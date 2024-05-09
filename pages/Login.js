@@ -10,7 +10,7 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import img from "../assets/airplane.png";
+
 import { ScrollView } from "react-native-web";
 
 export default function Login() {
@@ -26,7 +26,7 @@ export default function Login() {
   const handleLogin = () => {
     Alert.alert(
       "Login Details",
-      Email: ${email}\nPassword: ${password},
+      `Email: ${email}\nPassword: ${password}`, // Message should be inside backticks for template literals
       [{ text: "OK", onPress: () => console.log("OK Pressed") }],
       { cancelable: false }
     );
@@ -34,7 +34,7 @@ export default function Login() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Image source={img} style={styles.image} />
+        {/* <Image source={img} style={styles.image} />*/}
         <Text style={styles.login}>Log In</Text>
         <View style={styles.emailview}>
           <Text style={styles.email}>Email address</Text>
