@@ -10,10 +10,10 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-import { ScrollView } from "react-native-web";
+import img from '../assets/airplane.png'
 
 export default function Login() {
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -34,7 +34,7 @@ export default function Login() {
 
   return (
     <SafeAreaView style={styles.container}>
-        {/* <Image source={img} style={styles.image} />*/}
+        <Image source={img} style={styles.image} />
         <Text style={styles.login}>Log In</Text>
         <View style={styles.emailview}>
           <Text style={styles.email}>Email address</Text>
