@@ -3,12 +3,11 @@ import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacit
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const PasswordChanged = () => {
-    const [email, setEmail] = useState("");
     return (
         <SafeAreaView style={styles.container}>
             <MaterialCommunityIcons
                 name={"checkbox-marked-circle"}
-                size={130}
+                size={120}
                 color="#4F718A"
             />
             <Text style={styles.passwordChangedTitle}>Password changed</Text>
