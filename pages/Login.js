@@ -162,7 +162,9 @@ const styles = StyleSheet.create({
   signUpText: {
     fontFamily: "Inter",
     fontSize: 14,
-    color: "#007BFF",
+    color: "#000000",
     marginLeft: 5,
+    fontWeight:'bold',
+    textDecorationLine:'underline'
   },
 });
