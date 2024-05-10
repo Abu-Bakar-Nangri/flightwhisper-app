@@ -2,10 +2,11 @@ import { StyleSheet} from 'react-native';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgetPassword from './pages/ForgetPassword';
+import ResetPassword from './pages/ResetPassword';
 
 export default function App() {
   return (
-    <ForgetPassword/>
+    <ResetPassword/>
   );
 }
 
