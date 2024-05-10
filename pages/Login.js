@@ -34,46 +34,48 @@ export default function Login() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <View style={styles.imageContainer}>
         <Image source={img} style={styles.image} />
-        <Text style={styles.login}>Log In</Text>
-        <View style={styles.emailview}>
-          <Text style={styles.email}>Email address</Text>
-          <TextInput
-            style={styles.enteremail}
-            value={email}
-            onChangeText={setEmail}
-            placeholder="Enter email"
-          />
-        </View>
-        <View style={styles.emailview}>
-          <Text style={styles.email}>Password</Text>
-          <TextInput
-            style={styles.enteremail}
-            secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
-            placeholder="Enter password "
-          />
-          <MaterialCommunityIcons
-            name={showPassword ? "eye-off" : "eye"}
-            size={24}
-            color="#aaa"
-            style={styles.icon}
-            onPress={toggleShowPassword}
-          />
-        </View>
+      </View>
+      <Text style={styles.login}>Log In</Text>
+      <View style={styles.emailview}>
+        <Text style={styles.email}>Email address</Text>
+        <TextInput
+          style={styles.enteremail}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Enter email"
+        />
+      </View>
+      <View style={styles.emailview}>
+        <Text style={styles.email}>Password</Text>
+        <TextInput
+          style={styles.enteremail}
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Enter password "
+        />
+        <MaterialCommunityIcons
+          name={showPassword ? "eye-off" : "eye"}
+          size={24}
+          color="#aaa"
+          style={styles.icon}
+          onPress={toggleShowPassword}
+        />
+      </View>
+      <TouchableOpacity>
+        <Text style={styles.forgetpassword}>Forgot Password?</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginbtn} onPress={handleLogin}>
+        <Text style={styles.logintext}>Login in</Text>
+      </TouchableOpacity>
+      <View style={styles.registerBtnContainer}>
+        <Text style={styles.registerText}>Don't have an account?</Text>
         <TouchableOpacity>
-          <Text style={styles.forgetpassword}>Forgot Password?</Text>
+          <Text style={styles.signUpText}>Sign up</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginbtn} onPress={handleLogin}>
-          <Text style={styles.logintext}>Login in</Text>
-        </TouchableOpacity>
-        <View style={styles.registerBtnContainer}>
-          <Text style={styles.registerText}>Don't have an account?</Text>
-          <TouchableOpacity>
-            <Text style={styles.signUpText}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -85,11 +87,16 @@ const styles = StyleSheet.create({
     alignItems: "top",
     justifyContent: "left",
   },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 100,
+    marginBottom:60,
+  },
   image: {
-    width: "85%",
-    height: "25%",
-    marginHorizontal: 30,
-    marginVertical: 40,
+    width: 300,
+    height: 380,
   },
   login: {
     fontSize: 30,
