@@ -1,14 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,TextInput ,Button,Touchable} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>FlightWhisper</Text>
-      <TextInput style={styles.input} placeholder='Enter Name'></TextInput>
-      <TextInput style={styles.input} placeholder='Enter Name'></TextInput>
-      <TextInput style={styles.input} placeholder='Enter Name'></TextInput>
-      <Touchable style={styles.button}>Login hdlfjgldfkjglfkd dfgjdlfg dfkgj ere</Touchable>
+      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
   );
