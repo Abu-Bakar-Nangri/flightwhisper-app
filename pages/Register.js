@@ -88,6 +88,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingBottom: 25,
         paddingHorizontal: 30,
+        fontWeight:'400',
+        color:'rgba(0, 0, 0, 0.7)',
     },
     registerbtn: {
         height: 55,
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     registerText: {
         fontFamily: "Inter",
         fontSize: 14,
-        color: "#333",
+        color: 'rgba(0, 0, 0, 0.7)',
     },
     signUpText: {
         fontFamily: "Inter",
