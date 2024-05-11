@@ -5,10 +5,11 @@ import ForgetPassword from './pages/ForgetPassword';
 import ResetPassword from './pages/ResetPassword';
 import PasswordChanged from './pages/PasswordChanged';
 import VerifyOTP from './pages/VerifyOTP';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
   return (
-    <VerifyOTP/>
+    <Dashboard/>
   );
 }
 
