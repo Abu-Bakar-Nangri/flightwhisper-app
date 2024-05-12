@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, Dimensions, Modal } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, Dimensions, Modal, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import img from '../assets/person.png'
@@ -9,52 +9,150 @@ const Dashboard = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.profiledata}>
-                <View style={styles.headerContainer}>
-                    <View style={styles.headerData}>
-                        <TouchableOpacity style={styles.imgContainer} onPress={() => setModalVisible(true)}>
-                            <Image source={img} style={styles.image} resizeMode='cover' />
-                        </TouchableOpacity>
-                        <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={modalVisible}
-                            onRequestClose={() => {
-                                setModalVisible(false);
-                            }}>
-                            <View style={styles.modalContainer}>
-                                <Image source={img} style={styles.fullScreenImage} resizeMode='contain' />
-                                <TouchableOpacity
-                                    style={styles.closeButton}
-                                    onPress={() => setModalVisible(false)}
-                                >
-                                    <MaterialCommunityIcons name="close" size={30} color="black" />
-                                </TouchableOpacity>
+            <ScrollView>
+                <View style={styles.profiledata}>
+                    <View style={styles.headerContainer}>
+                        <View style={styles.headerData}>
+                            <TouchableOpacity style={styles.imgContainer} onPress={() => setModalVisible(true)}>
+                                <Image source={img} style={styles.image} resizeMode='cover' />
+                            </TouchableOpacity>
+                            <Modal
+                                animationType="fade"
+                                transparent={true}
+                                visible={modalVisible}
+                                onRequestClose={() => {
+                                    setModalVisible(false);
+                                }}>
+                                <View style={styles.modalContainer}>
+                                    <Image source={img} style={styles.fullScreenImage} resizeMode='contain' />
+                                    <TouchableOpacity
+                                        style={styles.closeButton}
+                                        onPress={() => setModalVisible(false)}
+                                    >
+                                        <MaterialCommunityIcons name="close" size={30} color="black" />
+                                    </TouchableOpacity>
+                                </View>
+                            </Modal>
+                            <View>
+                                <Text style={styles.userName}>Abu Bakar Siddique</Text>
+                                <Text style={styles.userEmail}>abububakarnangri@gmail.com</Text>
                             </View>
-                        </Modal>
-                        <View>
-                            <Text style={styles.userName}>Abu Bakar Siddique</Text>
-                            <Text style={styles.userEmail}>abububakarnangri@gmail.com</Text>
                         </View>
+                        <TouchableOpacity style={styles.bellContainer}>
+                            <MaterialCommunityIcons
+                                name={"bell"}
+                                size={23}
+                                color="#f5f5f5"
+                                style={styles.bellicon}
+                            />
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.bellContainer}>
-                        <MaterialCommunityIcons
-                            name={"bell"}
-                            size={23}
-                            color="#f5f5f5"
-                            style={styles.bellicon}
-                        />
-                    </TouchableOpacity>
+                    <Text style={styles.DashboardTitle}> Book Your Flight Ticket</Text>
                 </View>
-                <Text style={styles.DashboardTitle}> Book Your Flight Ticket</Text>
-            </View>
-            <View style={styles.flightSerach}>
-                <TextInput
-                    style={styles.enteremail}
-                    placeholder="Enter email or number" />
-                <TextInput
-                    style={styles.enteremail}
-                    placeholder="Enter email or number" />
+                <View style={styles.flightSerach}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+                <View style={styles.H}>
+                    <TextInput
+                        style={styles.enteremail}
+                        placeholder="Enter email or number" />
+                </View>
+            </ScrollView>
+            <View style={styles.registerBtnContainer}>
+            <TouchableOpacity style={styles.hfhg}>
+                            <MaterialCommunityIcons
+                                name={"bell"}
+                                size={23}
+                                color="#000"
+                                style={styles.gf}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.hfhg}>
+                            <MaterialCommunityIcons
+                                name={"bell"}
+                                size={23}
+                                color="#000"
+                                style={styles.gf}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.hfhg}>
+                            <MaterialCommunityIcons
+                                name={"bell"}
+                                size={23}
+                                color="#000"
+                                style={styles.gf}
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.hfhg}>
+                            <MaterialCommunityIcons
+                                name={"bell"}
+                                size={23}
+                                color="#000"
+                                style={styles.gf}
+                            />
+                        </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -71,7 +169,7 @@ const styles = StyleSheet.create({
     },
     profiledata: {
         backgroundColor: '#4F718A',
-        marginVertical: 20,
+        marginVertical: 25,
         height: 250,
     },
     headerContainer: {
@@ -144,11 +242,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         fontSize: 26,
         fontWeight: '400',
-        ffontFamily: 'Poppins',
+        fontFamily: 'Poppins',
         color: '#fff'
     },
     flightSerach: {
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
         marginHorizontal: 20,
         padding: 10,
         borderRadius: 6,
@@ -164,7 +262,32 @@ const styles = StyleSheet.create({
         height: 55,
         paddingHorizontal: 16,
         fontSize: 16,
-        marginVertical:4,
+        marginVertical: 4,
+    },
+    registerBtnContainer: {
+        justifyContent:'space-around',
+        flexDirection: "row",
+        borderWidth:2,
+        height:60,
+      },
+      hfhg:{
+        backgroundColor:'blue',
+        width:100,
+        justifyContent:'center',
+        alignItems:'center'
+      },
+    registerText: {
+        fontFamily: "Inter",
+        fontSize: 14,
+        color: 'rgba(0, 0, 0, 0.7)',
+    },
+    signUpText: {
+        fontFamily: "Inter",
+        fontSize: 14,
+        color: "#000000",
+        marginLeft: 5,
+        fontWeight: 'bold',
+        textDecorationLine: 'underline'
     },
 });
 
