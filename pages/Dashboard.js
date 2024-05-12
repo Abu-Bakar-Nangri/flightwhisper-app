@@ -9,7 +9,8 @@ const Dashboard = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}>
                 <View style={styles.profiledata}>
                     <View style={styles.headerContainer}>
                         <View style={styles.headerData}>
@@ -38,9 +39,9 @@ const Dashboard = () => {
                                 <Text style={styles.userEmail}>abububakarnangri@gmail.com</Text>
                             </View>
                         </View>
-                        <TouchableOpacity style={styles.bellContainer}>
+                        <TouchableOpacity activeOpacity={1} style={styles.bellContainer}>
                             <MaterialCommunityIcons
-                                name={"bell"}
+                                name={"bell-badge-outline"}
                                 size={23}
                                 color="#f5f5f5"
                                 style={styles.bellicon}
@@ -121,38 +122,42 @@ const Dashboard = () => {
                 </View>
             </ScrollView>
             <View style={styles.registerBtnContainer}>
-            <TouchableOpacity style={styles.hfhg}>
-                            <MaterialCommunityIcons
-                                name={"bell"}
-                                size={23}
-                                color="#000"
-                                style={styles.gf}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.hfhg}>
-                            <MaterialCommunityIcons
-                                name={"bell"}
-                                size={23}
-                                color="#000"
-                                style={styles.gf}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.hfhg}>
-                            <MaterialCommunityIcons
-                                name={"bell"}
-                                size={23}
-                                color="#000"
-                                style={styles.gf}
-                            />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.hfhg}>
-                            <MaterialCommunityIcons
-                                name={"bell"}
-                                size={23}
-                                color="#000"
-                                style={styles.gf}
-                            />
-                        </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.9} style={styles.hfhg}>
+                    <MaterialCommunityIcons
+                        name={"home"}
+                        size={26}
+                        color="#000"
+                        style={styles.gf}
+                    />
+                    <Text style={styles.homeIconText}>Home</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.hfhg}>
+                    <MaterialCommunityIcons
+                        name={"ticket"}
+                        size={26}
+                        color="#000"
+                        style={styles.gf}
+                    />
+                    <Text style={styles.homeIconText}>Ticket</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.hfhg}>
+                    <MaterialCommunityIcons
+                        name={"history"}
+                        size={26}
+                        color="#000"
+                        style={styles.gf}
+                    />
+                    <Text style={styles.homeIconText}>History</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.hfhg}>
+                    <MaterialCommunityIcons
+                        name={"account"}
+                        size={30}
+                        color="#000"
+                        style={styles.gf}
+                    />
+                    <Text style={styles.homeIconText}> Profile</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -235,7 +240,7 @@ const styles = StyleSheet.create({
     },
     bellicon: {
         paddingHorizontal: 5,
-        paddingVertical: 2,
+        paddingVertical: 4,
         color: '#f9f9f9'
     },
     DashboardTitle: {
@@ -265,17 +270,19 @@ const styles = StyleSheet.create({
         marginVertical: 4,
     },
     registerBtnContainer: {
-        justifyContent:'space-around',
+        justifyContent: 'space-around',
         flexDirection: "row",
-        borderWidth:2,
-        height:60,
-      },
-      hfhg:{
-        backgroundColor:'blue',
-        width:100,
-        justifyContent:'center',
-        alignItems:'center'
-      },
+        borderWidth: 2,
+        height: 50,
+    },
+    hfhg: {
+        backgroundColor: '#4F718A',
+        width: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor:'red',
+        shadowOffset:60,
+    },
     registerText: {
         fontFamily: "Inter",
         fontSize: 14,
@@ -288,6 +295,12 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         fontWeight: 'bold',
         textDecorationLine: 'underline'
+    },
+    homeIconText:{
+        fontSize:11,
+        textDecorationStyle:'solid',
+        lineHeight:15,
+        fontWeight:"bold",
     },
 });
 
