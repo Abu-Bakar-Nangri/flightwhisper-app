@@ -87,7 +87,7 @@ const Dashboard = ({navigation}) => {
           <Text style={styles.DashboardTitle}> Book Your Flight Ticket</Text>
         </View>
         <View style={styles.flightSerach}>
-          <TouchableOpacity activeOpacity={1} style={styles.flightbtn}>
+          <TouchableOpacity activeOpacity={1} style={styles.flightbtn} onPress={()=> navigation.navigate('Flight')}>
             <MaterialCommunityIcons
               name={"airplane"}
               size={50}
@@ -95,7 +95,7 @@ const Dashboard = ({navigation}) => {
             />
             <Text style={styles.flightTitle}>Flights</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={styles.flightbtn}>
+          <TouchableOpacity activeOpacity={1} style={styles.flightbtn} onPress={()=> navigation.navigate('Hotel')}>
             <MaterialCommunityIcons name={"home"} size={50} color="#4F718A" />
             <Text style={styles.flightTitle}>Hotel</Text>
           </TouchableOpacity>

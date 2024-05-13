@@ -12,6 +12,9 @@ import Register from './Register';
 import ResetPassword from './ResetPassword';
 import Ticket from './Ticket';
 import VerifyOTP from './VerifyOTP';
+import Flight from './Flight';
+import Hotel from './Hotel';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -20,8 +23,10 @@ function Navigation() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Dashboard" component={Dashboard}/>
+      <Stack.Screen name="Flight" component={Flight}/>
       <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
       <Stack.Screen name="History" component={History}/>
+      <Stack.Screen name="Hotel" component={Hotel}/>
       <Stack.Screen name="PasswordChanged" component={PasswordChanged}/>
       <Stack.Screen name="Profile" component={Profile}/>
       <Stack.Screen name="Register" component={Register}/>
