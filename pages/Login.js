@@ -10,7 +10,6 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import { ScrollView } from "react-native-web";
 
 export default function Login() {
