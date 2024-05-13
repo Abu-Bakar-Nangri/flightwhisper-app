@@ -6,10 +6,11 @@ import ResetPassword from './pages/ResetPassword';
 import PasswordChanged from './pages/PasswordChanged';
 import VerifyOTP from './pages/VerifyOTP';
 import Dashboard from './pages/Dashboard';
+import Navigation from './pages/Navigation';
 
 export default function App() {
   return (
-    <Dashboard/>
+    <Navigation/>
   );
 }
 

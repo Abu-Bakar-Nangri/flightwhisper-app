@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity } from 'r
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from '../assets/airplane.png'
 
-const Register = () => {
+const Register = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.imageContainer}>

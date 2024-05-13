@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 
-const VerifyOTP = () => {
+const VerifyOTP = ({ navigation }) => {
     const [seconds, setSeconds] = useState(30);
     const [otp, setOtp] = useState(['', '', '', '']);
     const inputs = useRef([]);

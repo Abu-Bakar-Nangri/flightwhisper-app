@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const ResetPassword = () => {
+const ResetPassword = ({ navigation }) => {
     const [email, setEmail] = useState("");
     const [showNewPassword, setNewShowPassword] = useState(false);
     const [showConfirmPassword, setConfirmShowPassword] = useState(false);

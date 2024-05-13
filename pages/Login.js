@@ -11,10 +11,9 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-web";
-import img from '../assets/airplane.png'
+import img from "../assets/airplane.png";
 
-export default function Login() {
-
+export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -25,12 +24,13 @@ export default function Login() {
   };
 
   const handleLogin = () => {
-    Alert.alert(
-      "Login Details",
-      `Email: ${email}\nPassword: ${password}`, // Message should be inside backticks for template literals
-      [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-      { cancelable: false }
-    );
+    navigation.navigate("Dashboard");
+  };
+  const handleForgetPassword = () => {
+    navigation.navigate("ForgetPassword");
+  };
+  const handleRegister = () => {
+    navigation.navigate("Register");
   };
 
   return (
@@ -65,15 +65,19 @@ export default function Login() {
           />
         </View>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleForgetPassword}>
         <Text style={styles.forgetpassword}>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginbtn} onPress={handleLogin}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.loginbtn}
+        onPress={handleLogin}
+      >
         <Text style={styles.logintext}>Login in</Text>
       </TouchableOpacity>
       <View style={styles.registerBtnContainer}>
         <Text style={styles.registerText}>Don't have an account?</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleRegister}>
           <Text style={styles.signUpText}>Sign up</Text>
         </TouchableOpacity>
       </View>
@@ -90,8 +94,8 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 100,
     marginBottom: 60,
   },
@@ -137,16 +141,16 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
   passwordInputview: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
   icon: {
-    marginRight: 20, 
-    marginLeft: -40
+    marginRight: 20,
+    marginLeft: -40,
   },
   enterpassword: {
-    flex: 1, 
+    flex: 1,
     borderColor: "#D8DADC",
     borderWidth: 1,
     borderRadius: 6,
@@ -158,8 +162,8 @@ const styles = StyleSheet.create({
   forgetpassword: {
     textAlign: "right",
     paddingHorizontal: 20,
-    paddingTop:10,
-    paddingBottom:20,
+    paddingTop: 10,
+    paddingBottom: 20,
   },
   loginbtn: {
     height: 55,
@@ -184,14 +188,14 @@ const styles = StyleSheet.create({
   registerText: {
     fontFamily: "Inter",
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.7)',
+    color: "rgba(0, 0, 0, 0.7)",
   },
   signUpText: {
     fontFamily: "Inter",
     fontSize: 14,
     color: "#000000",
     marginLeft: 5,
-    fontWeight: 'bold',
-    textDecorationLine: 'underline'
+    fontWeight: "bold",
+    textDecorationLine: "underline",
   },
 });
