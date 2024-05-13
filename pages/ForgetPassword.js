@@ -4,6 +4,15 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ForgetPassword = ({ navigation }) => {
     const [email, setEmail] = useState("");
+
+const handleForgetPassword = ()=>{
+    navigation.navigate('VerifyOTP')
+}
+
+const handleLogin = () => {
+    // Reset navigation stack to Login screen
+    navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
+  };
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity style={styles.iconContainer}>
@@ -25,12 +34,12 @@ const ForgetPassword = ({ navigation }) => {
                     placeholder="Email your email address or number"
                 />
             </View>
-            <TouchableOpacity style={styles.sendCodebtn} >
+            <TouchableOpacity activeOpacity={1} style={styles.sendCodebtn} onPress={handleForgetPassword}>
                 <Text style={styles.sendCodetext}>Send code</Text>
             </TouchableOpacity>
             <View style={styles.rememberBtnContainer}>
                 <Text style={styles.rememberText}>Remember password?</Text>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleLogin} activeOpacity={1}>
                     <Text style={styles.loginText}>Log in</Text>
                 </TouchableOpacity>
             </View>

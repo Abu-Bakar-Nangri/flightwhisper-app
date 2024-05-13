@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const PasswordChanged = () => {
+const PasswordChanged = ({navigation}) => {
+    const handleLogin = () => {
+        // Reset navigation stack to Login screen
+        navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
+      };
     return (
         <SafeAreaView style={styles.container}>
             <MaterialCommunityIcons
@@ -12,7 +16,7 @@ const PasswordChanged = () => {
             />
             <Text style={styles.passwordChangedTitle}>Password changed</Text>
             <Text style={styles.passwordChangedSubTitle}>Your password has been changed succesfully</Text>
-            <TouchableOpacity style={styles.passwordChangedbtn} >
+            <TouchableOpacity style={styles.passwordChangedbtn} onPress={handleLogin}>
                 <Text style={styles.passwordChangedtext}>Back to login</Text>
             </TouchableOpacity>
         </SafeAreaView>

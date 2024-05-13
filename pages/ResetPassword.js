@@ -13,6 +13,10 @@ const ResetPassword = ({ navigation }) => {
     const toggleShowConfirmPassword = () => {
         setConfirmShowPassword(!showConfirmPassword);
     };
+
+    const handleResetPassword =  ()=>{
+        navigation.navigate('PasswordChanged')
+    }
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity style={styles.iconContainer}>
@@ -59,15 +63,9 @@ const ResetPassword = ({ navigation }) => {
                     />
                 </View>
             </View>
-            <TouchableOpacity style={styles.resetbtn} >
+            <TouchableOpacity activeOpacity={1} style={styles.resetbtn} onPress={handleResetPassword}>
                 <Text style={styles.resettext}>Reset password</Text>
             </TouchableOpacity>
-            <View style={styles.rememberBtnContainer}>
-                <Text style={styles.rememberText}>Already have an account?</Text>
-                <TouchableOpacity>
-                    <Text style={styles.loginText}>Log in</Text>
-                </TouchableOpacity>
-            </View>
         </SafeAreaView>
     );
 };
@@ -150,26 +148,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         paddingVertical: 14,
         color: "#ffffff",
-    },
-    rememberBtnContainer: {
-        flex: 1,
-        justifyContent: "center",
-        flexDirection: "row",
-        alignItems: "flex-end",
-        marginBottom: 20,
-    },
-    rememberText: {
-        fontFamily: "Inter",
-        fontSize: 14,
-        color: 'rgba(0, 0, 0, 0.7)',
-    },
-    loginText: {
-        fontFamily: "Inter",
-        fontSize: 14,
-        color: "#000000",
-        marginLeft: 5,
-        fontWeight: 'bold',
-        textDecorationLine: 'underline'
     },
 });
 

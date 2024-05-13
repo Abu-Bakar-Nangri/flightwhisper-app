@@ -20,6 +20,10 @@ const VerifyOTP = ({ navigation }) => {
         }
     };
 
+    const handleVerifyOTP = ()=>{
+        navigation.navigate('ResetPassword')
+    }
+
     useEffect(() => {
         const timer = setInterval(() => {
             if (seconds > 0) {
@@ -50,7 +54,7 @@ const VerifyOTP = ({ navigation }) => {
                     />
                 ))}
             </View>
-            <TouchableOpacity style={styles.verifybtn}>
+            <TouchableOpacity activeOpacity={1} style={styles.verifybtn} onPress={handleVerifyOTP}>
                 <Text style={styles.verifytext}>Verify</Text>
             </TouchableOpacity>
             <View style={styles.sendCodeContainer}>
