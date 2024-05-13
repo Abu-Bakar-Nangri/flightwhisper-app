@@ -23,6 +23,10 @@ const PasswordChanged = ({navigation}) => {
     );
 };
 
+PasswordChanged.navigationOptions = {
+    headerShown: false,
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

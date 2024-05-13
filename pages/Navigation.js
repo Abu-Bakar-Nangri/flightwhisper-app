@@ -22,18 +22,18 @@ function Navigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-      <Stack.Screen name="Dashboard" component={Dashboard}/>
-      <Stack.Screen name="Flight" component={Flight}/>
-      <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
+      <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }}/>
+      <Stack.Screen name="Flight" component={Flight} options={{ headerShown: false }}/>
+      <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{ headerShown: false }}/>
       <Stack.Screen name="History" component={History}/>
-      <Stack.Screen name="Hotel" component={Hotel}/>
-      <Stack.Screen name="PasswordChanged" component={PasswordChanged}/>
-      <Stack.Screen name="Profile" component={Profile}/>
-      <Stack.Screen name="Register" component={Register}/>
-      <Stack.Screen name="ResetPassword" component={ResetPassword}/>
-      <Stack.Screen name="Ticket" component={Ticket}/>
-      <Stack.Screen name="VerifyOTP" component={VerifyOTP}/>
-      <Stack.Screen name="Login" component={Login} options={{ title:'Login' }}/>
+      <Stack.Screen name="Hotel" component={Hotel} options={{ headerShown: false }}/>
+      <Stack.Screen name="PasswordChanged" component={PasswordChanged} options={{ headerShown: false }}/>
+      <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
+      <Stack.Screen name="Register" component={Register} options={{ headerShown: false }}/>
+      <Stack.Screen name="ResetPassword" component={ResetPassword} options={{ headerShown: false }}/>
+      <Stack.Screen name="Ticket" component={Ticket} options={{ headerShown: false }}/>
+      <Stack.Screen name="VerifyOTP" component={VerifyOTP} options={{ headerShown: false }}/>
+      <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
 
       </Stack.Navigator>
     </NavigationContainer>

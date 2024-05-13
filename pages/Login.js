@@ -199,3 +199,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
+
+Login.navigationOptions = {
+  headerShown: false,
+};
