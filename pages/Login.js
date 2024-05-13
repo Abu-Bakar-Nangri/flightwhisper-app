@@ -11,8 +11,10 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-web";
+import img from '../assets/airplane.png'
 
 export default function Login() {
+
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -33,25 +35,26 @@ export default function Login() {
 
   return (
     <SafeAreaView style={styles.container}>
-        {/* <Image source={img} style={styles.image} />*/}
-        <Text style={styles.login}>Log In</Text>
-        <View style={styles.emailview}>
-          <Text style={styles.email}>Email address</Text>
+      <View style={styles.imageContainer}>
+        <Image source={img} style={styles.image} />
+      </View>
+      <Text style={styles.login}>Log In</Text>
+      <View style={styles.emailview}>
+        <Text style={styles.email}>Email address or number</Text>
+        <TextInput
+          style={styles.enteremail}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Enter email or number"
+        />
+      </View>
+      <View style={styles.passwordview}>
+        <Text style={styles.password}>Password</Text>
+        <View style={styles.passwordInputview}>
           <TextInput
-            style={styles.enteremail}
-            value={email}
-            onChangeText={setEmail}
-            placeholder="Enter email"
-          />
-        </View>
-        <View style={styles.emailview}>
-          <Text style={styles.email}>Password</Text>
-          <TextInput
-            style={styles.enteremail}
             secureTextEntry={!showPassword}
-            value={password}
-            onChangeText={setPassword}
-            placeholder="Enter password "
+            style={styles.enterpassword}
+            placeholder="Enter password"
           />
           <MaterialCommunityIcons
             name={showPassword ? "eye-off" : "eye"}
@@ -61,18 +64,19 @@ export default function Login() {
             onPress={toggleShowPassword}
           />
         </View>
+      </View>
+      <TouchableOpacity>
+        <Text style={styles.forgetpassword}>Forgot Password?</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginbtn} onPress={handleLogin}>
+        <Text style={styles.logintext}>Login in</Text>
+      </TouchableOpacity>
+      <View style={styles.registerBtnContainer}>
+        <Text style={styles.registerText}>Don't have an account?</Text>
         <TouchableOpacity>
-          <Text style={styles.forgetpassword}>Forgot Password?</Text>
+          <Text style={styles.signUpText}>Sign up</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginbtn} onPress={handleLogin}>
-          <Text style={styles.logintext}>Login in</Text>
-        </TouchableOpacity>
-        <View style={styles.registerBtnContainer}>
-          <Text style={styles.registerText}>Don't have an account?</Text>
-          <TouchableOpacity>
-            <Text style={styles.signUpText}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -84,11 +88,16 @@ const styles = StyleSheet.create({
     alignItems: "top",
     justifyContent: "left",
   },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 100,
+    marginBottom: 60,
+  },
   image: {
-    width: "85%",
-    height: "25%",
-    marginHorizontal: 30,
-    marginVertical: 40,
+    width: 300,
+    height: 380,
   },
   login: {
     fontSize: 30,
@@ -108,11 +117,36 @@ const styles = StyleSheet.create({
     fontFamily: "Inter",
     color: "#000000",
   },
-  icon: {
-    marginHorizontal: 170,
-    marginTop: -40,
-  },
   enteremail: {
+    borderColor: "#D8DADC",
+    borderWidth: 1,
+    borderRadius: 6,
+    backgroundColor: "#ffffff",
+    height: 55,
+    paddingHorizontal: 16,
+    fontSize: 16,
+  },
+  passwordview: {
+    paddingHorizontal: 20,
+    paddingVertical: 3,
+  },
+  password: {
+    fontSize: 14,
+    paddingVertical: 6,
+    fontFamily: "Inter",
+    color: "#000000",
+  },
+  passwordInputview: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+  },
+  icon: {
+    marginRight: 20, 
+    marginLeft: -40
+  },
+  enterpassword: {
+    flex: 1, 
     borderColor: "#D8DADC",
     borderWidth: 1,
     borderRadius: 6,
@@ -124,7 +158,8 @@ const styles = StyleSheet.create({
   forgetpassword: {
     textAlign: "right",
     paddingHorizontal: 20,
-    paddingVertical: 25,
+    paddingTop:10,
+    paddingBottom:20,
   },
   loginbtn: {
     height: 55,
@@ -149,12 +184,14 @@ const styles = StyleSheet.create({
   registerText: {
     fontFamily: "Inter",
     fontSize: 14,
-    color: "#333",
+    color: 'rgba(0, 0, 0, 0.7)',
   },
   signUpText: {
     fontFamily: "Inter",
     fontSize: 14,
-    color: "#007BFF",
+    color: "#000000",
     marginLeft: 5,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline'
   },
 });

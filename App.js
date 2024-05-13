@@ -1,10 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View ,Button ,TextInput} from 'react-native';
+import { StyleSheet} from 'react-native';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import ForgetPassword from './pages/ForgetPassword';
+import ResetPassword from './pages/ResetPassword';
+import PasswordChanged from './pages/PasswordChanged';
+import VerifyOTP from './pages/VerifyOTP';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
   return (
-    <Login/>
+    <Dashboard/>
   );
 }
 
@@ -14,5 +19,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+    backgroundColor:'#f9f9f9'
+  }
 });
