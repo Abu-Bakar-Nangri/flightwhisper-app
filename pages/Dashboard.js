@@ -12,23 +12,24 @@ import {
   ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import img from "../assets/person.png";
+import destination from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 
-const Dashboard = ({navigation}) => {
+const Dashboard = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleTicket = () => {
-    navigation.navigate('Ticket');
+    navigation.navigate("Ticket");
   };
   const handleHistory = () => {
-    navigation.navigate('History');
+    navigation.navigate("History");
   };
   const handleProfile = () => {
-    navigation.navigate('Profile');
+    navigation.navigate("Profile");
   };
   const handleDashboard = () => {
-    navigation.navigate('Dashboard');
+    navigation.navigate("Dashboard");
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -76,9 +77,13 @@ const Dashboard = ({navigation}) => {
                 <Text style={styles.userEmail}>abububakarnangri@gmail.com</Text>
               </View>
             </View>
-            <TouchableOpacity activeOpacity={1} style={styles.bellContainer}>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.bellContainer}
+              onPress={handleHistory}
+            >
               <MaterialCommunityIcons
-                name={"bell"}
+                name={"bell-badge-outline"}
                 size={23}
                 color="#f5f5f5"
                 style={styles.bellicon}
@@ -88,7 +93,11 @@ const Dashboard = ({navigation}) => {
           <Text style={styles.DashboardTitle}> Book Your Flight Ticket</Text>
         </View>
         <View style={styles.flightSerach}>
-          <TouchableOpacity activeOpacity={1} style={styles.flightbtn} onPress={()=> navigation.navigate('Flight')}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={styles.flightbtn}
+            onPress={() => navigation.navigate("Flight")}
+          >
             <MaterialCommunityIcons
               name={"airplane"}
               size={50}
@@ -96,44 +105,169 @@ const Dashboard = ({navigation}) => {
             />
             <Text style={styles.flightTitle}>Flights</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} style={styles.flightbtn} onPress={()=> navigation.navigate('Hotel')}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={styles.flightbtn}
+            onPress={() => navigation.navigate("Hotel")}
+          >
             <MaterialCommunityIcons name={"home"} size={50} color="#4F718A" />
             <Text style={styles.flightTitle}>Hotel</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.H}>
-          <TextInput
-            style={styles.enteremail}
-            placeholder="Enter email or number"
-          />
+
+        <View style={styles.popularDestinationContainer}>
+          <View style={styles.popularHeaderContainer}>
+            <Text style={styles.popularHeaderText}>Popular Destinations</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAllText}>See all</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+          </ScrollView>
         </View>
-        <View style={styles.H}>
-          <TextInput
-            style={styles.enteremail}
-            placeholder="Enter email or number"
-          />
+
+        <View style={styles.popularDestinationContainer}>
+          <View style={styles.popularHeaderContainer}>
+            <Text style={styles.popularHeaderText}>Popular Destinations</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAllText}>See all</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+          </ScrollView>
         </View>
-        <View style={styles.H}>
-          <TextInput
-            style={styles.enteremail}
-            placeholder="Enter email or number"
-          />
+
+        <View style={styles.popularDestinationContainer}>
+          <View style={styles.popularHeaderContainer}>
+            <Text style={styles.popularHeaderText}>Popular Destinations</Text>
+            <TouchableOpacity>
+              <Text style={styles.seeAllText}>See all</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+            <View style={styles.popularCard}>
+              <Image style={styles.popularImage} source={destination} />
+              <Text style={styles.destinationName}>Khao Sok National Park</Text>
+              <Text style={styles.destinationPrice}>$3300</Text>
+            </View>
+          </ScrollView>
         </View>
       </ScrollView>
       <View style={styles.footerContainer}>
-        <TouchableOpacity activeOpacity={1} style={styles.footerBtn} onPress={handleDashboard}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.footerBtn}
+          onPress={handleDashboard}
+        >
           <MaterialCommunityIcons name={"home"} size={26} color="#4F718A" />
           <Text style={styles.homeIconText}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={1} style={styles.footerBtn} onPress={handleTicket}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.footerBtn}
+          onPress={handleTicket}
+        >
           <MaterialCommunityIcons name={"ticket"} size={26} color="gray" />
           <Text style={styles.otherIconText}>Ticket</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={1} style={styles.footerBtn} onPress={handleHistory}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.footerBtn}
+          onPress={handleHistory}
+        >
           <MaterialCommunityIcons name={"history"} size={26} color="gray" />
           <Text style={styles.otherIconText}>History</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={1} style={styles.footerBtn} onPress={handleProfile}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.footerBtn}
+          onPress={handleProfile}
+        >
           <MaterialCommunityIcons name={"account"} size={30} color="gray" />
           <Text style={styles.otherIconText}>Profile</Text>
         </TouchableOpacity>
@@ -231,7 +365,7 @@ const styles = StyleSheet.create({
   },
   flightSerach: {
     marginHorizontal: 20,
-    paddingVertical:10,
+    paddingVertical: 10,
     position: "absolute",
     top: 170,
     width: "90%",
@@ -240,7 +374,7 @@ const styles = StyleSheet.create({
   },
   flightbtn: {
     backgroundColor: "#f9f9f9",
-    width: '42%',
+    width: "42%",
     height: 110,
     borderRadius: 10,
     justifyContent: "center",
@@ -265,6 +399,51 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
     marginVertical: 100,
+  },
+  popularDestinationContainer: {
+    marginTop: 55,
+  },
+  popularHeaderContainer: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+  },
+  popularHeaderText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  seeAllText: {
+    fontSize: 16,
+    color: "blue",
+  },
+  popularCard: {
+    marginLeft: 20,
+    width: 250,
+    height: 300,
+    backgroundColor: "red",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  popularImage: {
+    width: "100%",
+    height: 220,
+    resizeMode: "cover",
+  },
+
+  destinationName: {
+    paddingHorizontal: 10,
+    paddingTop: 8,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  destinationPrice: {
+    paddingHorizontal: 10,
+    paddingBottom: 8,
+    fontSize: 18,
+    color: "#4F718A",
+    fontWeight: "700",
   },
   footerContainer: {
     backgroundColor: "#fff",
