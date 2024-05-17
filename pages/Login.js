@@ -52,6 +52,8 @@ export default function Login({ navigation }) {
         <Text style={styles.password}>Password</Text>
         <View style={styles.passwordInputview}>
           <TextInput
+            value={password}
+            onChangeText={setPassword}
             secureTextEntry={!showPassword}
             style={styles.enterpassword}
             placeholder="Enter password"

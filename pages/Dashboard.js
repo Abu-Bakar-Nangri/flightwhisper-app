@@ -12,6 +12,7 @@ import {
   ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import img from "../assets/person.png";
 
 const Dashboard = ({navigation}) => {
@@ -77,7 +78,7 @@ const Dashboard = ({navigation}) => {
             </View>
             <TouchableOpacity activeOpacity={1} style={styles.bellContainer}>
               <MaterialCommunityIcons
-                name={"bell-badge-outline"}
+                name={"home"}
                 size={23}
                 color="#f5f5f5"
                 style={styles.bellicon}
