@@ -78,7 +78,7 @@ const Dashboard = ({navigation}) => {
             </View>
             <TouchableOpacity activeOpacity={1} style={styles.bellContainer}>
               <MaterialCommunityIcons
-                name={"home"}
+                name={"bell"}
                 size={23}
                 color="#f5f5f5"
                 style={styles.bellicon}
