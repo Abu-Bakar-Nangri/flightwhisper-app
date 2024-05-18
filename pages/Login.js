@@ -8,6 +8,8 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Alert,
+  Platform,
+  KeyboardAvoidingView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-web";
@@ -35,6 +37,10 @@ export default function Login({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+            <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.keyboardAvoidingView}
+      >
       <View style={styles.imageContainer}>
         <Image source={img} style={styles.image} />
       </View>
@@ -83,6 +89,7 @@ export default function Login({ navigation }) {
           <Text style={styles.signUpText}>Sign up</Text>
         </TouchableOpacity>
       </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
@@ -93,6 +100,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "top",
     justifyContent: "left",
+  },
+  keyboardAvoidingView: {
+    flex: 1,
   },
   imageContainer: {
     flex: 1,
