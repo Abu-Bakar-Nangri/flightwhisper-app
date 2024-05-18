@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/person.png";
-import destination from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 
 const Dashboard = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
