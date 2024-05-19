@@ -9,9 +9,9 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-web";
 import img from "../assets/airplane.png";
 
 export default function Login({ navigation }) {

@@ -11,7 +11,6 @@ import {
   Modal,
   ScrollView,
   Pressable,
-  Platform ,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/person.png";
