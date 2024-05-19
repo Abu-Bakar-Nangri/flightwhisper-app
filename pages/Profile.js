@@ -10,6 +10,7 @@ import {
   Dimensions,
   Modal,
   Pressable,
+  Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
@@ -228,6 +229,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     backgroundColor: "#f5f5f5",
+    width: "100%",
   },
   profiledata: {
     backgroundColor: "#4F718A",
@@ -237,7 +239,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 40,
+    marginVertical: Platform.OS==='ios'? 28:40,
     marginHorizontal: 20,
     width: "92%",
   },
@@ -252,7 +254,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#728DA1",
   },
   userName: {
-    fontSize: 20,
+    fontSize: Platform.OS === 'ios' ? 26 :  22,
     fontWeight: "500",
     color: "rgba(255,255,255,0.9)",
     fontFamily: "poppion",
@@ -312,13 +314,13 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 25,
-    right: 25,
+    top: Platform.OS==='ios'? 60:20,
+    right: Platform.OS==='ios'? 30:25,
     borderRadius: 30,
     borderWidth: 2,
   },
   ProfileTitle:{
-    fontSize:16,
+    fontSize:Platform.OS === 'ios' ? 20 : 18,
     fontWeight:'600'
   },
   ProfileEmail:{
@@ -359,15 +361,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "space-around",
     flexDirection: "row",
-    width: "100%",
-    height: 50,
-    shadowColor: "rgba(255, 255, 255, 0.1)",
-    shadowOpacity: 0.1, 
-    shadowRadius: 4, 
-    elevation: 2, 
-    borderTopWidth: 0.5, 
-    borderColor: "rgba(0,0,0,0.1)", 
-  },  
+    height: Platform.OS === 'ios' ? 60 : 50,
+    width:"100%"
+  },
   footerBtn: {
     width: 100,
     justifyContent: "center",

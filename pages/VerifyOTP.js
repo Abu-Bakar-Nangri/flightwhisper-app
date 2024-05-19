@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'top',
         alignItems: 'left',
-        backgroundColor: '#fff',
+        backgroundColor: "#f5f5f5",
     },
     verifyOTPTitle: {
         fontSize: 32,
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         marginHorizontal: 20,
         marginVertical: 20,
+        width:'90%',
     },
     input: {
         width: 70,
@@ -119,6 +120,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         justifyContent: 'center',
         alignItems: 'center',
+        width:'90%'
     },
     verifytext: {
         fontSize: 17,
@@ -131,6 +133,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 20,
+        width:'100%'
       },
       sendCodeButton: {
         padding: 10,

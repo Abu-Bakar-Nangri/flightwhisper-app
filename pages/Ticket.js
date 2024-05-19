@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -74,18 +75,15 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "flex-start", // Align content at the top
       alignItems: "flex-start", // Align content to the left
-      backgroundColor: "#f2f2f2",
+      backgroundColor: "#f5f5f5",
+      width:'100%',
     },
     footerContainer: {
       backgroundColor: "#fff",
       justifyContent: "space-around",
       flexDirection: "row",
-      height: 50,
-      shadowOffset: { width: 0, height: 8 }, // Corrected shadow offset
-      shadowColor: "red",
-      shadowOpacity: 0.9,
-      shadowRadius: 20,
-      elevation: -5,
+      height: Platform.OS === 'ios' ? 60 : 50,
+      width:"100%"
     },
     footerBtn: {
       width: 100,

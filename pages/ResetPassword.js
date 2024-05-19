@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ResetPassword = ({ navigation }) => {
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'top',
         alignItems: 'left',
-        backgroundColor: '#fff',
+        backgroundColor: "#f5f5f5",
     },
     iconContainer: {
         width: 32,
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
+        width:'100%',
     },
 
     icon: {
@@ -141,12 +142,13 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginHorizontal: 20,
         marginVertical: 32,
+        width:'90%'
     },
     resettext: {
-        fontSize: 17,
+        fontSize: Platform.OS==='ios'? 18:17,
         fontWeight: "bold",
         textAlign: "center",
-        paddingVertical: 14,
+        paddingVertical: Platform.OS==='ios'? 17:14,
         color: "#ffffff",
     },
 });
