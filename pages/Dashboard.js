@@ -556,5 +556,4 @@ const TrendingCountries = [
     population: '60 million',
     capital: 'Pretoria',
   },
-  // Add more countries as needed
 ];
