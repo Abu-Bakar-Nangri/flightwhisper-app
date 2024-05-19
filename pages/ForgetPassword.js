@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     emailview: {
         paddingHorizontal: 20,
         paddingVertical: 3,
+        width:'100%'
     },
     email: {
         fontSize: 14,
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         marginHorizontal: 20,
         marginVertical: 32,
+        width:'91%'
     },
     sendCodetext: {
         fontSize: 17,
@@ -124,6 +126,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-end",
         marginBottom: 20,
+        width:'100%'
     },
     rememberText: {
         fontFamily: "Inter",

@@ -11,6 +11,7 @@ import {
   Modal,
   ScrollView,
   Pressable,
+  Platform ,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/person.png";
@@ -72,7 +73,8 @@ const Dashboard = ({ navigation }) => {
                     style={styles.fullScreenImage}
                     resizeMode="contain"
                   />
-                  <Pressable
+                  <TouchableOpacity
+                  activeOpacity={0.4}
                     style={styles.closeButton}
                     onPress={() => setModalVisible(false)}
                   >
@@ -81,7 +83,7 @@ const Dashboard = ({ navigation }) => {
                       size={30}
                       color="black"
                     />
-                  </Pressable>
+                  </TouchableOpacity>
                 </View>
               </Modal>
               <View>
@@ -213,18 +215,18 @@ const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "top",
-    alignItems: "left",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     backgroundColor: "#f2f2f2",
   },
   profiledata: {
     backgroundColor: "#4F718A",
-    height: 220,
+    height: 225,
   },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop:30,
+    marginTop:Platform.OS === 'ios' ? 20 : 30,
     marginHorizontal: 20,
   },
   headerData: {
@@ -255,8 +257,8 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 20,
-    right: 20,
+    top: Platform.OS === 'ios' ? 60 : 20,
+    right: Platform.OS === 'ios' ? 25 : 20,
     borderRadius: 30,
     borderWidth: 2,
   },
@@ -293,13 +295,13 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontFamily: "Poppins",
     color: "#fff",
-    paddingVertical:10,
+    paddingVertical:12,
   },
   flightSerach: {
     marginHorizontal: 20,
     paddingVertical: 10,
     position: "absolute",
-    top: 170,
+    top: 156,
     width: "90%",
     flexDirection: "row",
     justifyContent: "space-around",
@@ -313,18 +315,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     shadowOffset: { width: 0, height: 2 },
     shadowColor: "black",
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.2,
     shadowRadius: 3,
-    elevation: 5,
+    elevation: 3,
   },
   flightTitle: {
     fontSize: 18,
     fontWeight: "600",
     color: "#4F718A",
   },
-
   popularDestinationContainer: {
-    marginTop: 45,
+    marginTop: 60,
   },
   trendingCountriesContainer:{
     marginTop: 10,
@@ -382,7 +383,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "space-around",
     flexDirection: "row",
-    height: 50,
+    height: Platform.OS === 'ios' ? 60 : 50,
+    width:"100%"
   },
   footerBtn: {
     width: 100,

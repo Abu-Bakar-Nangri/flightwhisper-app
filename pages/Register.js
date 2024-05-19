@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from '../assets/airplane.png'
 
 const Register = ({navigation}) => {
+    const handleLogin = () => {
+        navigation.navigate('Login')
+    }
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.imageContainer}>
@@ -11,7 +14,7 @@ const Register = ({navigation}) => {
             </View>
             <Text style={styles.registerTitle}>Explore the app</Text>
             <Text style={styles.registerSubTitle}>Now your finances are in one place and always under control</Text>
-            <TouchableOpacity style={styles.registerbtn}>
+            <TouchableOpacity activeOpacity={1} style={styles.registerbtn}>
                 <MaterialCommunityIcons
                     style={styles.googleIcon}
                     name={"google"}
@@ -20,7 +23,7 @@ const Register = ({navigation}) => {
                 />
                 <Text style={styles.btnTxt}> Continue with google</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.registerbtn}>
+            <TouchableOpacity activeOpacity={1}  style={styles.registerbtn}>
                 <MaterialCommunityIcons
                     style={styles.appleIcon}
                     name={"apple"}
@@ -29,7 +32,7 @@ const Register = ({navigation}) => {
                 />
                 <Text style={styles.btnTxt}> Continue with Apple</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.registerbtn}>
+            <TouchableOpacity activeOpacity={1}  style={styles.registerbtn}>
                 <MaterialCommunityIcons
                     style={styles.emailIcon}
                     name={"email"}
@@ -38,7 +41,7 @@ const Register = ({navigation}) => {
                 />
                 <Text style={styles.btnTxt}> Continue with Email</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.registerbtn}>
+            <TouchableOpacity activeOpacity={1}  style={styles.registerbtn}>
                 <MaterialCommunityIcons
                     style={styles.emailIcon}
                     name={"email"}
@@ -49,7 +52,7 @@ const Register = ({navigation}) => {
             </TouchableOpacity>
             <View style={styles.registerBtnContainer}>
                 <Text style={styles.registerText}>Already have an account?</Text>
-                <TouchableOpacity>
+                <TouchableOpacity activeOpacity={1}  onPress={handleLogin}>
                     <Text style={styles.signUpText}>Log in</Text>
                 </TouchableOpacity>
             </View>
@@ -63,13 +66,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#f5f5f5",
         alignItems: "top",
         justifyContent: "left",
+        width:'100%',
     },
     imageContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 100,
+        marginTop: Platform.OS==="ios"? 60:120,
         marginBottom: 60,
+        width:'100%',
     },
     image: {
         width: 300,
@@ -82,6 +87,7 @@ const styles = StyleSheet.create({
         paddingTop: 22,
         paddingBottom: 4,
         paddingHorizontal: 20,
+        width:'100%',
     },
     registerSubTitle: {
         fontSize: 16,
@@ -90,6 +96,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         fontWeight:'400',
         color:'rgba(0, 0, 0, 0.7)',
+        width:'100%',
     },
     registerbtn: {
         height: 55,
@@ -97,7 +104,8 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         borderRadius: 30,
         marginVertical: 6,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        width:'90%',
     },
     googleIcon:{
         paddingHorizontal:18,
@@ -114,8 +122,8 @@ const styles = StyleSheet.create({
     btnTxt: {
         fontSize: 20,
         fontWeight:'4s00',
-        paddingVertical: 12,
-        color: '#ffffff'
+        paddingVertical: Platform.OS==='ios'? 15:12,
+        color: '#ffffff',
     },
     registerBtnContainer: {
         flex: 1,
@@ -123,6 +131,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-end",
         marginBottom: 20,
+        width:'100%',
     },
     registerText: {
         fontFamily: "Inter",

@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -86,12 +87,13 @@ const History = ({ navigation }) => {
           justifyContent: "flex-start", 
           alignItems: "flex-start", 
           backgroundColor: "#f5f5f5",
+          width:'100%',
         },
         NotificatonContainer:{
           backgroundColor:'#4F718A',
           width:"100%",
           flexDirection:'row',
-          height:100,
+          height:Platform.OS === 'ios' ? 80 : 100,
           justifyContent:"space-between",
           alignItems:'center',
         },
@@ -115,13 +117,8 @@ const History = ({ navigation }) => {
           backgroundColor: "#fff",
           justifyContent: "space-around",
           flexDirection: "row",
-          height: 50,
-          shadowOffset: { width: 0, height: 8 }, 
-          shadowColor: "red",
-          shadowOpacity: 0.9,
-          shadowRadius: 20,
-          elevation: -5,
-          width:'100%'
+          height: Platform.OS === 'ios' ? 60 : 50,
+          width:"100%"
         },
         footerBtn: {
           width: 100,

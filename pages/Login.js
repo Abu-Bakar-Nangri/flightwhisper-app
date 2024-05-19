@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Alert,
+  Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-web";
@@ -67,7 +68,7 @@ export default function Login({ navigation }) {
           />
         </View>
       </View>
-      <TouchableOpacity onPress={handleForgetPassword}>
+      <TouchableOpacity activeOpacity={1} style={styles.forgetpasswordbtn} onPress={handleForgetPassword}>
         <Text style={styles.forgetpassword}>Forgot Password?</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -79,7 +80,7 @@ export default function Login({ navigation }) {
       </TouchableOpacity>
       <View style={styles.registerBtnContainer}>
         <Text style={styles.registerText}>Don't have an account?</Text>
-        <TouchableOpacity onPress={handleRegister}>
+        <TouchableOpacity activeOpacity={1} onPress={handleRegister}>
           <Text style={styles.signUpText}>Sign up</Text>
         </TouchableOpacity>
       </View>
@@ -94,13 +95,15 @@ const styles = StyleSheet.create({
     alignItems: "top",
     justifyContent: "left",
     backgroundColor: "#f5f5f5",
+    width: "100%",
   },
   imageContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 100,
+    marginTop: Platform.OS==="ios"? 60:120,
     marginBottom: 60,
+    width:'100%'
   },
   image: {
     width: 300,
@@ -117,6 +120,7 @@ const styles = StyleSheet.create({
   emailview: {
     paddingHorizontal: 20,
     paddingVertical: 3,
+    width:'100%',
   },
   email: {
     fontSize: 14,
@@ -136,6 +140,7 @@ const styles = StyleSheet.create({
   passwordview: {
     paddingHorizontal: 20,
     paddingVertical: 3,
+    width:'100%',
   },
   password: {
     fontSize: 14,
@@ -162,23 +167,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
   },
+  forgetpasswordbtn:{
+    width:'100%'
+  },
   forgetpassword: {
     textAlign: "right",
-    paddingHorizontal: 20,
+    paddingHorizontal: 25,
     paddingTop: 10,
     paddingBottom: 20,
+
   },
   loginbtn: {
     height: 55,
     backgroundColor: "#4F718A",
     borderRadius: 6,
     marginHorizontal: 20,
+    width:'89%',
   },
   logintext: {
     fontSize: 17,
     fontWeight: "bold",
     textAlign: "center",
-    paddingVertical: 14,
+    paddingVertical: Platform.OS==="ios"? 17:14,
     color: "#ffffff",
   },
   registerBtnContainer: {
@@ -187,6 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     marginBottom: 20,
+    width:'100%',
   },
   registerText: {
     fontFamily: "Inter",

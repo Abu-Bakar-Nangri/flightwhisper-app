@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const PasswordChanged = ({navigation}) => {
@@ -16,7 +16,7 @@ const PasswordChanged = ({navigation}) => {
             />
             <Text style={styles.passwordChangedTitle}>Password changed</Text>
             <Text style={styles.passwordChangedSubTitle}>Your password has been changed succesfully</Text>
-            <TouchableOpacity style={styles.passwordChangedbtn} onPress={handleLogin}>
+            <TouchableOpacity activeOpacity={1} style={styles.passwordChangedbtn} onPress={handleLogin}>
                 <Text style={styles.passwordChangedtext}>Back to login</Text>
             </TouchableOpacity>
         </SafeAreaView>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: "bold",
         textAlign: "center",
-        paddingVertical: 14,
+        paddingVertical:  Platform.OS==="ios"? 17:14,
         color: "#ffffff",
     },
 });
