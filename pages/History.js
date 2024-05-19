@@ -27,6 +27,17 @@ const History = ({ navigation }) => {
       };
       return (
         <SafeAreaView style={styles.container}>
+          <View  style={styles.NotificatonContainer}>
+            <TouchableOpacity activeOpacity={1} style={styles.BackBtnContainer}>
+                <MaterialCommunityIcons
+                  name="chevron-left"
+                  size={28}
+                  color={"#f5f5f5"}
+                />
+              </TouchableOpacity>
+              <Text style={styles.NotificatonTitle}>Notification</Text>
+              <View></View>
+           </View>
           <ScrollView>
             <Text>Ticket</Text>
           </ScrollView>
@@ -72,27 +83,52 @@ const History = ({ navigation }) => {
     const styles = StyleSheet.create({
         container: {
           flex: 1,
-          justifyContent: "flex-start", // Align content at the top
-          alignItems: "flex-start", // Align content to the left
-          backgroundColor: "#f2f2f2",
+          justifyContent: "flex-start", 
+          alignItems: "flex-start", 
+          backgroundColor: "#f5f5f5",
         },
+        NotificatonContainer:{
+          backgroundColor:'#4F718A',
+          width:"100%",
+          flexDirection:'row',
+          height:100,
+          justifyContent:"space-between",
+          alignItems:'center',
+        },
+        BackBtnContainer: {
+          width: 32,
+          height: 32,
+          justifyContent: "center",
+          alignItems: "center",
+          borderWidth: 1,
+          borderRadius: 30,
+          borderColor: "#f9f9f9",
+          backgroundColor: "#728DA1",
+          marginLeft:20,
+        },
+        NotificatonTitle: {
+          fontSize: 22,
+          color: '#fff',
+          marginLeft:-50,
+        },        
         footerContainer: {
           backgroundColor: "#fff",
           justifyContent: "space-around",
           flexDirection: "row",
           height: 50,
-          shadowOffset: { width: 0, height: 8 }, // Corrected shadow offset
+          shadowOffset: { width: 0, height: 8 }, 
           shadowColor: "red",
           shadowOpacity: 0.9,
           shadowRadius: 20,
           elevation: -5,
+          width:'100%'
         },
         footerBtn: {
           width: 100,
           justifyContent: "center",
           alignItems: "center",
           shadowColor: "red",
-          shadowOffset: { width: 0, height: 8 }, // Corrected shadow offset
+          shadowOffset: { width: 0, height: 8 }, 
         },
         homeIconText: {
           fontSize: 11,

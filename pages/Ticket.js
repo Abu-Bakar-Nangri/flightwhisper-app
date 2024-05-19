@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: "flex-start", // Align content at the top
       alignItems: "flex-start", // Align content to the left
-      backgroundColor: "#f2f2f2",
+      backgroundColor: "#f5f5f5",
     },
     footerContainer: {
       backgroundColor: "#fff",

@@ -1,6 +1,9 @@
+
 import * as React from "react";
+import { StyleSheet } from 'react-native'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SearchBar } from 'react-native-elements';
 
 import Dashboard from "./Dashboard";
 import ForgetPassword from "./ForgetPassword";
@@ -14,6 +17,8 @@ import Ticket from "./Ticket";
 import VerifyOTP from "./VerifyOTP";
 import Flight from "./Flight";
 import Hotel from "./Hotel";
+import PopularDestination from "./PopularDestination";
+import DestinationDetails from "./DestinationDetails";
 
 const Stack = createNativeStackNavigator();
 
@@ -81,9 +86,47 @@ function Navigation() {
           component={Login}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="PopularDestination"
+          component={PopularDestination}
+          options={({ navigation }) => ({
+            header: () => (
+              <SearchBar
+                placeholder="Search..."
+
+                lightTheme
+                round
+                containerStyle={styles.searchBarContainer}
+                inputContainerStyle={styles.searchBarInputContainer}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="DestinationDetails"
+          component={DestinationDetails}
+          options={{ title: "Popular Destinations Details" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+
+const styles = StyleSheet.create({
+  // Existing styles...
+
+  searchBarContainer: {
+    backgroundColor: 'transparent',
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    paddingVertical: 20,
+    marginTop: 15,
+    paddingHorizontal: 20, // Adjust as needed
+  },
+  searchBarInputContainer: {
+    backgroundColor: '#fff',
+  },
+});
 
 export default Navigation;

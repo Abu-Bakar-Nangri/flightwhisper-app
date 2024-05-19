@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "top",
     justifyContent: "left",
+    backgroundColor: "#f5f5f5",
   },
   imageContainer: {
     flex: 1,

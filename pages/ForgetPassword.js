@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'top',
         alignItems: 'left',
-        backgroundColor: '#fff',
+        backgroundColor: "#f5f5f5",
     },
     iconContainer: {
         width: 32,

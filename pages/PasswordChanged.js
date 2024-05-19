@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: "#f5f5f5",
     },
     passwordChangedTitle: {
         fontSize: 32,
