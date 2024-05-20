@@ -34,10 +34,17 @@ export default function RegisterwithEmail({ navigation }) {
 
   const handleRegister = async () => {
     try {
-      if (!email || !password) {
+      if (!email || !password || !confirmpassword) {
         Alert.alert("Please enter both email and password");
         return;
       }
+
+      if (password !== confirmpassword) {
+        Alert.alert("Passwords do not match");
+        return;
+      }
+
+      // Passwords match, proceed with registration
       // await AsyncStorage.setItem('email', email);
       // await AsyncStorage.setItem('password', password);
       navigation.navigate("Login");
@@ -46,13 +53,16 @@ export default function RegisterwithEmail({ navigation }) {
     }
   };
 
+  const handleLogin = () => {
+    navigation.navigate("Login");
+  };
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <SafeAreaView style={styles.container}>
-        <View style={styles.imageContainer}></View>
         <Text style={styles.login}>Register with Email</Text>
         <View style={styles.emailview}>
           <Text style={styles.email}>Email address</Text>
@@ -101,12 +111,16 @@ export default function RegisterwithEmail({ navigation }) {
             />
           </View>
         </View>
-        <TouchableOpacity activeOpacity={1} style={styles.loginbtn}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.loginbtn}
+          onPress={handleRegister}
+        >
           <Text style={styles.logintext}>Register</Text>
         </TouchableOpacity>
         <View style={styles.registerBtnContainer}>
           <Text style={styles.registerText}>Already have an account?</Text>
-          <TouchableOpacity activeOpacity={1}>
+          <TouchableOpacity activeOpacity={1} onPress={handleLogin}>
             <Text style={styles.signUpText}>Log in</Text>
           </TouchableOpacity>
         </View>
@@ -129,6 +143,7 @@ const styles = StyleSheet.create({
   login: {
     fontSize: 30,
     fontWeight: "bold",
+    paddingTop: 30,
     paddingVertical: 4,
     paddingHorizontal: 20,
     fontFamily: "Poppins",
@@ -156,12 +171,12 @@ const styles = StyleSheet.create({
   },
   passwordview: {
     paddingHorizontal: 20,
-    paddingVertical: 3,
+    paddingVertical: 1,
     width: "100%",
   },
   password: {
     fontSize: 14,
-    paddingVertical: 6,
+    paddingVertical: 3,
     fontFamily: "Inter",
     color: "#000000",
   },

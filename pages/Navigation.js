@@ -1,9 +1,9 @@
-
 import * as React from "react";
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SearchBar } from 'react-native-elements';
+import { SearchBar } from "react-native-elements";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import Dashboard from "./Dashboard";
 import ForgetPassword from "./CredentailsAllPages/ForgetPassword";
@@ -19,12 +19,14 @@ import Flight from "./FlightAllPages/Flight";
 import Hotel from "./HotelAllPages/Hotel";
 import PopularDestination from "./HotelAllPages/PopularDestination";
 import DestinationDetails from "./HotelAllPages/DestinationDetails";
-import HelpCenter from "./HelpCenter";
-import Security from "./Security";
+import HelpCenter from "./HelpandInfoApp/HelpCenter";
+import Security from "./HelpandInfoApp/Security";
 import RegisterwithEmail from "./CredentailsAllPages/RegisterwithEmail";
+import PaymentMethods from "./HelpandInfoApp/PaymentMethod";
+import AboutUs from "./HelpandInfoApp/AboutUs";
+import ContactUs from "./HelpandInfoApp/ContactUs";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,27 +39,29 @@ function Navigation() {
 
   const checkAuthStatus = async () => {
     try {
-      const storedEmail = await AsyncStorage.getItem('email');
-      const storedPassword = await AsyncStorage.getItem('password');
+      const storedEmail = await AsyncStorage.getItem("email");
+      const storedPassword = await AsyncStorage.getItem("password");
 
       if (storedEmail && storedPassword) {
         setIsAuthenticated(true);
       }
     } catch (error) {
-      console.error('Error checking authentication status:', error);
+      console.error("Error checking authentication status:", error);
     } finally {
       setIsLoading(false);
     }
   };
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthenticated ? "Dashboard" : "Login"}>
-          <Stack.Screen
+      <Stack.Navigator
+        initialRouteName={isAuthenticated ? "Dashboard" : "Login"}
+      >
+        <Stack.Screen
           name="Dashboard"
           component={Dashboard}
           options={{ headerShown: false }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{ headerShown: false }}
@@ -70,7 +74,17 @@ function Navigation() {
         <Stack.Screen
           name="ForgetPassword"
           component={ForgetPassword}
-          options={{ headerShown: false }}
+          options={{
+            headerTitle: "Forget Password",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
         <Stack.Screen
           name="History"
@@ -100,7 +114,17 @@ function Navigation() {
         <Stack.Screen
           name="ResetPassword"
           component={ResetPassword}
-          options={{ headerShown: false }}
+          options={{
+            headerTitle: "Reset Password",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
         <Stack.Screen
           name="Ticket"
@@ -110,66 +134,142 @@ function Navigation() {
         <Stack.Screen
           name="VerifyOTP"
           component={VerifyOTP}
-          options={{ headerShown: false }}
+          options={{
+            headerTitle: "Verify OTP",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
-       
 
         <Stack.Screen
           name="PopularDestination"
           component={PopularDestination}
-          options={({ navigation }) => ({
-            header: () => (
-              <SearchBar
-                placeholder="Search..."
-
-                lightTheme
-                round
-                containerStyle={styles.searchBarContainer}
-                inputContainerStyle={styles.searchBarInputContainer}
-              />
-            ),
-          })}
+          options={{
+            headerTitle: "Popular Destination",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
         <Stack.Screen
           name="DestinationDetails"
           component={DestinationDetails}
-          options={{ title: "Popular Destinations Details" }}
+          options={{
+            headerTitle: "Popular Destination Details",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="HelpCenter"
           component={HelpCenter}
-          options={{ title: "Help Center" }}
+          options={{
+            headerTitle: "Help Center",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
         <Stack.Screen
           name="Security"
           component={Security}
-          options={{ title: "Security Info" }}
+          options={{
+            headerTitle: "Security",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="RegisterwithEmail"
           component={RegisterwithEmail}
-          options={{ headerShown: false }}
+          options={{
+            headerTitle: "Register with Email",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="PaymentMethods"
+          component={PaymentMethods}
+          options={{
+            headerTitle: "Payment Methods",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="AboutUs"
+          component={AboutUs}
+          options={{
+            headerTitle: "About Us",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="ContactUs"
+          component={ContactUs}
+          options={{
+            headerTitle: "Contact Us",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-
-const styles = StyleSheet.create({
-  // Existing styles...
-
-  searchBarContainer: {
-    backgroundColor: 'transparent',
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    paddingVertical: 20,
-    marginTop: 15,
-    paddingHorizontal: 20, // Adjust as needed
-  },
-  searchBarInputContainer: {
-    backgroundColor: '#fff',
-  },
-});
 
 export default Navigation;

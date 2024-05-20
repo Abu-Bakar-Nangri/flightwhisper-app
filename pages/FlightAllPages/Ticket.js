@@ -71,39 +71,38 @@ const Ticket = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "flex-start", // Align content at the top
-      alignItems: "flex-start", // Align content to the left
-      backgroundColor: "#f5f5f5",
-      width:'100%',
-    },
-    footerContainer: {
-      backgroundColor: "#fff",
-      justifyContent: "space-around",
-      flexDirection: "row",
-      height: Platform.OS === 'ios' ? 60 : 50,
-      width:"100%"
-    },
-    footerBtn: {
-      width: 100,
-      justifyContent: "center",
-      alignItems: "center",
-      shadowColor: "red",
-      shadowOffset: { width: 0, height: 8 }, // Corrected shadow offset
-    },
-    homeIconText: {
-      fontSize: 11,
-      lineHeight: 15,
-      fontWeight: "bold",
-      color: "#4F718A",
-    },
-    otherIconText: {
-      fontSize: 11,
-      lineHeight: 15,
-      color: "gray",
-    },
-  });
-  
+  container: {
+    flex: 1,
+    justifyContent: "flex-start", // Align content at the top
+    alignItems: "flex-start", // Align content to the left
+    backgroundColor: "#f5f5f5",
+    width: "100%",
+  },
+  footerContainer: {
+    backgroundColor: "#fff",
+    justifyContent: "space-around",
+    flexDirection: "row",
+    height: Platform.OS === "ios" ? 60 : 50,
+    width: "100%",
+  },
+  footerBtn: {
+    width: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "red",
+    shadowOffset: { width: 0, height: 8 }, // Corrected shadow offset
+  },
+  homeIconText: {
+    fontSize: 11,
+    lineHeight: 15,
+    fontWeight: "bold",
+    color: "#4F718A",
+  },
+  otherIconText: {
+    fontSize: 11,
+    lineHeight: 15,
+    color: "gray",
+  },
+});
 
 export default Ticket;

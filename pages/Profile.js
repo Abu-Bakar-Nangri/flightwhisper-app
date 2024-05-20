@@ -30,18 +30,24 @@ const Profile = ({ navigation }) => {
   const handleHistory = () => {
     navigation.navigate("History");
   };
-  const handlePaymentMethod = () =>{
-
-  }
-  const handleLanguage = () =>{
-    
-  }
-  const handleSecurity = () =>{
-    navigation.navigate("Security")
-  }
-  const handleHelpCenter = () =>{
-    navigation.navigate("HelpCenter")
-  }
+  const handlePaymentMethod = () => {
+    navigation.navigate("PaymentMethods");
+  };
+  const handleLanguage = () => {
+    Alert.alert("Language supported is English");
+  };
+  const handleSecurity = () => {
+    navigation.navigate("Security");
+  };
+  const handleHelpCenter = () => {
+    navigation.navigate("HelpCenter");
+  };
+  const handleAboutUS = () => {
+    navigation.navigate("AboutUs");
+  };
+  const handleContactUS = () => {
+    navigation.navigate("ContactUs");
+  };
 
   const handleSignout = () => {
     Alert.alert(
@@ -50,18 +56,18 @@ const Profile = ({ navigation }) => {
       [
         {
           text: "Cancel",
-          onPress: () =>{},
-          style: "cancel"
+          onPress: () => {},
+          style: "cancel",
         },
-        { 
+        {
           text: "Sign Out",
           onPress: () => navigation.navigate("Login"),
-          style: "destructive"
-        }
+          style: "destructive",
+        },
       ],
       { cancelable: false }
     );
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -89,50 +95,57 @@ const Profile = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
-       <View style={styles.ProfileInfoContainer}>
-        <View style={styles.ProfileData}>
-            <Pressable style={styles.ProfileImage} onPress={() => setModalVisible(true)} >
+        <View style={styles.ProfileInfoContainer}>
+          <View style={styles.ProfileData}>
+            <Pressable
+              style={styles.ProfileImage}
+              onPress={() => setModalVisible(true)}
+            >
               <Image source={img} style={styles.image} resizeMode="cover" />
             </Pressable>
             <Modal
-                animationType="fade"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  setModalVisible(false);
-                }}
-              >
-                <View style={styles.modalContainer}>
-                  <Image
-                    source={img}
-                    style={styles.fullScreenImage}
-                    resizeMode="contain"
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(false);
+              }}
+            >
+              <View style={styles.modalContainer}>
+                <Image
+                  source={img}
+                  style={styles.fullScreenImage}
+                  resizeMode="contain"
+                />
+                <Pressable
+                  style={styles.closeButton}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <MaterialCommunityIcons
+                    name="close"
+                    size={30}
+                    color="black"
                   />
-                  <Pressable
-                    style={styles.closeButton}
-                    onPress={() => setModalVisible(false)}
-                  >
-                    <MaterialCommunityIcons
-                      name="close"
-                      size={30}
-                      color="black"
-                    />
-                  </Pressable>
-                </View>
-              </Modal>
+                </Pressable>
+              </View>
+            </Modal>
             <Text style={styles.ProfileTitle}>Abu Bakar Siddique</Text>
             <Text style={styles.ProfileEmail}>abubakarnangri@gmail.com</Text>
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Settings</Text>
-            <TouchableOpacity activeOpacity={1}style={styles.SettingItem} onPress={handlePaymentMethod}>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handlePaymentMethod}
+            >
               <View style={styles.SettingItemInfo}>
-              <MaterialCommunityIcons
-                name={"credit-card"}
-                size={24}
-                color="rgba(0,0,0,0.7)"
-                style={styles.SettingItemIcon}
-              />
+                <MaterialCommunityIcons
+                  name={"credit-card"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
                 <Text style={styles.SettingItemTitle}>Payment Method</Text>
               </View>
               <MaterialCommunityIcons
@@ -142,14 +155,18 @@ const Profile = ({ navigation }) => {
                 style={styles.SettingItemIcon}
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}style={styles.SettingItem}>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleLanguage}
+            >
               <View style={styles.SettingItemInfo}>
-              <MaterialCommunityIcons
-                name={"earth"}
-                size={24}
-                color="rgba(0,0,0,0.7)"
-                style={styles.SettingItemIcon}
-              />
+                <MaterialCommunityIcons
+                  name={"earth"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
                 <Text style={styles.SettingItemTitle}>Language</Text>
               </View>
               <MaterialCommunityIcons
@@ -159,14 +176,18 @@ const Profile = ({ navigation }) => {
                 style={styles.SettingItemIcon}
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1} style={styles.SettingItem} onPress={handleSecurity}>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleSecurity}
+            >
               <View style={styles.SettingItemInfo}>
-              <MaterialCommunityIcons
-                name={"security"}
-                size={24}
-                color="rgba(0,0,0,0.7)"
-                style={styles.SettingItemIcon}
-              />
+                <MaterialCommunityIcons
+                  name={"security"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
                 <Text style={styles.SettingItemTitle}>Security</Text>
               </View>
               <MaterialCommunityIcons
@@ -179,14 +200,61 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Support</Text>
-            <TouchableOpacity activeOpacity={1} style={styles.SettingItem} onPress={handleHelpCenter}>
+
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleAboutUS}
+            >
               <View style={styles.SettingItemInfo}>
+                <MaterialCommunityIcons
+                  name={"account-group"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
+                <Text style={styles.SettingItemTitle}>About Us</Text>
+              </View>
               <MaterialCommunityIcons
-                name={"help-circle"}
-                size={24}
+                name={"chevron-right"}
+                size={36}
                 color="rgba(0,0,0,0.7)"
                 style={styles.SettingItemIcon}
               />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleContactUS}
+            >
+              <View style={styles.SettingItemInfo}>
+                <MaterialCommunityIcons
+                  name={"phone"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
+                <Text style={styles.SettingItemTitle}>Contact Us</Text>
+              </View>
+              <MaterialCommunityIcons
+                name={"chevron-right"}
+                size={36}
+                color="rgba(0,0,0,0.7)"
+                style={styles.SettingItemIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleHelpCenter}
+            >
+              <View style={styles.SettingItemInfo}>
+                <MaterialCommunityIcons
+                  name={"help-circle"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
                 <Text style={styles.SettingItemTitle}>Help Center</Text>
               </View>
               <MaterialCommunityIcons
@@ -196,14 +264,18 @@ const Profile = ({ navigation }) => {
                 style={styles.SettingItemIcon}
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}style={styles.SettingItem} onPress={handleSignout}>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleSignout}
+            >
               <View style={styles.SettingItemInfo}>
-              <MaterialCommunityIcons
-                name={"logout"}
-                size={24}
-                color="rgba(0,0,0,0.7)"
-                style={styles.SettingItemIcon}
-              />
+                <MaterialCommunityIcons
+                  name={"logout"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
                 <Text style={styles.SettingItemTitle}>Signout</Text>
               </View>
               <MaterialCommunityIcons
@@ -255,7 +327,6 @@ const Profile = ({ navigation }) => {
   );
 };
 
-
 const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
@@ -274,7 +345,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: Platform.OS==='ios'? 28:40,
+    marginVertical: Platform.OS === "ios" ? 28 : 40,
     marginHorizontal: 20,
     width: "92%",
   },
@@ -289,7 +360,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#728DA1",
   },
   userName: {
-    fontSize: Platform.OS === 'ios' ? 26 :  22,
+    fontSize: Platform.OS === "ios" ? 26 : 22,
     fontWeight: "500",
     color: "rgba(255,255,255,0.9)",
     fontFamily: "poppion",
@@ -301,7 +372,7 @@ const styles = StyleSheet.create({
     marginTop: -105,
     marginVertical: 10,
     elevation: 5,
-    shadowColor: "rgba(0,0,0,0.2)", 
+    shadowColor: "rgba(0,0,0,0.2)",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -315,26 +386,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
-  
-  ProfileData:{
-    justifyContent:"center",
-    alignItems:"center",
+
+  ProfileData: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   ProfileImage: {
     width: 120,
     height: 120,
     borderRadius: 100,
-    position: 'relative',
-    overflow: 'hidden',
-    justifyContent: 'center', 
-    alignItems: 'center',
-    marginVertical:15,
-    marginTop:20,
+    position: "relative",
+    overflow: "hidden",
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 15,
+    marginTop: 20,
   },
   image: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     borderRadius: 100,
   },
   modalContainer: {
@@ -349,55 +420,55 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: Platform.OS==='ios'? 60:20,
-    right: Platform.OS==='ios'? 30:25,
+    top: Platform.OS === "ios" ? 60 : 20,
+    right: Platform.OS === "ios" ? 30 : 25,
     borderRadius: 30,
     borderWidth: 2,
   },
-  ProfileTitle:{
-    fontSize:Platform.OS === 'ios' ? 20 : 18,
-    fontWeight:'600'
+  ProfileTitle: {
+    fontSize: Platform.OS === "ios" ? 20 : 18,
+    fontWeight: "600",
   },
-  ProfileEmail:{
-    fontSize:14,
-    color:'rgba(0,0,0,0.4)',
+  ProfileEmail: {
+    fontSize: 14,
+    color: "rgba(0,0,0,0.4)",
   },
-  SettingContainer:{
-    marginHorizontal:10,
-    marginVertical:10,
+  SettingContainer: {
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
-  SettingTitle:{
-    fontSize:17,
-    fontWeight:'500',
-    paddingVertical:10,
+  SettingTitle: {
+    fontSize: 17,
+    fontWeight: "500",
+    paddingVertical: 10,
   },
-  SettingItem:{
-    flexDirection:'row',
-    alignItems:'center',
-    justifyContent:'space-between',
-    backgroundColor:'#B5C5D2',
-    height:60,
-    borderRadius:8,
-    marginVertical:4,
+  SettingItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#B5C5D2",
+    height: 60,
+    borderRadius: 8,
+    marginVertical: 4,
   },
-  SettingItemInfo:{
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center'
+  SettingItemInfo: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  SettingItemIcon:{
-    marginHorizontal:10
+  SettingItemIcon: {
+    marginHorizontal: 10,
   },
-  SettingItemTitle:{
-    paddingHorizontal:2,
-    fontSize:16
+  SettingItemTitle: {
+    paddingHorizontal: 2,
+    fontSize: 16,
   },
   footerContainer: {
     backgroundColor: "#fff",
     justifyContent: "space-around",
     flexDirection: "row",
-    height: Platform.OS === 'ios' ? 60 : 50,
-    width:"100%"
+    height: Platform.OS === "ios" ? 60 : 50,
+    width: "100%",
   },
   footerBtn: {
     width: 100,

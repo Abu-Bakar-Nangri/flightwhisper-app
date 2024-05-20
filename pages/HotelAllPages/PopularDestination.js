@@ -57,10 +57,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
+        width:'100%',
+        marginHorizontal:10,
     },
     popularCard: {
-        marginHorizontal: 10,
-        marginVertical: 5,
+        marginHorizontal:5,
+        marginVertical: 6,
         backgroundColor: "white",
         borderRadius: 10,
         overflow: "hidden",
