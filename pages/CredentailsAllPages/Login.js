@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   StyleSheet,
   Text,
@@ -12,21 +14,30 @@ import {
   ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import img from "../assets/airplane.png";
+import img from '../../assets/airplane.png';
 
 export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = () => {
-    navigation.navigate("Dashboard");
+  const handleLogin = async () => {
+    try {
+      if (!email || !password) {
+        Alert.alert("Please enter both email and password");
+        return;
+      }
+        navigation.navigate("Dashboard");
+      }
+     catch (error) {
+      Alert.alert("Error occurred while logging in");
+    }
   };
+  
   const handleForgetPassword = () => {
     navigation.navigate("ForgetPassword");
   };

@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import img from '../assets/airplane.png'
+import img from '../../assets/airplane.png';
 
 const Register = ({navigation}) => {
     const handleLogin = () => {
         navigation.navigate('Login')
+    }
+    const handleRegisterwithEmail = () =>{
+        navigation.navigate('RegisterwithEmail')
     }
     return (
         <SafeAreaView style={styles.container}>
@@ -32,7 +35,7 @@ const Register = ({navigation}) => {
                 />
                 <Text style={styles.btnTxt}> Continue with Apple</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}  style={styles.registerbtn}>
+            <TouchableOpacity activeOpacity={1}  style={styles.registerbtn} onPress={handleRegisterwithEmail}>
                 <MaterialCommunityIcons
                     style={styles.emailIcon}
                     name={"email"}
@@ -40,15 +43,6 @@ const Register = ({navigation}) => {
                     color="#fff"
                 />
                 <Text style={styles.btnTxt}> Continue with Email</Text>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}  style={styles.registerbtn}>
-                <MaterialCommunityIcons
-                    style={styles.emailIcon}
-                    name={"email"}
-                    size={28}
-                    color="#fff"
-                />
-                <Text style={styles.btnTxt}> Continue with Number</Text>
             </TouchableOpacity>
             <View style={styles.registerBtnContainer}>
                 <Text style={styles.registerText}>Already have an account?</Text>

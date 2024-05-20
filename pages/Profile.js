@@ -11,6 +11,7 @@ import {
   Modal,
   Pressable,
   Platform,
+  Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
@@ -29,6 +30,39 @@ const Profile = ({ navigation }) => {
   const handleHistory = () => {
     navigation.navigate("History");
   };
+  const handlePaymentMethod = () =>{
+
+  }
+  const handleLanguage = () =>{
+    
+  }
+  const handleSecurity = () =>{
+    navigation.navigate("Security")
+  }
+  const handleHelpCenter = () =>{
+    navigation.navigate("HelpCenter")
+  }
+
+  const handleSignout = () => {
+    Alert.alert(
+      "Confirm Sign Out",
+      "Are you sure you want to sign out?",
+      [
+        {
+          text: "Cancel",
+          onPress: () =>{},
+          style: "cancel"
+        },
+        { 
+          text: "Sign Out",
+          onPress: () => navigation.navigate("Login"),
+          style: "destructive"
+        }
+      ],
+      { cancelable: false }
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -91,7 +125,7 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Settings</Text>
-            <TouchableOpacity activeOpacity={1}style={styles.SettingItem}>
+            <TouchableOpacity activeOpacity={1}style={styles.SettingItem} onPress={handlePaymentMethod}>
               <View style={styles.SettingItemInfo}>
               <MaterialCommunityIcons
                 name={"credit-card"}
@@ -125,7 +159,7 @@ const Profile = ({ navigation }) => {
                 style={styles.SettingItemIcon}
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}style={styles.SettingItem}>
+            <TouchableOpacity activeOpacity={1} style={styles.SettingItem} onPress={handleSecurity}>
               <View style={styles.SettingItemInfo}>
               <MaterialCommunityIcons
                 name={"security"}
@@ -145,7 +179,7 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Support</Text>
-            <TouchableOpacity activeOpacity={1}style={styles.SettingItem}>
+            <TouchableOpacity activeOpacity={1} style={styles.SettingItem} onPress={handleHelpCenter}>
               <View style={styles.SettingItemInfo}>
               <MaterialCommunityIcons
                 name={"help-circle"}
@@ -162,7 +196,7 @@ const Profile = ({ navigation }) => {
                 style={styles.SettingItemIcon}
               />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={1}style={styles.SettingItem}>
+            <TouchableOpacity activeOpacity={1}style={styles.SettingItem} onPress={handleSignout}>
               <View style={styles.SettingItemInfo}>
               <MaterialCommunityIcons
                 name={"logout"}
