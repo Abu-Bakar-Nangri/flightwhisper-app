@@ -32,6 +32,7 @@ const Profile = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
+        bounces={false}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >

@@ -1,24 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   Image,
   StyleSheet,
   SafeAreaView,
-  TextInput,
   TouchableOpacity,
   Dimensions,
   Modal,
   ScrollView,
-  Pressable,
   Platform,
+  ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/person.png";
 import destination from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 
 const Dashboard = ({ navigation }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleTicket = () => {
     navigation.navigate("Ticket");
@@ -33,18 +40,25 @@ const Dashboard = ({ navigation }) => {
     navigation.navigate("Dashboard");
   };
 
-  const handlePopularDestination =(Destinations) => {
-    navigation.navigate('PopularDestination',{Destinations})
-  }
+  const handlePopularDestination = (Destinations) => {
+    navigation.navigate("PopularDestination", { Destinations });
+  };
   const handleDestinationDetails = (destinationData) => {
-    navigation.navigate('DestinationDetails',{destinationData})
-  }
+    navigation.navigate("DestinationDetails", { destinationData });
+  };
 
-  const sortedDestinations = Destinations.sort((a, b) => b.rating - a.rating).slice(0,6);
-  const sortedTrendingCountries = TrendingCountries.sort((a, b) => b.rating - a.rating).slice(0,6);
-  
+  const sortedDestinations = Destinations.sort(
+    (a, b) => b.rating - a.rating
+  ).slice(0, 6);
+  const sortedTrendingCountries = TrendingCountries.sort(
+    (a, b) => b.rating - a.rating
+  ).slice(0, 6);
 
-  return (
+  return isLoading ? (
+    <View style={styles.loadingIndicator}>
+      <ActivityIndicator size={70} color="#4F718A" />
+    </View>
+  ) : (
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -74,7 +88,7 @@ const Dashboard = ({ navigation }) => {
                     resizeMode="contain"
                   />
                   <TouchableOpacity
-                  activeOpacity={0.4}
+                    activeOpacity={0.4}
                     style={styles.closeButton}
                     onPress={() => setModalVisible(false)}
                   >
@@ -132,43 +146,72 @@ const Dashboard = ({ navigation }) => {
         <View style={styles.popularDestinationContainer}>
           <View style={styles.popularHeaderContainer}>
             <Text style={styles.popularHeaderText}>Popular Destinations</Text>
-            <TouchableOpacity onPress={()=>handlePopularDestination(Destinations)}>
+            <TouchableOpacity
+              onPress={() => handlePopularDestination(Destinations)}
+            >
               <Text style={styles.seeAllText}>See all</Text>
             </TouchableOpacity>
           </View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {sortedDestinations.map((destination,index)=>(
-              <TouchableOpacity key={index} activeOpacity={1} style={styles.popularCard} onPress={() => handleDestinationDetails(destination)}>
-              <Image style={styles.popularImage} source={destination.img} />
-              <Text style={styles.destinationRating}>{destination.rating}</Text>
-              <Text style={styles.destinationName} numberOfLines={1} ellipsizeMode="tail">
-                {destination.title}
-              </Text>
-              <Text style={styles.destinationPrice}>{destination.price}</Text>
-            </TouchableOpacity>
+            {sortedDestinations.map((destination, index) => (
+              <TouchableOpacity
+                key={index}
+                activeOpacity={1}
+                style={styles.popularCard}
+                onPress={() => handleDestinationDetails(destination)}
+              >
+                <Image style={styles.popularImage} source={destination.img} />
+                <Text style={styles.destinationRating}>
+                  {destination.rating}
+                </Text>
+                <Text
+                  style={styles.destinationName}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {destination.title}
+                </Text>
+                <Text style={styles.destinationPrice}>{destination.price}</Text>
+              </TouchableOpacity>
             ))}
-            
           </ScrollView>
         </View>
         <View style={styles.trendingCountriesContainer}>
           <View style={styles.popularHeaderContainer}>
             <Text style={styles.popularHeaderText}>Trending Countries</Text>
-            <TouchableOpacity onPress={()=>handlePopularDestination(Destinations)}>
+            <TouchableOpacity
+              onPress={() => handlePopularDestination(Destinations)}
+            >
               <Text style={styles.seeAllText}>See all</Text>
             </TouchableOpacity>
           </View>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {sortedTrendingCountries.map((trendingCountries,index)=>(
-              <TouchableOpacity key={index} activeOpacity={1} style={styles.popularCard} onPress={() => handleDestinationDetails(trendingCountries)}>
-              <Image style={styles.popularImage} source={trendingCountries.img} />
-              <Text style={styles.destinationRating}>{trendingCountries.rating}</Text>
-              <Text style={styles.destinationName} numberOfLines={1} ellipsizeMode="tail">
-                {trendingCountries.title}
-              </Text>
-              <Text style={styles.destinationPrice}>{trendingCountries.price}</Text>
-            </TouchableOpacity>
+            {sortedTrendingCountries.map((trendingCountries, index) => (
+              <TouchableOpacity
+                key={index}
+                activeOpacity={1}
+                style={styles.popularCard}
+                onPress={() => handleDestinationDetails(trendingCountries)}
+              >
+                <Image
+                  style={styles.popularImage}
+                  source={trendingCountries.img}
+                />
+                <Text style={styles.destinationRating}>
+                  {trendingCountries.rating}
+                </Text>
+                <Text
+                  style={styles.destinationName}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {trendingCountries.title}
+                </Text>
+                <Text style={styles.destinationPrice}>
+                  {trendingCountries.price}
+                </Text>
+              </TouchableOpacity>
             ))}
-            
           </ScrollView>
         </View>
       </ScrollView>
@@ -226,7 +269,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop:Platform.OS === 'ios' ? 20 : 30,
+    marginTop: Platform.OS === "ios" ? 20 : 30,
     marginHorizontal: 20,
   },
   headerData: {
@@ -257,8 +300,8 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: Platform.OS === 'ios' ? 60 : 20,
-    right: Platform.OS === 'ios' ? 25 : 20,
+    top: Platform.OS === "ios" ? 60 : 20,
+    right: Platform.OS === "ios" ? 25 : 20,
     borderRadius: 30,
     borderWidth: 2,
   },
@@ -295,7 +338,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontFamily: "Poppins",
     color: "#fff",
-    paddingVertical:12,
+    paddingVertical: 12,
   },
   flightSerach: {
     marginHorizontal: 20,
@@ -327,9 +370,9 @@ const styles = StyleSheet.create({
   popularDestinationContainer: {
     marginTop: 60,
   },
-  trendingCountriesContainer:{
+  trendingCountriesContainer: {
     marginTop: 10,
-    marginBottom:15,
+    marginBottom: 15,
   },
   popularHeaderContainer: {
     justifyContent: "space-between",
@@ -346,7 +389,7 @@ const styles = StyleSheet.create({
   seeAllText: {
     fontSize: 16,
     color: "rgba(0,0,0,0.6)",
-    fontWeight:'400'
+    fontWeight: "400",
   },
   popularCard: {
     marginLeft: 20,
@@ -361,11 +404,11 @@ const styles = StyleSheet.create({
     height: 218,
     resizeMode: "cover",
   },
-  destinationRating:{
-    paddingHorizontal:10,
-    paddingTop:6,
-    fontSize:16,
-    fontWeight:'400',
+  destinationRating: {
+    paddingHorizontal: 10,
+    paddingTop: 6,
+    fontSize: 16,
+    fontWeight: "400",
   },
   destinationName: {
     paddingHorizontal: 10,
@@ -383,8 +426,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     justifyContent: "space-around",
     flexDirection: "row",
-    height: Platform.OS === 'ios' ? 60 : 50,
-    width:"100%"
+    height: Platform.OS === "ios" ? 60 : 50,
+    width: "100%",
   },
   footerBtn: {
     width: 100,
@@ -402,158 +445,168 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     color: "gray",
   },
+  loadingIndicator: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+  },
 });
 
 export default Dashboard;
 
-
 const Destinations = [
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Khao Sok National Park',
-    price: '$3300',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Khao Sok National Park",
+    price: "$3300",
     rating: 4.5,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Grand Canyon',
-    price: '$2500',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Grand Canyon",
+    price: "$2500",
     rating: 4.8,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Santorini, Greece',
-    price: '$4500',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Santorini, Greece",
+    price: "$4500",
     rating: 4.7,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Machu Picchu, Peru',
-    price: '$4000',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Machu Picchu, Peru",
+    price: "$4000",
     rating: 4.6,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Great Barrier Reef, Australia',
-    price: '$5000',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Great Barrier Reef, Australia",
+    price: "$5000",
     rating: 4.9,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Bora Bora, French Polynesia',
-    price: '$6000',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Bora Bora, French Polynesia",
+    price: "$6000",
     rating: 4.7,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Banff National Park, Canada',
-    price: '$3500',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Banff National Park, Canada",
+    price: "$3500",
     rating: 4.6,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Dubai, United Arab Emirates',
-    price: '$5500',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Dubai, United Arab Emirates",
+    price: "$5500",
     rating: 4.5,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Kyoto, Japan',
-    price: '$3800',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Kyoto, Japan",
+    price: "$3800",
     rating: 4.7,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Niagara Falls, USA/Canada',
-    price: '$3200',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Niagara Falls, USA/Canada",
+    price: "$3200",
     rating: 4.6,
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Victoria Falls, Zambia/Zimbabwe',
-    price: '$4200',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Victoria Falls, Zambia/Zimbabwe",
+    price: "$4200",
     rating: 4.8,
   },
   // Add more destinations as needed
 ];
 
-
 const TrendingCountries = [
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Italy',
-    description: 'Italy, a European country with a long Mediterranean coastline, has left a powerful mark on Western culture and cuisine. Its capital, Rome, is home to the Vatican as well as landmark art and ancient ruins.',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Italy",
+    description:
+      "Italy, a European country with a long Mediterranean coastline, has left a powerful mark on Western culture and cuisine. Its capital, Rome, is home to the Vatican as well as landmark art and ancient ruins.",
     rating: 4.7,
-    price: '$1500',
-    currency: 'USD',
-    language: 'Italian',
-    population: '60 million',
-    capital: 'Rome',
+    price: "$1500",
+    currency: "USD",
+    language: "Italian",
+    population: "60 million",
+    capital: "Rome",
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Japan',
-    description: 'Japan is an island country in East Asia, located in the northwest Pacific Ocean. It is bordered on the west by the Sea of Japan, and extends from the Sea of Okhotsk in the north toward the East China Sea and Taiwan in the south.',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Japan",
+    description:
+      "Japan is an island country in East Asia, located in the northwest Pacific Ocean. It is bordered on the west by the Sea of Japan, and extends from the Sea of Okhotsk in the north toward the East China Sea and Taiwan in the south.",
     rating: 4.8,
-    price: '$2000',
-    currency: 'USD',
-    language: 'Japanese',
-    population: '126 million',
-    capital: 'Tokyo',
+    price: "$2000",
+    currency: "USD",
+    language: "Japanese",
+    population: "126 million",
+    capital: "Tokyo",
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Australia',
-    description: 'Australia is a country and continent surrounded by the Indian and Pacific oceans. Its major cities – Sydney, Brisbane, Melbourne, Perth, Adelaide – are coastal.',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Australia",
+    description:
+      "Australia is a country and continent surrounded by the Indian and Pacific oceans. Its major cities – Sydney, Brisbane, Melbourne, Perth, Adelaide – are coastal.",
     rating: 4.6,
-    price: '$1800',
-    currency: 'USD',
-    language: 'English',
-    population: '25 million',
-    capital: 'Canberra',
+    price: "$1800",
+    currency: "USD",
+    language: "English",
+    population: "25 million",
+    capital: "Canberra",
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'France',
-    description: 'France, in Western Europe, encompasses medieval cities, alpine villages and Mediterranean beaches. Paris, its capital, is famed for its fashion houses, classical art museums including the Louvre and monuments like the Eiffel Tower.',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "France",
+    description:
+      "France, in Western Europe, encompasses medieval cities, alpine villages and Mediterranean beaches. Paris, its capital, is famed for its fashion houses, classical art museums including the Louvre and monuments like the Eiffel Tower.",
     rating: 4.5,
-    price: '$1700',
-    currency: 'USD',
-    language: 'French',
-    population: '67 million',
-    capital: 'Paris',
+    price: "$1700",
+    currency: "USD",
+    language: "French",
+    population: "67 million",
+    capital: "Paris",
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'Brazil',
-    description: 'Brazil is the largest country in both South America and Latin America. It covers an area of 8,515,767 square kilometers (3,287,956 sq mi) with a population of over 211 million.',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "Brazil",
+    description:
+      "Brazil is the largest country in both South America and Latin America. It covers an area of 8,515,767 square kilometers (3,287,956 sq mi) with a population of over 211 million.",
     rating: 4.7,
-    price: '$1600',
-    currency: 'USD',
-    language: 'Portuguese',
-    population: '211 million',
-    capital: 'Brasília',
+    price: "$1600",
+    currency: "USD",
+    language: "Portuguese",
+    population: "211 million",
+    capital: "Brasília",
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'China',
-    description: 'China, officially the People\'s Republic of China, is a country in East Asia. It is the world\'s most populous country, with a population of more than 1.4 billion.',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "China",
+    description:
+      "China, officially the People's Republic of China, is a country in East Asia. It is the world's most populous country, with a population of more than 1.4 billion.",
     rating: 4.6,
-    price: '$1900',
-    currency: 'USD',
-    language: 'Chinese',
-    population: '1.4 billion',
-    capital: 'Beijing',
+    price: "$1900",
+    currency: "USD",
+    language: "Chinese",
+    population: "1.4 billion",
+    capital: "Beijing",
   },
   {
-    img: require('../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg'),
-    title: 'South Africa',
-    description: 'South Africa is a country on the southernmost tip of the African continent, marked by several distinct ecosystems. Inland safari destination Kruger National Park is populated by big game. ',
+    img: require("../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg"),
+    title: "South Africa",
+    description:
+      "South Africa is a country on the southernmost tip of the African continent, marked by several distinct ecosystems. Inland safari destination Kruger National Park is populated by big game. ",
     rating: 4.5,
-    price: '$2200',
-    currency: 'USD',
-    language: 'South African English',
-    population: '60 million',
-    capital: 'Pretoria',
+    price: "$2200",
+    currency: "USD",
+    language: "South African English",
+    population: "60 million",
+    capital: "Pretoria",
   },
 ];
