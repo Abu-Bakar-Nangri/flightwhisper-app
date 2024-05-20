@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   StyleSheet,
   Text,
@@ -12,21 +14,29 @@ import {
   ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import img from "../assets/airplane.png";
+import img from "../../assets/airplane.png";
 
 export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = () => {
-    navigation.navigate("Dashboard");
+  const handleLogin = async () => {
+    try {
+      if (!email || !password) {
+        Alert.alert("Please enter both email and password");
+        return;
+      }
+      navigation.navigate("Dashboard");
+    } catch (error) {
+      Alert.alert("Error occurred while logging in");
+    }
   };
+
   const handleForgetPassword = () => {
     navigation.navigate("ForgetPassword");
   };
@@ -68,7 +78,11 @@ export default function Login({ navigation }) {
           />
         </View>
       </View>
-      <TouchableOpacity activeOpacity={1} style={styles.forgetpasswordbtn} onPress={handleForgetPassword}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={styles.forgetpasswordbtn}
+        onPress={handleForgetPassword}
+      >
         <Text style={styles.forgetpassword}>Forgot Password?</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -101,9 +115,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: Platform.OS==="ios"? 60:120,
+    marginTop: Platform.OS === "ios" ? 60 : 120,
     marginBottom: 60,
-    width:'100%'
+    width: "100%",
   },
   image: {
     width: 300,
@@ -120,7 +134,7 @@ const styles = StyleSheet.create({
   emailview: {
     paddingHorizontal: 20,
     paddingVertical: 3,
-    width:'100%',
+    width: "100%",
   },
   email: {
     fontSize: 14,
@@ -140,7 +154,7 @@ const styles = StyleSheet.create({
   passwordview: {
     paddingHorizontal: 20,
     paddingVertical: 3,
-    width:'100%',
+    width: "100%",
   },
   password: {
     fontSize: 14,
@@ -167,28 +181,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
   },
-  forgetpasswordbtn:{
-    width:'100%'
+  forgetpasswordbtn: {
+    width: "100%",
   },
   forgetpassword: {
     textAlign: "right",
     paddingHorizontal: 25,
     paddingTop: 10,
     paddingBottom: 20,
-
   },
   loginbtn: {
     height: 55,
     backgroundColor: "#4F718A",
     borderRadius: 6,
     marginHorizontal: 20,
-    width:'89%',
+    width: "89%",
   },
   logintext: {
     fontSize: 17,
     fontWeight: "bold",
     textAlign: "center",
-    paddingVertical: Platform.OS==="ios"? 17:14,
+    paddingVertical: Platform.OS === "ios" ? 17 : 14,
     color: "#ffffff",
   },
   registerBtnContainer: {
@@ -197,7 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     marginBottom: 20,
-    width:'100%',
+    width: "100%",
   },
   registerText: {
     fontFamily: "Inter",
