@@ -71,7 +71,7 @@ const formatDate = (dateStr) => {
 
 const History = ({ navigation }) => {
   const handleTicket = () => {
-    navigation.navigate("Ticket");
+    navigation.navigate("Flight");
   };
   const handleHome = () => {
     navigation.navigate("Dashboard");
