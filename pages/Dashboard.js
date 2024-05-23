@@ -28,7 +28,7 @@ const Dashboard = ({ navigation }) => {
   }, []);
 
   const handleTicket = () => {
-    navigation.navigate("Ticket");
+    navigation.navigate("Flight");
   };
   const handleHistory = () => {
     navigation.navigate("History");
@@ -118,7 +118,7 @@ const Dashboard = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
-          <Text style={styles.DashboardTitle}> Book Your Flight Ticket</Text>
+          <Text style={styles.DashboardTitle}>Welcome to FlightWhisper</Text>
         </View>
         <View style={styles.flightSerach}>
           <TouchableOpacity
@@ -237,7 +237,7 @@ const Dashboard = ({ navigation }) => {
           style={styles.footerBtn}
           onPress={handleHistory}
         >
-          <MaterialCommunityIcons name={"history"} size={26} color="gray" />
+          <MaterialCommunityIcons name={"file"} size={26} color="gray" />
           <Text style={styles.otherIconText}>History</Text>
         </TouchableOpacity>
         <TouchableOpacity
