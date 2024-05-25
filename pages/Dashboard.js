@@ -138,7 +138,7 @@ const Dashboard = ({ navigation }) => {
             style={styles.flightbtn}
             onPress={() => navigation.navigate("Hotel")}
           >
-            <MaterialCommunityIcons name={"home"} size={50} color="#4F718A" />
+            <MaterialCommunityIcons name={"bed-king-outline"} size={50} color="#4F718A" />
             <Text style={styles.flightTitle}>Hotel</Text>
           </TouchableOpacity>
         </View>

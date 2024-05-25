@@ -28,6 +28,11 @@ const Flight = ({ navigation }) => {
   const [selectedDepartureDate, setSelectedDepartureDate] = useState(null);
   const [selectedReturnDate, setSelectedReturnDate] = useState(null);
   const [seatType, setSeatType] = useState("Economy");
+  const [adults, setAdults] = useState(1);
+  const [childs, setChilds] = useState(0);
+  const [infants, setInfants] = useState(0);
+
+  const getTotalPassengers = () => adults + childs + infants;
 
   const handleTicket = () => {
     navigation.navigate("Ticket");
@@ -69,8 +74,53 @@ const Flight = ({ navigation }) => {
   };
 
   const handleTravelerCount = () => {
-      setTravelerModalVisible(false)
-  }
+    setTravelerModalVisible(false);
+  };
+
+  const handleAdultMinus = () => {
+    if (adults > 1) {
+      setAdults(adults - 1);
+      if (infants > adults - 1) {
+        setInfants(adults - 1);
+      }
+    }
+  };
+
+  const handleAdultPlus = () => {
+    if (getTotalPassengers() < 10) {
+      setAdults(adults + 1);
+    }
+  };
+
+  const handleChildMinus = () => {
+    if (childs > 0) {
+      setChilds(childs - 1);
+    }
+  };
+
+  const handleChildPlus = () => {
+    if (getTotalPassengers() < 10) {
+      setChilds(childs + 1);
+    }
+  };
+
+  const handleInfantMinus = () => {
+    if (infants > 0) {
+      setInfants(infants - 1);
+    }
+  };
+
+  const handleInfantsPlus = () => {
+    if (getTotalPassengers() < 10 && infants < adults) {
+      setInfants(infants + 1);
+    }
+  };
+
+  const countStyle = {
+    borderWidth: 2,
+    borderRadius: 20,
+    color: getTotalPassengers() < 10 ? 'red' : 'gray'
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -170,6 +220,7 @@ const Flight = ({ navigation }) => {
               style={styles.departuredate}
               onPress={() => setDepartureDateModalVisible(true)}
             >
+              <MaterialCommunityIcons name="calendar-month" size={28} />
               <Text style={styles.deteTitle}>
                 {selectedDepartureDate === null
                   ? "Departure Date"
@@ -181,6 +232,7 @@ const Flight = ({ navigation }) => {
               style={styles.arivaldate}
               onPress={() => setReturnDateModalVisible(true)}
             >
+              <MaterialCommunityIcons name="calendar-month" size={28} />
               <Text style={styles.deteTitle}>
                 {selectedReturnDate === null
                   ? "Retrun date"
@@ -193,6 +245,11 @@ const Flight = ({ navigation }) => {
             style={styles.Travelers}
             onPress={() => setTravelerModalVisible(true)}
           >
+            <MaterialCommunityIcons
+              name="account-group"
+              size={30}
+              style={styles.adultIcon}
+            />
             <Text style={styles.CabinClassTitle}>1 Adult</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -200,6 +257,7 @@ const Flight = ({ navigation }) => {
             style={styles.cabinClass}
             onPress={() => setClassTypeModalVisible(true)}
           >
+            <MaterialCommunityIcons name="home" size={28} />
             <Text style={styles.CabinClassTitle}>{seatType}</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.8} style={styles.searchbtn}>
@@ -408,9 +466,88 @@ const Flight = ({ navigation }) => {
             <TouchableOpacity onPress={() => setTravelerModalVisible(false)}>
               <MaterialCommunityIcons name="close" size={30} color="red" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={ handleTravelerCount}>
+            <TouchableOpacity onPress={handleTravelerCount}>
               <MaterialCommunityIcons name="check" size={30} color="black" />
             </TouchableOpacity>
+          </View>
+          <Text style={styles.TitleModelPassengers}>Passengers</Text>
+          <View style={styles.InfoModelPassengers}>
+            <View style={styles.AgeModelPassenger}>
+              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <View style={styles.agesPassengers}>
+                <Text style={styles.passsengerType}>Adult</Text>
+                <Text style={styles.passengerAges}>{`(>12 years)`}</Text>
+              </View>
+            </View>
+            <View style={styles.InfoModelBtn}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleAdultMinus}
+              >
+                <MaterialCommunityIcons name="minus" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.passengerCunt}>{adults}</Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={handleAdultPlus}
+                style={countStyle}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.InfoModelPassengers}>
+            <View style={styles.AgeModelPassenger}>
+              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <View style={styles.agesPassengers}>
+                <Text style={styles.passsengerType}>Adult</Text>
+                <Text style={styles.passengerAges}>{`(2 -12 years)`}</Text>
+              </View>
+            </View>
+            <View style={styles.InfoModelBtn}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleChildMinus}
+              >
+                <MaterialCommunityIcons name="minus" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.passengerCunt}>{childs}</Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleChildPlus}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.InfoModelPassengers}>
+            <View style={styles.AgeModelPassenger}>
+              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <View style={styles.agesPassengers}>
+                <Text style={styles.passsengerType}>Infant</Text>
+                <Text style={styles.passengerAges}>{`(<2 years)`}</Text>
+              </View>
+            </View>
+            <View style={styles.InfoModelBtn}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleInfantMinus}
+              >
+                <MaterialCommunityIcons name="minus" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.passengerCunt}>{infants}</Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleInfantsPlus}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -564,21 +701,26 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: "#B5C5D2",
     borderRadius: 6,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "center",
     paddingHorizontal: 10,
+    flexDirection: "row",
   },
   arivaldate: {
     width: "46%",
     height: 60,
     backgroundColor: "#B5C5D2",
     borderRadius: 6,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "center",
     paddingHorizontal: 10,
+    flexDirection: "row",
   },
   deteTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: "rgba(0,0,0,0.8)",
+    paddingHorizontal: 10,
   },
   Travelers: {
     backgroundColor: "#B5C5D2",
@@ -602,6 +744,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: "row",
     paddingHorizontal: 10,
+  },
+  adultIcon: {
+    marginHorizontal: 5,
   },
   CabinClassTitle: {
     fontSize: 18,
@@ -734,6 +879,41 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
+  },
+  TitleModelPassengers: {
+    fontSize: 18,
+    paddingVertical: 20,
+    fontWeight: "500",
+  },
+  InfoModelPassengers: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 12,
+  },
+  AgeModelPassenger: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  agesPassengers: {
+    paddingHorizontal: 10,
+  },
+  passsengerType: {
+    fontSize: 16,
+    fontWeight: "400",
+  },
+  passengerAges: {
+    fontSize: 12,
+    fontWeight: "300",
+    color: "gray",
+  },
+  InfoModelBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  passengerCunt: {
+    fontSize: 16,
+    paddingHorizontal: 25,
   },
 });
 
