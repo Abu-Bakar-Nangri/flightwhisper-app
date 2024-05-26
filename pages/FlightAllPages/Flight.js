@@ -292,7 +292,7 @@ const Flight = ({ navigation }) => {
               style={styles.departuredate}
               onPress={() => setDepartureDateModalVisible(true)}
             >
-              <MaterialCommunityIcons name="calendar-month" size={28} />
+              <MaterialCommunityIcons name="calendar-month-outline" size={28} />
               <Text style={styles.deteTitle}>
                 {selectedDepartureDate === null
                   ? "Departure Date"
@@ -304,7 +304,7 @@ const Flight = ({ navigation }) => {
               style={styles.arivaldate}
               onPress={() => setReturnDateModalVisible(true)}
             >
-              <MaterialCommunityIcons name="calendar-month" size={28} />
+              <MaterialCommunityIcons name="calendar-month-outline" size={28} />
               <Text style={styles.deteTitle}>
                 {selectedReturnDate === null
                   ? "Retrun date"
@@ -333,7 +333,7 @@ const Flight = ({ navigation }) => {
             <Text style={styles.CabinClassTitle}>{seatType}</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.8} style={styles.searchbtn} onPress={handleSerach}>
-            <Text style={styles.searchtext}>Search</Text>
+            <Text style={styles.searchtext}>Search Flights</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.PopularFlightContainer}>
@@ -803,7 +803,7 @@ const styles = StyleSheet.create({
   flightTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "rgba(0,0,0,0.5)",
+    color: "rgba(0,0,0,0.9)",
     paddingHorizontal: 20,
   },
   dateContainer: {
