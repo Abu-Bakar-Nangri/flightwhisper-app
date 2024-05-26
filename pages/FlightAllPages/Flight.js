@@ -135,7 +135,7 @@ const Flight = ({ navigation }) => {
       Alert.alert("Error", "Please fill in all the fields.");
       return;
     }
-  
+
     const searchFlight = {
       from: fromValue,
       to: toValue,
@@ -144,7 +144,7 @@ const Flight = ({ navigation }) => {
       passengers: adults + childs + infants,
       seatType: seatType,
     };
-  
+
     const searchMessage = `
       From: ${searchFlight.from}
       To: ${searchFlight.to}
@@ -153,10 +153,10 @@ const Flight = ({ navigation }) => {
       Passengers: ${searchFlight.passengers}
       Seat Type: ${searchFlight.seatType}
     `;
-  
+
     Alert.alert("Flight Search Details", searchMessage);
   };
-  
+
 
   const renderItemFrom = ({ item }) => (
     <TouchableOpacity key={item.shortName} onPress={() => handlePressFrom(item)} activeOpacity={0.8} style={styles.PopularCitiesBtn}>
@@ -188,21 +188,6 @@ const Flight = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  
-  const UpcomingFlight = ({ item }) => (
-    <TouchableOpacity key={item.shortName}  activeOpacity={0} style={styles.PopularCitiesBtn}>
-      <View style={styles.PopularCitiesInfo}>
-        <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
-        <View>
-          <Text style={styles.PopularCitiesCity}>{item.city}</Text>
-          <Text style={styles.PopularCitiesCountry}>{item.country}</Text>
-        </View>
-      </View>
-      <View style={styles.PopularCitiesShortName}>
-        <Text>{item.shortName}</Text>
-      </View>
-    </TouchableOpacity>
-  );
 
   const countStyle = {
     borderWidth: 2,
@@ -354,11 +339,21 @@ const Flight = ({ navigation }) => {
         <View style={styles.PopularFlightContainer}>
           <Text style={styles.popularHeaderText}>Upcoming Flight</Text>
         </View>
-        <FlatList
-              data={morePopularCities}
-              renderItem={UpcomingFlight}
-              keyExtractor={(item) => item.shortName}
-            />
+        {morePopularCities.map((item) => (
+          <TouchableOpacity key={item.shortName} activeOpacity={0.2} style={styles.PopularCitiesBtn}>
+            <View style={styles.PopularCitiesInfo}>
+              <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
+              <View>
+                <Text style={styles.PopularCitiesCity}>{item.city}</Text>
+                <Text style={styles.PopularCitiesCountry}>{item.country}</Text>
+              </View>
+            </View>
+            <View style={styles.PopularCitiesShortName}>
+              <Text>{item.shortName}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+
       </ScrollView>
 
       <View style={styles.footerContainer}>
@@ -1137,8 +1132,9 @@ const popularCities = [
   { city: "Rio de Janeiro", country: "Brazil", shortName: "RIO", icon: "map-marker-outline" },
 ];
 
+
 const morePopularCities = [
-  { city: "Buenos Aires", country: "Argentina", shortName: "BUE", icon: "map-marker-outline" },
+  { city: "Buenos Aire", country: "Argentina", shortName: "BUE", icon: "map-marker-outline" },
   { city: "Cairo", country: "Egypt", shortName: "CAI", icon: "map-marker-outline" },
   { city: "Bangkok", country: "Thailand", shortName: "BKK", icon: "map-marker-outline" },
   { city: "Istanbul", country: "Turkey", shortName: "IST", icon: "map-marker-outline" },
