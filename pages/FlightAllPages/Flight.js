@@ -1132,8 +1132,9 @@ const popularCities = [
   { city: "Rio de Janeiro", country: "Brazil", shortName: "RIO", icon: "map-marker-outline" },
 ];
 
+
 const morePopularCities = [
-  { city: "Buenos Aires", country: "Argentina", shortName: "BUE", icon: "map-marker-outline" },
+  { city: "Buenos Aire", country: "Argentina", shortName: "BUE", icon: "map-marker-outline" },
   { city: "Cairo", country: "Egypt", shortName: "CAI", icon: "map-marker-outline" },
   { city: "Bangkok", country: "Thailand", shortName: "BKK", icon: "map-marker-outline" },
   { city: "Istanbul", country: "Turkey", shortName: "IST", icon: "map-marker-outline" },
