@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/person.png";
-import destination from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 
 const Dashboard = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -138,7 +137,7 @@ const Dashboard = ({ navigation }) => {
             style={styles.flightbtn}
             onPress={() => navigation.navigate("Hotel")}
           >
-            <MaterialCommunityIcons name={"home"} size={50} color="#4F718A" />
+            <MaterialCommunityIcons name={"bed-king-outline"} size={50} color="#4F718A" />
             <Text style={styles.flightTitle}>Hotel</Text>
           </TouchableOpacity>
         </View>
@@ -213,6 +212,18 @@ const Dashboard = ({ navigation }) => {
               </TouchableOpacity>
             ))}
           </ScrollView>
+        </View>
+        <View>
+          <Text>Flight Booking video guide</Text>
+          {/* <Video
+        source={{ uri: 'https://www.youtube.com/watch?v=MvKUwIt60ag&ab_channel=Itsdeadhell' }} // Replace with your video URL
+        style={styles.video}
+        controls={true}
+        resizeMode="contain"
+      /> */}
+        </View>
+        <View>
+          <Text>Hotel Booking video guide</Text>
         </View>
       </ScrollView>
       <View style={styles.footerContainer}>

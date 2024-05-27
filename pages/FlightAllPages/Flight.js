@@ -11,6 +11,8 @@ import {
   Dimensions,
   Modal,
   Alert,
+  TextInput,
+  FlatList,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/person.png";
@@ -28,6 +30,13 @@ const Flight = ({ navigation }) => {
   const [selectedDepartureDate, setSelectedDepartureDate] = useState(null);
   const [selectedReturnDate, setSelectedReturnDate] = useState(null);
   const [seatType, setSeatType] = useState("Economy");
+  const [adults, setAdults] = useState(1);
+  const [childs, setChilds] = useState(0);
+  const [infants, setInfants] = useState(0);
+  const [fromValue, setFromValue] = useState(null)
+  const [toValue, setToValue] = useState(null)
+
+  const getTotalPassengers = () => adults + childs + infants;
 
   const handleTicket = () => {
     navigation.navigate("Ticket");
@@ -69,9 +78,122 @@ const Flight = ({ navigation }) => {
   };
 
   const handleTravelerCount = () => {
-      setTravelerModalVisible(false)
-  }
+    setTravelerModalVisible(false);
+  };
 
+  const handleAdultMinus = () => {
+    if (adults > 1) {
+      setAdults(adults - 1);
+      if (infants > adults - 1) {
+        setInfants(adults - 1);
+      }
+    }
+  };
+
+  const handleAdultPlus = () => {
+    if (getTotalPassengers() < 10) {
+      setAdults(adults + 1);
+    }
+  };
+
+  const handleChildMinus = () => {
+    if (childs > 0) {
+      setChilds(childs - 1);
+    }
+  };
+
+  const handleChildPlus = () => {
+    if (getTotalPassengers() < 10) {
+      setChilds(childs + 1);
+    }
+  };
+
+  const handleInfantMinus = () => {
+    if (infants > 0) {
+      setInfants(infants - 1);
+    }
+  };
+
+  const handleInfantsPlus = () => {
+    if (getTotalPassengers() < 10 && infants < adults) {
+      setInfants(infants + 1);
+    }
+  };
+
+  const handlePressFrom = (item) => {
+    setFromValue(`${item.city} (${item.shortName})`);
+    setFromModalVisible(false);
+  };
+
+  const handlePressTo = (item) => {
+    setToValue(`${item.city} (${item.shortName})`);
+    setToModalVisible(false);
+  };
+
+  const handleSerach = () => {
+    if (!fromValue || !toValue || !selectedDepartureDate || !selectedReturnDate || (adults + childs + infants) === 0 || !seatType) {
+      Alert.alert("Error", "Please fill in all the fields.");
+      return;
+    }
+
+    const searchFlight = {
+      from: fromValue,
+      to: toValue,
+      depDate: selectedDepartureDate,
+      retDate: selectedReturnDate,
+      passengers: adults + childs + infants,
+      seatType: seatType,
+    };
+
+    const searchMessage = `
+      From: ${searchFlight.from}
+      To: ${searchFlight.to}
+      Departure Date: ${searchFlight.depDate}
+      Return Date: ${searchFlight.retDate}
+      Passengers: ${searchFlight.passengers}
+      Seat Type: ${searchFlight.seatType}
+    `;
+
+    Alert.alert("Flight Search Details", searchMessage);
+  };
+
+
+  const renderItemFrom = ({ item }) => (
+    <TouchableOpacity key={item.shortName} onPress={() => handlePressFrom(item)} activeOpacity={0.8} style={styles.PopularCitiesBtn}>
+      <View style={styles.PopularCitiesInfo}>
+        <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
+        <View>
+          <Text style={styles.PopularCitiesCity}>{item.city}</Text>
+          <Text style={styles.PopularCitiesCountry}>{item.country}</Text>
+        </View>
+      </View>
+      <View style={styles.PopularCitiesShortName}>
+        <Text>{item.shortName}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const renderItemTo = ({ item }) => (
+    <TouchableOpacity key={item.shortName} onPress={() => handlePressTo(item)} activeOpacity={0.8} style={styles.PopularCitiesBtn}>
+      <View style={styles.PopularCitiesInfo}>
+        <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
+        <View>
+          <Text style={styles.PopularCitiesCity}>{item.city}</Text>
+          <Text style={styles.PopularCitiesCountry}>{item.country}</Text>
+        </View>
+      </View>
+      <View style={styles.PopularCitiesShortName}>
+        <Text>{item.shortName}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+
+  const countStyle = {
+    borderWidth: 2,
+    borderRadius: 20,
+    color: getTotalPassengers() < 10 ? 'red' : 'gray'
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -147,7 +269,7 @@ const Flight = ({ navigation }) => {
               color="#000"
             />
             <Text ellipsizeMode="tail" style={styles.flightTitle}>
-              From
+              {fromValue === null ? 'From' : fromValue}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -161,7 +283,7 @@ const Flight = ({ navigation }) => {
               color="#000"
             />
             <Text ellipsizeMode="tail" style={styles.flightTitle}>
-              To
+              {toValue === null ? 'To' : toValue}
             </Text>
           </TouchableOpacity>
           <View style={styles.dateContainer}>
@@ -170,6 +292,7 @@ const Flight = ({ navigation }) => {
               style={styles.departuredate}
               onPress={() => setDepartureDateModalVisible(true)}
             >
+              <MaterialCommunityIcons name="calendar-month-outline" size={28} />
               <Text style={styles.deteTitle}>
                 {selectedDepartureDate === null
                   ? "Departure Date"
@@ -181,6 +304,7 @@ const Flight = ({ navigation }) => {
               style={styles.arivaldate}
               onPress={() => setReturnDateModalVisible(true)}
             >
+              <MaterialCommunityIcons name="calendar-month-outline" size={28} />
               <Text style={styles.deteTitle}>
                 {selectedReturnDate === null
                   ? "Retrun date"
@@ -193,25 +317,43 @@ const Flight = ({ navigation }) => {
             style={styles.Travelers}
             onPress={() => setTravelerModalVisible(true)}
           >
-            <Text style={styles.CabinClassTitle}>1 Adult</Text>
+            <MaterialCommunityIcons
+              name="account-group"
+              size={30}
+              style={styles.adultIcon}
+            />
+            <Text style={styles.CabinClassTitle}>{adults} Adult {childs > 0 ? `${childs} Childs` : ''} {infants > 0 ? `${infants} Infants` : ''}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.cabinClass}
             onPress={() => setClassTypeModalVisible(true)}
           >
+            <MaterialCommunityIcons name="home" size={28} />
             <Text style={styles.CabinClassTitle}>{seatType}</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.8} style={styles.searchbtn}>
-            <Text style={styles.searchtext}>Search</Text>
+          <TouchableOpacity activeOpacity={0.8} style={styles.searchbtn} onPress={handleSerach}>
+            <Text style={styles.searchtext}>Search Flights</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.PopularFlightContainer}>
           <Text style={styles.popularHeaderText}>Upcoming Flight</Text>
-          <TouchableOpacity activeOpacity={0.8}>
-            <Text style={styles.seeAllText}>See All</Text>
-          </TouchableOpacity>
         </View>
+        {morePopularCities.map((item) => (
+          <TouchableOpacity key={item.shortName} activeOpacity={0.2} style={styles.PopularCitiesBtn}>
+            <View style={styles.PopularCitiesInfo}>
+              <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
+              <View>
+                <Text style={styles.PopularCitiesCity}>{item.city}</Text>
+                <Text style={styles.PopularCitiesCountry}>{item.country}</Text>
+              </View>
+            </View>
+            <View style={styles.PopularCitiesShortName}>
+              <Text>{item.shortName}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+
       </ScrollView>
 
       <View style={styles.footerContainer}>
@@ -256,8 +398,25 @@ const Flight = ({ navigation }) => {
           setFromModalVisible(false);
         }}
       >
-        <View style={styles.modalContainer}>
-          <Text>From</Text>
+        <View style={styles.fromModalContainer}>
+          <View style={styles.FromSearchView}>
+            <TouchableOpacity style={styles.fromClosebtn} onPress={() => setFromModalVisible(false)}>
+              <MaterialCommunityIcons name="close" size={34} color={'red'} />
+            </TouchableOpacity>
+            <View style={styles.FromSearch}>
+              <TextInput style={styles.FromSearchInput} placeholder="Select Departure"></TextInput>
+            </View>
+          </View>
+          <View>
+            <View style={styles.PopularCitiesTitle}>
+              <Text style={styles.PopularCitiesText}>Popular Cities</Text>
+            </View>
+            <FlatList
+              data={popularCities}
+              renderItem={renderItemFrom}
+              keyExtractor={(item) => item.shortName}
+            />
+          </View>
         </View>
       </Modal>
       <Modal
@@ -268,8 +427,25 @@ const Flight = ({ navigation }) => {
           setToModalVisible(false);
         }}
       >
-        <View style={styles.modalContainer}>
-          <Text>To</Text>
+        <View style={styles.fromModalContainer}>
+          <View style={styles.FromSearchView}>
+            <TouchableOpacity style={styles.fromClosebtn} onPress={() => setToModalVisible(false)}>
+              <MaterialCommunityIcons name="close" size={34} color={'red'} />
+            </TouchableOpacity>
+            <View style={styles.FromSearch}>
+              <TextInput style={styles.FromSearchInput} placeholder="Where to?"></TextInput>
+            </View>
+          </View>
+          <View>
+            <View style={styles.PopularCitiesTitle}>
+              <Text style={styles.PopularCitiesText}>Popular Cities</Text>
+            </View>
+            <FlatList
+              data={morePopularCities}
+              renderItem={renderItemTo}
+              keyExtractor={(item) => item.shortName}
+            />
+          </View>
         </View>
       </Modal>
       <Modal
@@ -408,9 +584,88 @@ const Flight = ({ navigation }) => {
             <TouchableOpacity onPress={() => setTravelerModalVisible(false)}>
               <MaterialCommunityIcons name="close" size={30} color="red" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={ handleTravelerCount}>
+            <TouchableOpacity onPress={handleTravelerCount}>
               <MaterialCommunityIcons name="check" size={30} color="black" />
             </TouchableOpacity>
+          </View>
+          <Text style={styles.TitleModelPassengers}>Passengers</Text>
+          <View style={styles.InfoModelPassengers}>
+            <View style={styles.AgeModelPassenger}>
+              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <View style={styles.agesPassengers}>
+                <Text style={styles.passsengerType}>Adult</Text>
+                <Text style={styles.passengerAges}>{`(>12 years)`}</Text>
+              </View>
+            </View>
+            <View style={styles.InfoModelBtn}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleAdultMinus}
+              >
+                <MaterialCommunityIcons name="minus" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.passengerCunt}>{adults}</Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={handleAdultPlus}
+                style={countStyle}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.InfoModelPassengers}>
+            <View style={styles.AgeModelPassenger}>
+              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <View style={styles.agesPassengers}>
+                <Text style={styles.passsengerType}>Adult</Text>
+                <Text style={styles.passengerAges}>{`(2 -12 years)`}</Text>
+              </View>
+            </View>
+            <View style={styles.InfoModelBtn}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleChildMinus}
+              >
+                <MaterialCommunityIcons name="minus" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.passengerCunt}>{childs}</Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleChildPlus}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.InfoModelPassengers}>
+            <View style={styles.AgeModelPassenger}>
+              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <View style={styles.agesPassengers}>
+                <Text style={styles.passsengerType}>Infant</Text>
+                <Text style={styles.passengerAges}>{`(<2 years)`}</Text>
+              </View>
+            </View>
+            <View style={styles.InfoModelBtn}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleInfantMinus}
+              >
+                <MaterialCommunityIcons name="minus" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.passengerCunt}>{infants}</Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleInfantsPlus}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -548,7 +803,7 @@ const styles = StyleSheet.create({
   flightTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "rgba(0,0,0,0.5)",
+    color: "rgba(0,0,0,0.9)",
     paddingHorizontal: 20,
   },
   dateContainer: {
@@ -564,21 +819,26 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: "#B5C5D2",
     borderRadius: 6,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "center",
     paddingHorizontal: 10,
+    flexDirection: "row",
   },
   arivaldate: {
     width: "46%",
     height: 60,
     backgroundColor: "#B5C5D2",
     borderRadius: 6,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    alignItems: "center",
     paddingHorizontal: 10,
+    flexDirection: "row",
   },
   deteTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: "rgba(0,0,0,0.8)",
+    paddingHorizontal: 10,
   },
   Travelers: {
     backgroundColor: "#B5C5D2",
@@ -602,6 +862,9 @@ const styles = StyleSheet.create({
     marginTop: 8,
     flexDirection: "row",
     paddingHorizontal: 10,
+  },
+  adultIcon: {
+    marginHorizontal: 5,
   },
   CabinClassTitle: {
     fontSize: 18,
@@ -665,11 +928,86 @@ const styles = StyleSheet.create({
     lineHeight: 15,
     color: "gray",
   },
+  fromModalContainer: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    backgroundColor: 'rgba(255,255,255,1)',
+    height: Platform.OS==='ios'?'93%':'100%',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingTop: 10,
+    position:'absolute',
+    bottom:0,
+    width:'100%'
+  },
+  FromSearchView: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
+  },
+  fromClosebtn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  FromSearch: {
+    marginHorizontal: 10,
+    height: 60,
+    width: '90%',
+  },
+  FromSearchInput: {
+    height: 60,
+    fontSize: 18,
+    paddingHorizontal: 15,
+    borderRadius: 6,
+  },
+  PopularCitiesTitle: {
+    width: '100%',
+    paddingTop: 10,
+    marginHorizontal: 20,
+  },
+  PopularCitiesText: {
+    fontWeight: '600',
+    paddingBottom: 10,
+  },
+  PopularCitiesBtn: {
+    width: '100%',
+    height: 65,
+    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  PopularCitiesInfo: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  PopularCitiesIcon: {
+    color: 'rgba(0,0,0,0.3)',
+    paddingHorizontal: 12,
+  },
+  PopularCitiesCity: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  PopularCitiesCountry: {
+    fontSize: 12,
+    color: 'rgba(0,0,0,0.6)',
+    paddingTop: 1,
+
+  },
+  PopularCitiesShortName: {
+    marginHorizontal: 20,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    borderRadius: 6,
+    paddingVertical: 2,
+    alignItems: 'center',
+    width: 50,
+  },
   modalDepartureDateContainer: {
     flex: 1,
     backgroundColor: "white",
     paddingTop: 50,
     paddingHorizontal: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   closeButtonDate: {
     fontSize: 18,
@@ -691,6 +1029,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: "absolute",
     height: "45%",
+    borderTopLeftRadius: 35,
+    borderTopRightRadius: 35,
   },
   closeClassButton: {
     fontSize: 18,
@@ -729,12 +1069,88 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: "absolute",
     height: "60%",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
   modalTravelerBtn: {
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
   },
+  TitleModelPassengers: {
+    fontSize: 18,
+    paddingVertical: 20,
+    fontWeight: "500",
+  },
+  InfoModelPassengers: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 12,
+  },
+  AgeModelPassenger: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  agesPassengers: {
+    paddingHorizontal: 10,
+  },
+  passsengerType: {
+    fontSize: 16,
+    fontWeight: "400",
+  },
+  passengerAges: {
+    fontSize: 12,
+    fontWeight: "300",
+    color: "gray",
+  },
+  InfoModelBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  passengerCunt: {
+    fontSize: 16,
+    paddingHorizontal: 25,
+  },
 });
 
 export default Flight;
+
+
+const popularCities = [
+  { city: "Abha", country: "Saudi Arabia", shortName: "AHB", icon: "map-marker-outline" },
+  { city: "Tokyo", country: "Japan", shortName: "TYO", icon: "map-marker-outline" },
+  { city: "Paris", country: "France", shortName: "PAR", icon: "map-marker-outline" },
+  { city: "New York", country: "USA", shortName: "NYC", icon: "map-marker-outline" },
+  { city: "London", country: "UK", shortName: "LON", icon: "map-marker-outline" },
+  { city: "Sydney", country: "Australia", shortName: "SYD", icon: "map-marker-outline" },
+  { city: "Berlin", country: "Germany", shortName: "BER", icon: "map-marker-outline" },
+  { city: "Dubai", country: "UAE", shortName: "DXB", icon: "map-marker-outline" },
+  { city: "Toronto", country: "Canada", shortName: "TOR", icon: "map-marker-outline" },
+  { city: "Moscow", country: "Russia", shortName: "MOW", icon: "map-marker-outline" },
+  { city: "Rome", country: "Italy", shortName: "ROM", icon: "map-marker-outline" },
+  { city: "Beijing", country: "China", shortName: "BJS", icon: "map-marker-outline" },
+  { city: "Mumbai", country: "India", shortName: "BOM", icon: "map-marker-outline" },
+  { city: "Cape Town", country: "South Africa", shortName: "CPT", icon: "map-marker-outline" },
+  { city: "Rio de Janeiro", country: "Brazil", shortName: "RIO", icon: "map-marker-outline" },
+];
+
+
+const morePopularCities = [
+  { city: "Buenos Aire", country: "Argentina", shortName: "BUE", icon: "map-marker-outline" },
+  { city: "Cairo", country: "Egypt", shortName: "CAI", icon: "map-marker-outline" },
+  { city: "Bangkok", country: "Thailand", shortName: "BKK", icon: "map-marker-outline" },
+  { city: "Istanbul", country: "Turkey", shortName: "IST", icon: "map-marker-outline" },
+  { city: "Seoul", country: "South Korea", shortName: "SEL", icon: "map-marker-outline" },
+  { city: "Nairobi", country: "Kenya", shortName: "NBO", icon: "map-marker-outline" },
+  { city: "Athens", country: "Greece", shortName: "ATH", icon: "map-marker-outline" },
+  { city: "Madrid", country: "Spain", shortName: "MAD", icon: "map-marker-outline" },
+  { city: "Mexico City", country: "Mexico", shortName: "MEX", icon: "map-marker-outline" },
+  { city: "Lisbon", country: "Portugal", shortName: "LIS", icon: "map-marker-outline" },
+  { city: "Jakarta", country: "Indonesia", shortName: "JKT", icon: "map-marker-outline" },
+  { city: "Vienna", country: "Austria", shortName: "VIE", icon: "map-marker-outline" },
+  { city: "Lima", country: "Peru", shortName: "LIM", icon: "map-marker-outline" },
+  { city: "Helsinki", country: "Finland", shortName: "HEL", icon: "map-marker-outline" },
+  { city: "Stockholm", country: "Sweden", shortName: "STO", icon: "map-marker-outline" },
+];
+
