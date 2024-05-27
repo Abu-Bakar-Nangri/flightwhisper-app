@@ -192,7 +192,8 @@ const Flight = ({ navigation }) => {
   const countStyle = {
     borderWidth: 2,
     borderRadius: 20,
-    color: getTotalPassengers() < 10 ? 'red' : 'gray'
+    color: getTotalPassengers() < 10 ? 'red' : 'gray',
+    backgroundColor:'#4F718A',
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -1108,6 +1109,11 @@ const styles = StyleSheet.create({
   passengerCunt: {
     fontSize: 16,
     paddingHorizontal: 25,
+  },
+  line:{
+    width:"100%",
+    borderBottomWidth:2,
+    borderColor:'red',
   },
 });
 

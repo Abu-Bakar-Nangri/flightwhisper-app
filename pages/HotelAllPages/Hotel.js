@@ -32,7 +32,7 @@ const Hotel = ({ navigation }) => {
   const [adults, setAdults] = useState(1);
   const [childs, setChilds] = useState(0);
   const [infants, setInfants] = useState(0);
-  const [fromValue, setFromValue] = useState(null)
+  const [destinationValue, setDestinationValue] = useState(null)
   const [toValue, setToValue] = useState(null)
 
   const getTotalPassengers = () => adults + childs + infants;
@@ -93,7 +93,7 @@ const Hotel = ({ navigation }) => {
 
 
   const handlePressFrom = (item) => {
-    setFromValue(`${item.city} (${item.shortName})`);
+    setDestinationValue(`${item.city} (${item.shortName})`);
     setDestinationModalVisible(false);
   };
 
@@ -103,13 +103,13 @@ const Hotel = ({ navigation }) => {
   };
 
   const handleSerach = () => {
-    if (!fromValue || !selectedCheckInDate || !selectedCheckOutDate || (adults + childs ) === 0) {
+    if (!destinationValue || !selectedCheckInDate || !selectedCheckOutDate || (adults + childs ) === 0) {
       Alert.alert("Error", "Please fill in all the fields.");
       return;
     }
 
     const searchFlight = {
-      from: fromValue,
+      from: destinationValue,
       to: toValue,
       depDate: selectedCheckInDate,
       retDate: selectedCheckOutDate,
@@ -144,27 +144,10 @@ const Hotel = ({ navigation }) => {
       </View>
     </TouchableOpacity>
   );
-
-  const renderItemTo = ({ item }) => (
-    <TouchableOpacity key={item.shortName} onPress={() => handlePressTo(item)} activeOpacity={0.8} style={styles.PopularCitiesBtn}>
-      <View style={styles.PopularCitiesInfo}>
-        <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
-        <View>
-          <Text style={styles.PopularCitiesCity}>{item.city}</Text>
-          <Text style={styles.PopularCitiesCountry}>{item.country}</Text>
-        </View>
-      </View>
-      <View style={styles.PopularCitiesShortName}>
-        <Text>{item.shortName}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-
-
   const countStyle = {
     borderWidth: 2,
     borderRadius: 20,
-    color: getTotalPassengers() < 10 ? 'red' : 'gray'
+    color: getTotalPassengers() < 10 ? 'red' : 'gray',
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -237,7 +220,7 @@ const Hotel = ({ navigation }) => {
           >
              <Icon name="search" size={22} color="#000" />
             <Text ellipsizeMode="tail" style={styles.flightTitle}>
-              {fromValue === null ? 'Destination' : fromValue}
+              {destinationValue === null ? 'Destination' : destinationValue}
             </Text>
           </TouchableOpacity>
           <View style={styles.dateContainer}>
@@ -276,7 +259,7 @@ const Hotel = ({ navigation }) => {
               size={30}
               style={styles.adultIcon}
             />
-            <Text style={styles.CabinClassTitle}>{adults} Adult {childs > 0 ? `${childs} Childs` : ''} {infants > 0 ? `${infants} Infants` : ''}</Text>
+            <Text style={styles.CabinClassTitle}>1 Guest in 1 Room</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.8} style={styles.searchbtn} onPress={handleSerach}>
             <Text style={styles.searchtext}>Search Hotels</Text>
@@ -435,13 +418,13 @@ const Hotel = ({ navigation }) => {
               <MaterialCommunityIcons name="check" size={30} color="black" />
             </TouchableOpacity>
           </View>
-          <Text style={styles.TitleModelPassengers}>Passengers</Text>
+          <Text style={styles.TitleModelPassengers}>Room 1</Text>
           <View style={styles.InfoModelPassengers}>
             <View style={styles.AgeModelPassenger}>
               <MaterialCommunityIcons name="account" size={30} color="black" />
               <View style={styles.agesPassengers}>
                 <Text style={styles.passsengerType}>Adult</Text>
-                <Text style={styles.passengerAges}>{`(>12 years)`}</Text>
+                <Text style={styles.passengerAges}>{`(> 17 years)`}</Text>
               </View>
             </View>
             <View style={styles.InfoModelBtn}>
@@ -466,8 +449,8 @@ const Hotel = ({ navigation }) => {
             <View style={styles.AgeModelPassenger}>
               <MaterialCommunityIcons name="account" size={30} color="black" />
               <View style={styles.agesPassengers}>
-                <Text style={styles.passsengerType}>Adult</Text>
-                <Text style={styles.passengerAges}>{`(2 -12 years)`}</Text>
+                <Text style={styles.passsengerType}>Child</Text>
+                <Text style={styles.passengerAges}>{`(≤ 17 years)`}</Text>
               </View>
             </View>
             <View style={styles.InfoModelBtn}>
