@@ -4,6 +4,6 @@ import Flight from './pages/FlightAllPages/Flight';
 
 export default function App() {
   return (
-    <Flight/>
+    <Navigation/>
   );
 }
