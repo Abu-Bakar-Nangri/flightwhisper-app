@@ -32,18 +32,25 @@ export default function Login({ navigation }) {
         Alert.alert("Please enter both email and password");
         return;
       }
-      const response = await axios.post('http://192.168.50.220:3699/api/users/register',{
+
+      const response = await axios.post('http://192.168.1.20:3699/api/users/login', {
         email,
-        password
+        password,
       });
-      Alert.alert(response.data);
+  
       if (response.status === 201) {
         navigation.navigate("Dashboard");
       } else {
-        Alert.alert("Registration failed", response.data.message || "Unknown error");
+        Alert.alert("Registration failed", response.data?.message || "Unknown error");
       }
     } catch (error) {
-      Alert.alert("Error occurred while logging in");
+      if (error.response) {
+        Alert.alert("Error", error.response.data?.message || "Unknown server error");
+      } else if (error.request) {
+        Alert.alert("Network error", "No response from server. Please try again later.");
+      } else {
+        Alert.alert("Error", "An error occurred while logging in");
+      }
     }
   };
 

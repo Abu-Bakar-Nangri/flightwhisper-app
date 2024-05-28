@@ -1,11 +1,7 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SearchBar } from "react-native-elements";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ProfileUpdate from './Profile/ProfileUpdate'
-
 import Dashboard from "./Dashboard";
 import ForgetPassword from "./CredentailsAllPages/ForgetPassword";
 import History from "./History";
