@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 import {
   StyleSheet,
@@ -31,7 +32,16 @@ export default function Login({ navigation }) {
         Alert.alert("Please enter both email and password");
         return;
       }
-      navigation.navigate("Dashboard");
+      const response = await axios.post('http://192.168.50.220:3699/api/users/register',{
+        email,
+        password
+      });
+      Alert.alert(response.data);
+      if (response.status === 201) {
+        navigation.navigate("Dashboard");
+      } else {
+        Alert.alert("Registration failed", response.data.message || "Unknown error");
+      }
     } catch (error) {
       Alert.alert("Error occurred while logging in");
     }
