@@ -17,15 +17,14 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-
 export default function RegisterwithEmail({ navigation }) {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [phoneNo,setPhoneNo] = useState('');
-  const [name,setName] = useState('');
+  const [phoneNo, setPhoneNo] = useState("");
+  const [name, setName] = useState("");
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -50,18 +49,27 @@ export default function RegisterwithEmail({ navigation }) {
         name,
         email,
         phoneNo,
-        password
+        password,
       };
 
-      const response = await axios.post('http://192.168.1.20:3699/api/users/register', registrationData);
+      const response = await axios.post(
+        "http://192.168.1.20:3699/api/users/register",
+        registrationData
+      );
 
       if (response.status === 201) {
         navigation.navigate("Login");
       } else {
-        Alert.alert("Registration failed", response.data.message || "Unknown error");
+        Alert.alert(
+          "Registration failed",
+          response.data.message || "Unknown error"
+        );
       }
     } catch (error) {
-      Alert.alert("Error occurred while registering", error.response?.data?.message || error.message);
+      Alert.alert(
+        "Error occurred while registering",
+        error.response?.data?.message || error.message
+      );
     }
   };
 
@@ -70,16 +78,18 @@ export default function RegisterwithEmail({ navigation }) {
   };
 
   return (
-    <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+    <ScrollView
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    >
       <SafeAreaView style={styles.container}>
-
         <Text style={styles.login}>Register with Email</Text>
         <View style={styles.emailview}>
           <Text style={styles.email}>Name</Text>
           <TextInput
             style={styles.enteremail}
             value={name}
-            onChangeText={setName}
+            onChangeText={(text) => setName(text.trim())}
             placeholder="Enter name"
           />
         </View>
@@ -89,19 +99,20 @@ export default function RegisterwithEmail({ navigation }) {
           <TextInput
             style={styles.enteremail}
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => setEmail(text.trim().toLowerCase())}
             placeholder="Enter email"
+            autoCapitalize="none"
           />
         </View>
         <View style={styles.emailview}>
-        <Text style={styles.email}>Number</Text>
-        <TextInput
-          style={styles.enteremail}
-          value={phoneNo}
-          onChangeText={setPhoneNo}
-          placeholder="Enter name"
-        />
-      </View>
+          <Text style={styles.email}>Number</Text>
+          <TextInput
+            style={styles.enteremail}
+            value={phoneNo}
+            onChangeText={(text) => setPhoneNo(text.trim())}
+            placeholder="Enter phone number"
+          />
+        </View>
         <View style={styles.passwordview}>
           <Text style={styles.password}>Password</Text>
           <View style={styles.passwordInputview}>
@@ -153,9 +164,8 @@ export default function RegisterwithEmail({ navigation }) {
             <Text style={styles.signUpText}>Log in</Text>
           </TouchableOpacity>
         </View>
-       
       </SafeAreaView>
-      </ScrollView>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -188,7 +198,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingVertical: 3,
     color: "#000000",
-    fontWeight:'500'
+    fontWeight: "500",
   },
   enteremail: {
     borderColor: "#D8DADC",
@@ -207,7 +217,7 @@ const styles = StyleSheet.create({
   password: {
     fontSize: 14,
     paddingVertical: 3,
-    fontWeight:'500',
+    fontWeight: "500",
     color: "#000000",
   },
   passwordInputview: {
@@ -254,7 +264,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   registerBtnContainer: {
-    paddingTop:40,
+    paddingTop: 40,
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "flex-end",
