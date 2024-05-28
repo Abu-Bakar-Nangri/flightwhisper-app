@@ -53,7 +53,7 @@ export default function RegisterwithEmail({ navigation }) {
         password
       };
 
-      const response = await axios.post('http://192.168.50.220:3699/api/users/register', registrationData);
+      const response = await axios.post('http://192.168.1.20:3699/api/users/register', registrationData);
 
       if (response.status === 201) {
         navigation.navigate("Login");
