@@ -19,7 +19,7 @@ import img from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 const Profile = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const handleTicket = () => {
-    navigation.navigate("Ticket");
+    navigation.navigate("Flight");
   };
   const handleHome = () => {
     navigation.navigate("Dashboard");
@@ -311,7 +311,7 @@ const Profile = ({ navigation }) => {
           style={styles.footerBtn}
           onPress={handleHistory}
         >
-          <MaterialCommunityIcons name={"history"} size={26} color="gray" />
+          <MaterialCommunityIcons name={"file"} size={26} color="gray" />
           <Text style={styles.otherIconText}>History</Text>
         </TouchableOpacity>
         <TouchableOpacity
