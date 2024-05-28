@@ -7,7 +7,7 @@ import ProfileUpdate from './pages/Profile/ProfileUpdate';
 export default function App() {
   return (
     <Provider store={store}>
-      <Navigation/>
+      <ProfileUpdate/>
     </Provider>
   );
 }
