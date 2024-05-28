@@ -1,10 +1,12 @@
 import { StyleSheet} from 'react-native';
 import Navigation from './pages/Navigation';
-import Hotel from './pages/HotelAllPages/Hotel';
-import Flight from './pages/FlightAllPages/Flight';
+import { Provider } from 'react-redux'
+import store from './pages/ReduxState/store';
 
 export default function App() {
   return (
-    <Navigation/>
+    <Provider store={store}>
+      <Navigation/>
+    </Provider>
   );
 }
