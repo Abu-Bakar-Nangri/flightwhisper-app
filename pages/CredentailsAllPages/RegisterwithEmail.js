@@ -271,12 +271,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   registerText: {
-    fontFamily: "Inter",
     fontSize: 14,
     color: "rgba(0, 0, 0, 0.7)",
   },
   signUpText: {
-    fontFamily: "Inter",
     fontSize: 14,
     color: "#000000",
     marginLeft: 5,
