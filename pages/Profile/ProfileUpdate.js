@@ -37,10 +37,10 @@ const ProfileUpdate = () => {
   };
 
   const handleUpdateProfile = () => {
-    // Create a copy of the userData object
+
     const updatedProfileData = { ...userData };
   
-    // Update the user data with the new values
+
     updatedProfileData.name = updatedUserData.name || userData.name;
     updatedProfileData.email = updatedUserData.email || userData.email;
     updatedProfileData.phoneNo = updatedUserData.phoneNo || userData.phoneNo;
@@ -48,7 +48,6 @@ const ProfileUpdate = () => {
     updatedProfileData.dob = updatedUserData.dob || userData.dob;
     updatedProfileData.nationality = updatedUserData.nationality || userData.nationality;
   
-    // Update the address with the new values
     updatedProfileData.address = {
       ...userData.address,
       street: updatedAddress.street || userData.address.street,
@@ -58,12 +57,10 @@ const ProfileUpdate = () => {
       country: updatedAddress.country || userData.address.country,
     };
   
-    // Perform any other necessary operations with updatedProfileData
-  
-    // Log the updated profile data
+
     console.log("Updated Profile Data:", updatedProfileData);
   
-    // Close the modal
+
     setModalVisible(false);
   };
   
