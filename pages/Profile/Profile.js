@@ -50,8 +50,7 @@ const Profile = ({ navigation }) => {
   };
   const handleProfileUpdate = () => {
     navigation.navigate("ProfileUpdate");
-  }
-
+  };
 
   const handleSignout = () => {
     Alert.alert(
@@ -72,6 +71,26 @@ const Profile = ({ navigation }) => {
       { cancelable: false }
     );
   };
+
+  const handleAccountDelete = () =>{
+    Alert.alert(
+      "Confirm Deleting Account",
+      "Are you sure you want to delete your account?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "Delete Account",
+          onPress: () => navigation.navigate("Login"),
+          style: "destructive",
+        },
+      ],
+      { cancelable: false }
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -137,28 +156,28 @@ const Profile = ({ navigation }) => {
             <Text style={styles.ProfileEmail}>abubakarnangri@gmail.com</Text>
           </View>
           <View style={styles.SettingContainer}>
-          <Text style={styles.SettingTitle}>Profile</Text>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={styles.SettingItem}
-            onPress={handleProfileUpdate}
-          >
-            <View style={styles.SettingItemInfo}>
+            <Text style={styles.SettingTitle}>Profile</Text>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleProfileUpdate}
+            >
+              <View style={styles.SettingItemInfo}>
+                <MaterialCommunityIcons
+                  name={"account"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
+                <Text style={styles.SettingItemTitle}>Profile Edit</Text>
+              </View>
               <MaterialCommunityIcons
-                name={"account"}
-                size={24}
+                name={"chevron-right"}
+                size={36}
                 color="rgba(0,0,0,0.7)"
                 style={styles.SettingItemIcon}
               />
-              <Text style={styles.SettingItemTitle}>Profile Edit</Text>
-            </View>
-            <MaterialCommunityIcons
-              name={"chevron-right"}
-              size={36}
-              color="rgba(0,0,0,0.7)"
-              style={styles.SettingItemIcon}
-            />
-          </TouchableOpacity>
+            </TouchableOpacity>
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Settings</Text>
@@ -292,6 +311,9 @@ const Profile = ({ navigation }) => {
                 style={styles.SettingItemIcon}
               />
             </TouchableOpacity>
+          </View>
+          <View style={styles.SettingContainer}>
+            <Text style={styles.SettingTitle}>Account Center</Text>
             <TouchableOpacity
               activeOpacity={1}
               style={styles.SettingItem}
@@ -305,6 +327,23 @@ const Profile = ({ navigation }) => {
                   style={styles.SettingItemIcon}
                 />
                 <Text style={styles.SettingItemTitle}>Signout</Text>
+              </View>
+              <MaterialCommunityIcons
+                name={"chevron-right"}
+                size={36}
+                color="rgba(0,0,0,0.7)"
+                style={styles.SettingItemIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1} style={styles.SettingItem} onPress={handleAccountDelete}>
+              <View style={styles.SettingItemInfo}>
+                <MaterialCommunityIcons
+                  name={"delete"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
+                <Text style={styles.SettingItemTitle}>Delete account</Text>
               </View>
               <MaterialCommunityIcons
                 name={"chevron-right"}
@@ -463,7 +502,7 @@ const styles = StyleSheet.create({
   },
   SettingContainer: {
     marginHorizontal: 10,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   SettingTitle: {
     fontSize: 17,

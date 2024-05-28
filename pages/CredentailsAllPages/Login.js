@@ -33,21 +33,33 @@ export default function Login({ navigation }) {
         return;
       }
 
-      const response = await axios.post('http://192.168.1.20:3699/api/users/login', {
-        email,
-        password,
-      });
-  
+      const response = await axios.post(
+        "http://192.168.1.20:3699/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+
       if (response.status === 201) {
         navigation.navigate("Dashboard");
       } else {
-        Alert.alert("Registration failed", response.data?.message || "Unknown error");
+        Alert.alert(
+          "Registration failed",
+          response.data?.message || "Unknown error"
+        );
       }
     } catch (error) {
       if (error.response) {
-        Alert.alert("Error", error.response.data?.message || "Unknown server error");
+        Alert.alert(
+          "Error",
+          error.response.data?.message || "Unknown server error"
+        );
       } else if (error.request) {
-        Alert.alert("Network error", "No response from server. Please try again later.");
+        Alert.alert(
+          "Network error",
+          "No response from server. Please try again later."
+        );
       } else {
         Alert.alert("Error", "An error occurred while logging in");
       }
@@ -71,9 +83,10 @@ export default function Login({ navigation }) {
         <Text style={styles.email}>Email address or number</Text>
         <TextInput
           style={styles.enteremail}
-          value={email}
-          onChangeText={setEmail}
+          value={email}s
+          onChangeText={(text) => setEmail(text.trim().toLowerCase())}
           placeholder="Enter email or number"
+          autoCapitalize="none"
         />
       </View>
       <View style={styles.passwordview}>
