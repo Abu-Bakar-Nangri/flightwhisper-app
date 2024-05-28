@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 import {
   StyleSheet,
@@ -15,7 +16,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import img from "../../assets/airplane.png";
+
 
 export default function RegisterwithEmail({ navigation }) {
   const [password, setPassword] = useState("");
@@ -23,6 +24,8 @@ export default function RegisterwithEmail({ navigation }) {
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [phoneNo,setPhoneNo] = useState('');
+  const [name,setName] = useState('');
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -34,8 +37,8 @@ export default function RegisterwithEmail({ navigation }) {
 
   const handleRegister = async () => {
     try {
-      if (!email || !password || !confirmpassword) {
-        Alert.alert("Please enter both email and password");
+      if (!email || !password || !confirmpassword || !name || !phoneNo) {
+        Alert.alert("Please enter all fields");
         return;
       }
 
@@ -43,13 +46,22 @@ export default function RegisterwithEmail({ navigation }) {
         Alert.alert("Passwords do not match");
         return;
       }
+      const registrationData = {
+        name,
+        email,
+        phoneNo,
+        password
+      };
 
-      // Passwords match, proceed with registration
-      // await AsyncStorage.setItem('email', email);
-      // await AsyncStorage.setItem('password', password);
-      navigation.navigate("Login");
+      const response = await axios.post('http://192.168.50.220:3699/api/users/register', registrationData);
+
+      if (response.status === 201) {
+        navigation.navigate("Login");
+      } else {
+        Alert.alert("Registration failed", response.data.message || "Unknown error");
+      }
     } catch (error) {
-      Alert.alert("Error occurred while registering");
+      Alert.alert("Error occurred while registering", error.response?.data?.message || error.message);
     }
   };
 
@@ -58,12 +70,20 @@ export default function RegisterwithEmail({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
+    <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
       <SafeAreaView style={styles.container}>
+
         <Text style={styles.login}>Register with Email</Text>
+        <View style={styles.emailview}>
+          <Text style={styles.email}>Name</Text>
+          <TextInput
+            style={styles.enteremail}
+            value={name}
+            onChangeText={setName}
+            placeholder="Enter name"
+          />
+        </View>
+
         <View style={styles.emailview}>
           <Text style={styles.email}>Email address</Text>
           <TextInput
@@ -73,6 +93,15 @@ export default function RegisterwithEmail({ navigation }) {
             placeholder="Enter email"
           />
         </View>
+        <View style={styles.emailview}>
+        <Text style={styles.email}>Number</Text>
+        <TextInput
+          style={styles.enteremail}
+          value={phoneNo}
+          onChangeText={setPhoneNo}
+          placeholder="Enter name"
+        />
+      </View>
         <View style={styles.passwordview}>
           <Text style={styles.password}>Password</Text>
           <View style={styles.passwordInputview}>
@@ -124,8 +153,9 @@ export default function RegisterwithEmail({ navigation }) {
             <Text style={styles.signUpText}>Log in</Text>
           </TouchableOpacity>
         </View>
+       
       </SafeAreaView>
-    </KeyboardAvoidingView>
+      </ScrollView>
   );
 }
 const styles = StyleSheet.create({
@@ -151,14 +181,14 @@ const styles = StyleSheet.create({
   },
   emailview: {
     paddingHorizontal: 20,
-    paddingVertical: 3,
+    paddingVertical: 2,
     width: "100%",
   },
   email: {
     fontSize: 14,
-    paddingVertical: 6,
-    fontFamily: "Inter",
+    paddingVertical: 3,
     color: "#000000",
+    fontWeight:'500'
   },
   enteremail: {
     borderColor: "#D8DADC",
@@ -171,13 +201,13 @@ const styles = StyleSheet.create({
   },
   passwordview: {
     paddingHorizontal: 20,
-    paddingVertical: 1,
+    paddingVertical: 2,
     width: "100%",
   },
   password: {
     fontSize: 14,
     paddingVertical: 3,
-    fontFamily: "Inter",
+    fontWeight:'500',
     color: "#000000",
   },
   passwordInputview: {
@@ -224,11 +254,10 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   registerBtnContainer: {
-    flex: 1,
+    paddingTop:40,
     justifyContent: "center",
     flexDirection: "row",
     alignItems: "flex-end",
-    marginBottom: 20,
     width: "100%",
   },
   registerText: {

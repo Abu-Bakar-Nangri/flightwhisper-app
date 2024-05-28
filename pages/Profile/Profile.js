@@ -14,7 +14,7 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import img from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
+import img from "../../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 
 const Profile = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,6 +48,10 @@ const Profile = ({ navigation }) => {
   const handleContactUS = () => {
     navigation.navigate("ContactUs");
   };
+  const handleProfileUpdate = () => {
+    navigation.navigate("ProfileUpdate");
+  }
+
 
   const handleSignout = () => {
     Alert.alert(
@@ -131,6 +135,30 @@ const Profile = ({ navigation }) => {
             </Modal>
             <Text style={styles.ProfileTitle}>Abu Bakar Siddique</Text>
             <Text style={styles.ProfileEmail}>abubakarnangri@gmail.com</Text>
+          </View>
+          <View style={styles.SettingContainer}>
+          <Text style={styles.SettingTitle}>Profile</Text>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={styles.SettingItem}
+            onPress={handleProfileUpdate}
+          >
+            <View style={styles.SettingItemInfo}>
+              <MaterialCommunityIcons
+                name={"account"}
+                size={24}
+                color="rgba(0,0,0,0.7)"
+                style={styles.SettingItemIcon}
+              />
+              <Text style={styles.SettingItemTitle}>Profile Edit</Text>
+            </View>
+            <MaterialCommunityIcons
+              name={"chevron-right"}
+              size={36}
+              color="rgba(0,0,0,0.7)"
+              style={styles.SettingItemIcon}
+            />
+          </TouchableOpacity>
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Settings</Text>

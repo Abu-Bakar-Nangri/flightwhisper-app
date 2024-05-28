@@ -4,13 +4,14 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SearchBar } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import ProfileUpdate from './Profile/ProfileUpdate'
 
 import Dashboard from "./Dashboard";
 import ForgetPassword from "./CredentailsAllPages/ForgetPassword";
 import History from "./History";
 import Login from "./CredentailsAllPages/Login";
 import PasswordChanged from "./CredentailsAllPages/PasswordChanged";
-import Profile from "./Profile";
+import Profile from './Profile/Profile'
 import Register from "./CredentailsAllPages/Register";
 import ResetPassword from "./CredentailsAllPages/ResetPassword";
 import Ticket from "./FlightAllPages/Ticket";
@@ -267,6 +268,21 @@ function Navigation() {
             },
           }}
         />
+        <Stack.Screen
+        name="ProfileUpdate"
+        component={ProfileUpdate}
+        options={{
+          headerTitle: "Profile Update",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            textAlign: "center",
+            color: "white",
+          },
+          headerStyle: {
+            backgroundColor: "#4F718A",
+          },
+        }}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );

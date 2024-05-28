@@ -1,9 +1,12 @@
 import { StyleSheet} from 'react-native';
 import Navigation from './pages/Navigation';
-import Hotel from './pages/HotelAllPages/Hotel';
+import { Provider } from 'react-redux'
+import store from './pages/ReduxState/store';
 
 export default function App() {
   return (
-    <Hotel/>
+    <Provider store={store}>
+      <Navigation/>
+    </Provider>
   );
 }

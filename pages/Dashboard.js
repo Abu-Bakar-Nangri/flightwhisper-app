@@ -13,7 +13,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Video from 'react-native-video';
 import img from "../assets/person.png";
 
 const Dashboard = ({ navigation }) => {
