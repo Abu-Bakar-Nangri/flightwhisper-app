@@ -18,6 +18,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/person.png";
 import { Calendar} from "react-native-calendars";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Hotel = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,8 +33,9 @@ const Hotel = ({ navigation }) => {
   const [adults, setAdults] = useState(1);
   const [childs, setChilds] = useState(0);
   const [infants, setInfants] = useState(0);
-  const [fromValue, setFromValue] = useState(null)
-  const [toValue, setToValue] = useState(null)
+  const [destinationValue, setDestinationValue] = useState(null);
+  const [toValue, setToValue] = useState(null);
+  const [rooms ,setRooms] = useState(1);
 
   const getTotalPassengers = () => adults + childs + infants;
 
@@ -46,7 +48,7 @@ const Hotel = ({ navigation }) => {
       setSelectedCheckInDate(day.dateString);
       setCheckInDateModalVisible(false);
     } else {
-      Alert.alert("Error: Departure date cannot be after return date.");
+      Alert.alert("Error: Check-in date cannot be after check-out date.");
     }
   };
 
@@ -55,7 +57,7 @@ const Hotel = ({ navigation }) => {
       setselectedCheckOutDate(day.dateString);
       setCheckOutDateModalVisible(false);
     } else {
-      Alert.alert("Error: Return date cannot be before departure date.");
+      Alert.alert("Error: Check-out cannot be before check-in date.");
     }
   };
 
@@ -63,6 +65,17 @@ const Hotel = ({ navigation }) => {
   const handleTravelerCount = () => {
     setTravelerModalVisible(false);
   };
+
+  const handleRoomPlus = () => {
+    if (rooms < 5) {
+      setRooms(rooms + 1);
+    }
+  }
+  const handleRoomMinus = () => {
+    if(rooms>1){
+      setRooms(rooms-1);
+    }
+  }
 
   const handleAdultMinus = () => {
     if (adults > 1) {
@@ -92,38 +105,33 @@ const Hotel = ({ navigation }) => {
   };
 
 
-  const handlePressFrom = (item) => {
-    setFromValue(`${item.city} (${item.shortName})`);
+
+  const handlePressDestination = (item) => {
+    setDestinationValue(`${item.city} (${item.shortName})`);
     setDestinationModalVisible(false);
   };
 
-  const handlePressTo = (item) => {
-    setToValue(`${item.city} (${item.shortName})`);
-    setToModalVisible(false);
-  };
 
   const handleSerach = () => {
-    if (!fromValue || !selectedCheckInDate || !selectedCheckOutDate || (adults + childs ) === 0) {
+    if (!destinationValue || !selectedCheckInDate || !selectedCheckOutDate || (adults + childs ) === 0 || rooms === 0) {
       Alert.alert("Error", "Please fill in all the fields.");
       return;
     }
 
     const searchFlight = {
-      from: fromValue,
-      to: toValue,
+      destination: destinationValue,
       depDate: selectedCheckInDate,
       retDate: selectedCheckOutDate,
-      passengers: adults + childs + infants,
-      seatType: seatType,
+      guest: adults + childs,
+      rooms: rooms,
     };
 
     const searchMessage = `
-      From: ${searchFlight.from}
-      To: ${searchFlight.to}
-      Departure Date: ${searchFlight.depDate}
-      Return Date: ${searchFlight.retDate}
-      Passengers: ${searchFlight.passengers}
-      Seat Type: ${searchFlight.seatType}
+      Destination: ${searchFlight.destination}
+      Check-in Date: ${searchFlight.depDate}
+      Check-out Date: ${searchFlight.retDate}
+      Quest: ${searchFlight.guest}
+      Rooms: ${searchFlight.rooms}
     `;
 
     Alert.alert("Flight Search Details", searchMessage);
@@ -131,7 +139,7 @@ const Hotel = ({ navigation }) => {
 
 
   const renderItemFrom = ({ item }) => (
-    <TouchableOpacity key={item.shortName} onPress={() => handlePressFrom(item)} activeOpacity={0.8} style={styles.PopularCitiesBtn}>
+    <TouchableOpacity key={item.shortName} onPress={() => handlePressDestination(item)} activeOpacity={0.8} style={styles.PopularCitiesBtn}>
       <View style={styles.PopularCitiesInfo}>
         <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
         <View>
@@ -144,27 +152,10 @@ const Hotel = ({ navigation }) => {
       </View>
     </TouchableOpacity>
   );
-
-  const renderItemTo = ({ item }) => (
-    <TouchableOpacity key={item.shortName} onPress={() => handlePressTo(item)} activeOpacity={0.8} style={styles.PopularCitiesBtn}>
-      <View style={styles.PopularCitiesInfo}>
-        <MaterialCommunityIcons style={styles.PopularCitiesIcon} name={item.icon} size={30} />
-        <View>
-          <Text style={styles.PopularCitiesCity}>{item.city}</Text>
-          <Text style={styles.PopularCitiesCountry}>{item.country}</Text>
-        </View>
-      </View>
-      <View style={styles.PopularCitiesShortName}>
-        <Text>{item.shortName}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-
-
   const countStyle = {
     borderWidth: 2,
     borderRadius: 20,
-    color: getTotalPassengers() < 10 ? 'red' : 'gray'
+    color: getTotalPassengers() < 10 ? 'red' : 'gray',
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -237,7 +228,7 @@ const Hotel = ({ navigation }) => {
           >
              <Icon name="search" size={22} color="#000" />
             <Text ellipsizeMode="tail" style={styles.flightTitle}>
-              {fromValue === null ? 'Destination' : fromValue}
+              {destinationValue === null ? 'Destination' : destinationValue}
             </Text>
           </TouchableOpacity>
           <View style={styles.dateContainer}>
@@ -276,7 +267,7 @@ const Hotel = ({ navigation }) => {
               size={30}
               style={styles.adultIcon}
             />
-            <Text style={styles.CabinClassTitle}>{adults} Adult {childs > 0 ? `${childs} Childs` : ''} {infants > 0 ? `${infants} Infants` : ''}</Text>
+            <Text style={styles.CabinClassTitle}>{getTotalPassengers()} Guest in {rooms} Room</Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.8} style={styles.searchbtn} onPress={handleSerach}>
             <Text style={styles.searchtext}>Search Hotels</Text>
@@ -435,13 +426,37 @@ const Hotel = ({ navigation }) => {
               <MaterialCommunityIcons name="check" size={30} color="black" />
             </TouchableOpacity>
           </View>
-          <Text style={styles.TitleModelPassengers}>Passengers</Text>
           <View style={styles.InfoModelPassengers}>
             <View style={styles.AgeModelPassenger}>
-              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <MaterialCommunityIcons name="bed" size={30} color="black" />
+              <View style={styles.agesPassengers}>
+                <Text style={styles.passsengerType}>Room</Text>
+              </View>
+            </View>
+            <View style={styles.InfoModelBtn}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={{ borderWidth: 2, borderRadius: 20 }}
+                onPress={handleRoomMinus}
+              >
+                <MaterialCommunityIcons name="minus" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.passengerCunt}>{rooms}</Text>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={handleRoomPlus}
+                style={countStyle}
+              >
+                <MaterialCommunityIcons name="plus" size={20} color="black" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.InfoModelPassengers}>
+            <View style={styles.AgeModelPassenger}>
+              <FontAwesome5 name="user" size={28} color="black" />
               <View style={styles.agesPassengers}>
                 <Text style={styles.passsengerType}>Adult</Text>
-                <Text style={styles.passengerAges}>{`(>12 years)`}</Text>
+                <Text style={styles.passengerAges}>{`(> 17 years)`}</Text>
               </View>
             </View>
             <View style={styles.InfoModelBtn}>
@@ -464,10 +479,10 @@ const Hotel = ({ navigation }) => {
           </View>
           <View style={styles.InfoModelPassengers}>
             <View style={styles.AgeModelPassenger}>
-              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <FontAwesome5 name="child" size={30} color="black" />
               <View style={styles.agesPassengers}>
-                <Text style={styles.passsengerType}>Adult</Text>
-                <Text style={styles.passengerAges}>{`(2 -12 years)`}</Text>
+                <Text style={styles.passsengerType}>Child</Text>
+                <Text style={styles.passengerAges}>{`(≤ 17 years)`}</Text>
               </View>
             </View>
             <View style={styles.InfoModelBtn}>
@@ -576,7 +591,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 26,
     fontWeight: "400",
-    fontFamily: "Poppins",
     color: "#fff",
     paddingVertical: 12,
   },
@@ -728,13 +742,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'rgba(255,255,255,1)',
-    height: Platform.OS==='ios'?'93%':'100%',
+    height: '100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingTop: 10,
-    position:'absolute',
-    bottom:0,
-    width:'100%'
   },
   FromSearchView: {
     flexDirection: 'row',
@@ -800,10 +811,11 @@ const styles = StyleSheet.create({
   modalDepartureDateContainer: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: 50,
+    paddingTop: Platform.OS==='ios'? 80:50,
     paddingHorizontal: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    height: Platform.OS==='ios'? "92%":"100%",
   },
   closeButtonDate: {
     fontSize: 18,
@@ -825,14 +837,16 @@ const styles = StyleSheet.create({
     width: "100%",
     bottom: 0,
     position: "absolute",
-    height: "100%",
+    height: Platform.OS==='ios'? "93%":"100%",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
+    paddingBottom:20,
   },
   modalTravelerBtn: {
     justifyContent: "space-between",
     alignItems: "center",
     flexDirection: "row",
+    marginBottom:20,
   },
   TitleModelPassengers: {
     fontSize: 18,

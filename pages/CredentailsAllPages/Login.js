@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 import {
   StyleSheet,
@@ -20,6 +20,7 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -31,9 +32,37 @@ export default function Login({ navigation }) {
         Alert.alert("Please enter both email and password");
         return;
       }
-      navigation.navigate("Dashboard");
+
+      const response = await axios.post(
+        "http://192.168.50.220:3699/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      if (response.status === 201) {
+        navigation.navigate("Dashboard");
+      } else {
+        Alert.alert(
+          "Registration failed",
+          response.data?.message || "Unknown error"
+        );
+      }
     } catch (error) {
-      Alert.alert("Error occurred while logging in");
+      if (error.response) {
+        Alert.alert(
+          "Error",
+          error.response.data?.message || "Unknown server error"
+        );
+      } else if (error.request) {
+        Alert.alert(
+          "Network error",
+          "No response from server. Please try again later."
+        );
+      } else {
+        Alert.alert("Error", "An error occurred while logging in");
+      }
     }
   };
 
@@ -54,9 +83,10 @@ export default function Login({ navigation }) {
         <Text style={styles.email}>Email address or number</Text>
         <TextInput
           style={styles.enteremail}
-          value={email}
-          onChangeText={setEmail}
+          value={email}s
+          onChangeText={(text) => setEmail(text.trim().toLowerCase())}
           placeholder="Enter email or number"
+          autoCapitalize="none"
         />
       </View>
       <View style={styles.passwordview}>
@@ -128,7 +158,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingVertical: 4,
     paddingHorizontal: 20,
-    fontFamily: "Poppins",
     color: "#000000",
   },
   emailview: {
@@ -139,7 +168,6 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 14,
     paddingVertical: 6,
-    fontFamily: "Inter",
     color: "#000000",
   },
   enteremail: {
@@ -159,7 +187,6 @@ const styles = StyleSheet.create({
   password: {
     fontSize: 14,
     paddingVertical: 6,
-    fontFamily: "Inter",
     color: "#000000",
   },
   passwordInputview: {
@@ -213,12 +240,10 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   registerText: {
-    fontFamily: "Inter",
     fontSize: 14,
     color: "rgba(0, 0, 0, 0.7)",
   },
   signUpText: {
-    fontFamily: "Inter",
     fontSize: 14,
     color: "#000000",
     marginLeft: 5,

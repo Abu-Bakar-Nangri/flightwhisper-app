@@ -17,6 +17,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/person.png";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const Flight = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -192,7 +193,8 @@ const Flight = ({ navigation }) => {
   const countStyle = {
     borderWidth: 2,
     borderRadius: 20,
-    color: getTotalPassengers() < 10 ? 'red' : 'gray'
+    color: getTotalPassengers() < 10 ? 'red' : 'gray',
+    backgroundColor:'#4F718A',
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -591,7 +593,7 @@ const Flight = ({ navigation }) => {
           <Text style={styles.TitleModelPassengers}>Passengers</Text>
           <View style={styles.InfoModelPassengers}>
             <View style={styles.AgeModelPassenger}>
-              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <FontAwesome5 name="user" size={30} color="black" />
               <View style={styles.agesPassengers}>
                 <Text style={styles.passsengerType}>Adult</Text>
                 <Text style={styles.passengerAges}>{`(>12 years)`}</Text>
@@ -609,7 +611,7 @@ const Flight = ({ navigation }) => {
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={handleAdultPlus}
-                style={countStyle}
+                style={{ borderWidth: 2, borderRadius: 20 }}
               >
                 <MaterialCommunityIcons name="plus" size={20} color="black" />
               </TouchableOpacity>
@@ -617,9 +619,9 @@ const Flight = ({ navigation }) => {
           </View>
           <View style={styles.InfoModelPassengers}>
             <View style={styles.AgeModelPassenger}>
-              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <FontAwesome5 name="child" size={30} color="black" />
               <View style={styles.agesPassengers}>
-                <Text style={styles.passsengerType}>Adult</Text>
+                <Text style={styles.passsengerType}>Child</Text>
                 <Text style={styles.passengerAges}>{`(2 -12 years)`}</Text>
               </View>
             </View>
@@ -643,7 +645,7 @@ const Flight = ({ navigation }) => {
           </View>
           <View style={styles.InfoModelPassengers}>
             <View style={styles.AgeModelPassenger}>
-              <MaterialCommunityIcons name="account" size={30} color="black" />
+              <FontAwesome5 name="baby" size={30} color="black" />
               <View style={styles.agesPassengers}>
                 <Text style={styles.passsengerType}>Infant</Text>
                 <Text style={styles.passengerAges}>{`(<2 years)`}</Text>
@@ -755,7 +757,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 26,
     fontWeight: "400",
-    fontFamily: "Poppins",
     color: "#fff",
     paddingVertical: 12,
   },
@@ -821,7 +822,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     flexDirection: "row",
   },
   arivaldate: {
@@ -831,14 +832,14 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     flexDirection: "row",
   },
   deteTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: "rgba(0,0,0,0.8)",
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
   },
   Travelers: {
     backgroundColor: "#B5C5D2",
@@ -936,9 +937,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingTop: 10,
-    position:'absolute',
-    bottom:0,
-    width:'100%'
   },
   FromSearchView: {
     flexDirection: 'row',
@@ -1004,7 +1002,7 @@ const styles = StyleSheet.create({
   modalDepartureDateContainer: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: 50,
+    paddingTop: Platform.OS==='ios'? 80:50,
     paddingHorizontal: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -1111,6 +1109,11 @@ const styles = StyleSheet.create({
   passengerCunt: {
     fontSize: 16,
     paddingHorizontal: 25,
+  },
+  line:{
+    width:"100%",
+    borderBottomWidth:2,
+    borderColor:'red',
   },
 });
 

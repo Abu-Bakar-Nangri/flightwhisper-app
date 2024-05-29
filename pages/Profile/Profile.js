@@ -14,7 +14,8 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import img from "../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
+import img from "../../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
+import axios from "axios";
 
 const Profile = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,6 +49,9 @@ const Profile = ({ navigation }) => {
   const handleContactUS = () => {
     navigation.navigate("ContactUs");
   };
+  const handleProfileUpdate = () => {
+    navigation.navigate("ProfileUpdate");
+  };
 
   const handleSignout = () => {
     Alert.alert(
@@ -68,6 +72,30 @@ const Profile = ({ navigation }) => {
       { cancelable: false }
     );
   };
+
+  const handleAccountDelete = () =>{
+    Alert.alert(
+      "Confirm Deleting Account",
+      "Are you sure you want to delete your account?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: "Delete Account",
+          onPress: () => navigation.navigate("Login"),
+          style: "destructive",
+        },
+      ],
+      { cancelable: false }
+    );
+  }
+
+  const deleteAccount = async() =>{
+      await axios.delete('http://192.168.50.220:3699/api/users/deleteAccount/abubakarnangri@gmail.com');
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -131,6 +159,30 @@ const Profile = ({ navigation }) => {
             </Modal>
             <Text style={styles.ProfileTitle}>Abu Bakar Siddique</Text>
             <Text style={styles.ProfileEmail}>abubakarnangri@gmail.com</Text>
+          </View>
+          <View style={styles.SettingContainer}>
+            <Text style={styles.SettingTitle}>Profile</Text>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.SettingItem}
+              onPress={handleProfileUpdate}
+            >
+              <View style={styles.SettingItemInfo}>
+                <MaterialCommunityIcons
+                  name={"account"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
+                <Text style={styles.SettingItemTitle}>Profile Edit</Text>
+              </View>
+              <MaterialCommunityIcons
+                name={"chevron-right"}
+                size={36}
+                color="rgba(0,0,0,0.7)"
+                style={styles.SettingItemIcon}
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Settings</Text>
@@ -264,6 +316,9 @@ const Profile = ({ navigation }) => {
                 style={styles.SettingItemIcon}
               />
             </TouchableOpacity>
+          </View>
+          <View style={styles.SettingContainer}>
+            <Text style={styles.SettingTitle}>Account Center</Text>
             <TouchableOpacity
               activeOpacity={1}
               style={styles.SettingItem}
@@ -277,6 +332,23 @@ const Profile = ({ navigation }) => {
                   style={styles.SettingItemIcon}
                 />
                 <Text style={styles.SettingItemTitle}>Signout</Text>
+              </View>
+              <MaterialCommunityIcons
+                name={"chevron-right"}
+                size={36}
+                color="rgba(0,0,0,0.7)"
+                style={styles.SettingItemIcon}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={1} style={styles.SettingItem} onPress={handleAccountDelete}>
+              <View style={styles.SettingItemInfo}>
+                <MaterialCommunityIcons
+                  name={"delete"}
+                  size={24}
+                  color="rgba(0,0,0,0.7)"
+                  style={styles.SettingItemIcon}
+                />
+                <Text style={styles.SettingItemTitle}>Delete account</Text>
               </View>
               <MaterialCommunityIcons
                 name={"chevron-right"}
@@ -363,7 +435,6 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === "ios" ? 26 : 22,
     fontWeight: "500",
     color: "rgba(255,255,255,0.9)",
-    fontFamily: "poppion",
   },
   ProfileInfoContainer: {
     backgroundColor: "#fff",
@@ -435,7 +506,7 @@ const styles = StyleSheet.create({
   },
   SettingContainer: {
     marginHorizontal: 10,
-    marginVertical: 10,
+    marginVertical: 5,
   },
   SettingTitle: {
     fontSize: 17,

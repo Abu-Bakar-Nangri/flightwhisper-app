@@ -1,16 +1,13 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { SearchBar } from "react-native-elements";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import ProfileUpdate from './Profile/ProfileUpdate'
 import Dashboard from "./Dashboard";
 import ForgetPassword from "./CredentailsAllPages/ForgetPassword";
 import History from "./History";
 import Login from "./CredentailsAllPages/Login";
 import PasswordChanged from "./CredentailsAllPages/PasswordChanged";
-import Profile from "./Profile";
+import Profile from './Profile/Profile'
 import Register from "./CredentailsAllPages/Register";
 import ResetPassword from "./CredentailsAllPages/ResetPassword";
 import Ticket from "./FlightAllPages/Ticket";
@@ -26,35 +23,16 @@ import PaymentMethods from "./HelpandInfoApp/PaymentMethod";
 import AboutUs from "./HelpandInfoApp/AboutUs";
 import ContactUs from "./HelpandInfoApp/ContactUs";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
-  React.useEffect(() => {
-    checkAuthStatus();
-  }, []);
 
-  const checkAuthStatus = async () => {
-    try {
-      const storedEmail = await AsyncStorage.getItem("email");
-      const storedPassword = await AsyncStorage.getItem("password");
-
-      if (storedEmail && storedPassword) {
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      console.error("Error checking authentication status:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isAuthenticated ? "Dashboard" : "Login"}
+        initialRouteName={ "Login"}
       >
         <Stack.Screen
           name="Dashboard"
@@ -267,6 +245,21 @@ function Navigation() {
             },
           }}
         />
+        <Stack.Screen
+        name="ProfileUpdate"
+        component={ProfileUpdate}
+        options={{
+          headerTitle: "Profile Update",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            textAlign: "center",
+            color: "white",
+          },
+          headerStyle: {
+            backgroundColor: "#4F718A",
+          },
+        }}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );

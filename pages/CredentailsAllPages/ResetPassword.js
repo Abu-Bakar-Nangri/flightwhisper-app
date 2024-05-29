@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
   password: {
     fontSize: 14,
     paddingVertical: 6,
-    fontFamily: "Inter",
     color: "#000000",
   },
   passwordInputview: {
