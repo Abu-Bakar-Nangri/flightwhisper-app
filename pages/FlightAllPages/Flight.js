@@ -757,7 +757,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     fontSize: 26,
     fontWeight: "400",
-    fontFamily: "Poppins",
     color: "#fff",
     paddingVertical: 12,
   },

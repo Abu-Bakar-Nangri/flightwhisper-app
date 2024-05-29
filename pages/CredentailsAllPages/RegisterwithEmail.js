@@ -53,7 +53,7 @@ export default function RegisterwithEmail({ navigation }) {
       };
 
       const response = await axios.post(
-        "http://192.168.1.20:3699/api/users/register",
+        "http://192.168.50.220:3699/api/users/register",
         registrationData
       );
 
@@ -186,7 +186,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingVertical: 4,
     paddingHorizontal: 20,
-    fontFamily: "Poppins",
     color: "#000000",
   },
   emailview: {

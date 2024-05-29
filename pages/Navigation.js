@@ -23,35 +23,16 @@ import PaymentMethods from "./HelpandInfoApp/PaymentMethod";
 import AboutUs from "./HelpandInfoApp/AboutUs";
 import ContactUs from "./HelpandInfoApp/ContactUs";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
 function Navigation() {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 
-  React.useEffect(() => {
-    checkAuthStatus();
-  }, []);
 
-  const checkAuthStatus = async () => {
-    try {
-      const storedEmail = await AsyncStorage.getItem("email");
-      const storedPassword = await AsyncStorage.getItem("password");
-
-      if (storedEmail && storedPassword) {
-        setIsAuthenticated(true);
-      }
-    } catch (error) {
-      console.error("Error checking authentication status:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isAuthenticated ? "Dashboard" : "Login"}
+        initialRouteName={ "Login"}
       >
         <Stack.Screen
           name="Dashboard"

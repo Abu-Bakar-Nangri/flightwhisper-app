@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
+import axios from "axios";
 
 const Profile = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -90,6 +91,10 @@ const Profile = ({ navigation }) => {
       ],
       { cancelable: false }
     );
+  }
+
+  const deleteAccount = async() =>{
+      await axios.delete('http://192.168.50.220:3699/api/users/deleteAccount/abubakarnangri@gmail.com');
   }
 
   return (
@@ -430,7 +435,6 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === "ios" ? 26 : 22,
     fontWeight: "500",
     color: "rgba(255,255,255,0.9)",
-    fontFamily: "poppion",
   },
   ProfileInfoContainer: {
     backgroundColor: "#fff",
