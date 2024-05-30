@@ -8,6 +8,7 @@ import {
   Modal,
   TextInput,
   Button,
+  Alert,
 } from "react-native";
 import { RadioButton } from 'react-native-paper';
 
@@ -15,8 +16,8 @@ const userData = {
   _id: "66562162cbd69eeac59ac811",
   name: "Abu Bakar Siddique",
   email: "abubakarnangri@gmail.com",
-  phoneNo: "3245521001",
-  gender: "male",
+  phoneNo: "03245521001",
+  gender: "Male",
   dob: "2003-05-15",
   nationality: "Pakistan",
   address: {
@@ -30,18 +31,23 @@ const userData = {
 
 const ProfileUpdate = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [name,setName] = useState(userData.name)
-  const [phoneNo,setPhoneNo] = useState(userData.phoneNo)
-  const [gender,setGender] = useState(userData.gender)
-  const [dob,setDOB] = useState(userData.dob)
-  const [nationality,setNationality] = useState(userData.nationality)
-  const [street,setStreet] = useState(userData.street)
-  const [city,setCity] = useState(userData.city)
-  const [province,setProvince] = useState(userData.province)
-  const [postalCode,setPostalCode] = useState(userData.postalCode)
-  const [country,setCountry] = useState(userData.country)
+  const [name, setName] = useState(userData.name)
+  const [phoneNo, setPhoneNo] = useState(userData.phoneNo)
+  const [gender, setGender] = useState(userData.gender)
+  const [dob, setDOB] = useState(userData.dob)
+  const [nationality, setNationality] = useState(userData.nationality)
+  const [street, setStreet] = useState(userData.address.street)
+  const [city, setCity] = useState(userData.address.city)
+  const [province, setProvince] = useState(userData.address.province)
+  const [postalCode, setPostalCode] = useState(userData.address.postalCode)
+  const [country, setCountry] = useState(userData.address.country)
 
+  const handleUpdate = () => {
+    Alert.alert(gender);
 
+    // Close the modal after updating
+    setModalVisible(false);
+  }
 
   const renderAddress = () => {
     const { street, city, province, postalCode, country } = userData.address;
@@ -85,7 +91,7 @@ const ProfileUpdate = () => {
       {userData.address && renderAddress()}
       <TouchableOpacity
         style={styles.updateButton}
-        activeOpacity={0.9} 
+        activeOpacity={0.9}
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.buttonText}>Edit Profile</Text>
@@ -96,135 +102,139 @@ const ProfileUpdate = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-      <ScrollView>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalHeader}>Edit Profile</Text>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Name</Text>
-              <TextInput
-                style={styles.enteremail}
-                onChangeText={name}
-                placeholder="Enter name"
+        <ScrollView>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalHeader}>Edit Profile</Text>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Name</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={name}
+                  onChangeText={(text) => setName(text)}
+                  placeholder="Enter name"
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Phone Number</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={phoneNo}
+                  onChangeText={(text) => setPhoneNo(text)}
+                  placeholder="Enter phone number"
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Gender</Text>
+                <View style={styles.radioContainer}>
+                  <View style={styles.radioButton}>
+                    <RadioButton
+                      value={gender}
+                      status={gender === 'Male' ? 'checked' : 'unchecked'}
+                      onPress={() => setGender('Male')}
+                      color="#4F718A"
+                    />
+                    <Text style={styles.radioText}>Male</Text>
+                  </View>
+                  <View style={styles.radioButton}>
+                    <RadioButton
+                      value={gender}
+                      status={gender === 'Female' ? 'checked' : 'unchecked'}
+                      onPress={() => setGender('Female')}
+                      color="#4F718A"
+                    />
+                    <Text style={styles.radioText}>Female</Text>
+                  </View>
+                  <View style={styles.radioButton}>
+                    <RadioButton
+                      value={gender}
+                      status={gender === 'Others' ? 'checked' : 'unchecked'}
+                      onPress={() => setGender('Others')}
+                      color="#4F718A"
+                    />
+                    <Text style={styles.radioText}>Others</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Date of Birth</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={dob}
+                  onChangeText={(text) => setDOB(text)}
+                  placeholder="Enter date of birth"
 
-              />
-            </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Phone Number</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter phone number"
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Nationality</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={nationality}
+                  onChangeText={(text) => setNationality(text)}
+                  placeholder="Enter nationality"
 
-              />
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Street</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={street}
+                  onChangeText={(text) => setStreet(text)}
+                  placeholder="Enter street"
+
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>City</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={city}
+                  onChangeText={(text) => setCity(text)}
+                  placeholder="Enter city"
+
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Province</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={province}
+                  onChangeText={(text) => setProvince(text)}
+                  placeholder="Enter province"
+
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Postal Code</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  placeholder="Enter postal code"
+                  value={postalCode}
+                  onChangeText={(text) => setPostalCode(text)}
+                />
+              </View>
+              <View style={styles.emailview}>
+                <Text style={styles.email}>Country</Text>
+                <TextInput
+                  style={styles.enteremail}
+                  value={country}
+                  onChangeText={(text) => setCountry(text)}
+                  placeholder="Enter country"
+                />
+              </View>
+              <View style={styles.modeleditbtn}>
+                <TouchableOpacity activeOpacity={0.9} style={styles.cancelBtn} onPress={() => setModalVisible(false)} >
+                  <Text style={styles.cancelText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.9} style={styles.updateBtn} onPress={handleUpdate} >
+                  <Text style={styles.updateText}>Update</Text>
+                </TouchableOpacity>
+              </View>
+
             </View>
-            <View style={styles.emailview}>
-        <Text style={styles.email}>Gender</Text>
-        <View style={styles.radioContainer}>
-          <View style={styles.radioButton}>
-            <RadioButton
-              value="male"
-              status={gender === 'male' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('male')}
-              color="#4F718A"
-            />
-            <Text style={styles.radioText}>Male</Text>
           </View>
-          <View style={styles.radioButton}>
-            <RadioButton
-              value="female"
-              status={gender === 'female' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('female')}
-              color="#4F718A"
-            />
-            <Text style={styles.radioText}>Female</Text>
-          </View>
-          <View style={styles.radioButton}>
-            <RadioButton
-              value="others"
-              status={gender === 'others' ? 'checked' : 'unchecked'}
-              onPress={() => setGender('others')}
-              color="#4F718A"
-            />
-            <Text style={styles.radioText}>Others</Text>
-          </View>
-        </View>
-      </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Date of Birth</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter date of birth"
-
-              />
-            </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Nationality</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter nationality"
-
-              />
-            </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Street</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter street"
-
-              />
-            </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>City</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter city"
-
-              />
-            </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Province</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter province"
- 
-              />
-            </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Postal Code</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter postal code"
-    
-              />
-            </View>
-            <View style={styles.emailview}>
-              <Text style={styles.email}>Country</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter country"
-      
-              />
-            </View>
-    
-            <View style={styles.modeleditbtn}> 
-              <TouchableOpacity activeOpacity={0.9} style={styles.cancelBtn} onPress={() => setModalVisible(false)} >
-                 <Text style={styles.cancelText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.9}  style={styles.updateBtn} >
-                <Text style={styles.updateText}>Update</Text>
-              </TouchableOpacity>
-            </View>
-            
-          </View>
-        </View>
         </ScrollView>
       </Modal>
     </ScrollView>
@@ -323,40 +333,40 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     fontSize: 16,
   },
-  modeleditbtn:{
-    width:'100%',
-    flexDirection:'row',
-    justifyContent:'space-evenly',
-    alignItems:'center',
-    paddingVertical:25,
+  modeleditbtn: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    paddingVertical: 25,
   },
-  cancelBtn:{
+  cancelBtn: {
     backgroundColor: "#92A7BA40",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
     alignItems: "center",
-    justifyContent:'center',
+    justifyContent: 'center',
     height: 50,
-    width:'45%',
+    width: '45%',
   },
-  cancelText:{
-    fontSize:16,
+  cancelText: {
+    fontSize: 16,
   },
-  updateText:{
-    fontSize:16,
-    color:'#fff',
-    fontWeight:'600'
+  updateText: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: '600'
   },
-  updateBtn:{
+  updateBtn: {
     backgroundColor: "#4F718A",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
     alignItems: "center",
-    justifyContent:'center',
+    justifyContent: 'center',
     height: 50,
-    width:'45%',
+    width: '45%',
   },
   radioContainer: {
     flexDirection: 'row',
