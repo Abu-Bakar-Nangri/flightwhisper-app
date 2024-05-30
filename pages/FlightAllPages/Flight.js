@@ -149,29 +149,30 @@ const Flight = ({ navigation }) => {
       return;
     }
 
-    const searchFlight = {
-      from: fromValue,
-      to: toValue,
-      depDate: selectedDepartureDate,
-      retDate: selectedReturnDate,
-      passengers: adults + childs + infants,
-      seatType: seatType,
-    };
+    // const searchFlight = {
+    //   from: fromValue,
+    //   to: toValue,
+    //   depDate: selectedDepartureDate,
+    //   retDate: selectedReturnDate,
+    //   passengers: adults + childs + infants,
+    //   seatType: seatType,
+    // };
 
-    const searchMessage = `
-      From: ${searchFlight.from}
-      To: ${searchFlight.to}
-      Departure Date: ${searchFlight.depDate}
-      Return Date: ${searchFlight.retDate}
-      Passengers: ${searchFlight.passengers}
-      Seat Type: ${searchFlight.seatType}
-    `;
+    // const searchMessage = `
+    //   From: ${searchFlight.from}
+    //   To: ${searchFlight.to}
+    //   Departure Date: ${searchFlight.depDate}
+    //   Return Date: ${searchFlight.retDate}
+    //   Passengers: ${searchFlight.passengers}
+    //   Seat Type: ${searchFlight.seatType}
+    // `;
 
-    Toast.show ({
-      type:'success',
-      text1:'Flight Search Details',
-      text2:searchMessage,
-    });
+    // Toast.show ({
+    //   type:'success',
+    //   text1:'Flight Search Details',
+    //   text2:searchMessage,
+    // });
+    navigation.navigate("FlightResult");
   };
 
 

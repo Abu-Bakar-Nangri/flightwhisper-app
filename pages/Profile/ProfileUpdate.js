@@ -9,66 +9,39 @@ import {
   TextInput,
   Button,
 } from "react-native";
+import { RadioButton } from 'react-native-paper';
+
+const userData = {
+  _id: "66562162cbd69eeac59ac811",
+  name: "Abu Bakar Siddique",
+  email: "abubakarnangri@gmail.com",
+  phoneNo: "3245521001",
+  gender: "male",
+  dob: "2003-05-15",
+  nationality: "Pakistan",
+  address: {
+    street: "Rose place street",
+    city: "Lahore",
+    province: "Punjab",
+    postalCode: "54000",
+    country: "Pakistan",
+  },
+};
 
 const ProfileUpdate = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [updatedUserData, setUpdatedUserData] = useState({
-    name: "",
-    email: "",
-    phoneNo: "",
-    gender: "",
-    dob: "",
-    nationality: "",
-  });
-  const [updatedAddress, setUpdatedAddress] = useState({
-    street: "",
-    city: "",
-    province: "",
-    postalCode: "",
-    country: "",
-  });
+  const [name,setName] = useState(userData.name)
+  const [phoneNo,setPhoneNo] = useState(userData.phoneNo)
+  const [gender,setGender] = useState(userData.gender)
+  const [dob,setDOB] = useState(userData.dob)
+  const [nationality,setNationality] = useState(userData.nationality)
+  const [street,setStreet] = useState(userData.street)
+  const [city,setCity] = useState(userData.city)
+  const [province,setProvince] = useState(userData.province)
+  const [postalCode,setPostalCode] = useState(userData.postalCode)
+  const [country,setCountry] = useState(userData.country)
 
-  const userData = {
-    _id: "66562162cbd69eeac59ac811",
-    name: "Abu Bakar Siddique",
-    email: "abubakarnangri@gmail.com",
-    phoneNo: "3245521001",
-    gender: "male",
-    dob: "2003-05-15",
-    nationality: "Pakistan",
-    address: {
-      street: "Rose place street",
-      city: "Lahore",
-      province: "Punjab",
-      postalCode: "54000",
-      country: "Pakistan",
-    },
-  };
 
-  const handleUpdateProfile = () => {
-    const updatedProfileData = { ...userData };
-
-    updatedProfileData.name = updatedUserData.name || userData.name;
-    updatedProfileData.email = updatedUserData.email || userData.email;
-    updatedProfileData.phoneNo = updatedUserData.phoneNo || userData.phoneNo;
-    updatedProfileData.gender = updatedUserData.gender || userData.gender;
-    updatedProfileData.dob = updatedUserData.dob || userData.dob;
-    updatedProfileData.nationality =
-      updatedUserData.nationality || userData.nationality;
-
-    updatedProfileData.address = {
-      ...userData.address,
-      street: updatedAddress.street || userData.address.street,
-      city: updatedAddress.city || userData.address.city,
-      province: updatedAddress.province || userData.address.province,
-      postalCode: updatedAddress.postalCode || userData.address.postalCode,
-      country: updatedAddress.country || userData.address.country,
-    };
-
-    console.log("Updated Profile Data:", updatedProfileData);
-
-    setModalVisible(false);
-  };
 
   const renderAddress = () => {
     const { street, city, province, postalCode, country } = userData.address;
@@ -86,7 +59,7 @@ const ProfileUpdate = () => {
       <Text style={styles.header}>Profile Edit</Text>
       <Text style={styles.sectionHeader}>Name</Text>
       <View style={styles.section}>
-        <Text style={styles.sectionText}>{userData.name}</Text>
+        <Text style={styles.sectionText}>{name}</Text>
       </View>
       <Text style={styles.sectionHeader}>Email</Text>
       <View style={styles.section}>
@@ -94,24 +67,25 @@ const ProfileUpdate = () => {
       </View>
       <Text style={styles.sectionHeader}>Phone Number</Text>
       <View style={styles.section}>
-        <Text style={styles.sectionText}>{userData.phoneNo}</Text>
+        <Text style={styles.sectionText}>{phoneNo}</Text>
       </View>
       <Text style={styles.sectionHeader}>Gender</Text>
       <View style={styles.section}>
-        <Text style={styles.sectionText}>{userData.gender}</Text>
+        <Text style={styles.sectionText}>{gender}</Text>
       </View>
       <Text style={styles.sectionHeader}>Date of Birth</Text>
       <View style={styles.section}>
-        <Text style={styles.sectionText}>{userData.dob}</Text>
+        <Text style={styles.sectionText}>{dob}</Text>
       </View>
       <Text style={styles.sectionHeader}>Nationality</Text>
       <View style={styles.section}>
-        <Text style={styles.sectionText}>{userData.nationality}</Text>
+        <Text style={styles.sectionText}>{nationality}</Text>
       </View>
       <Text style={styles.sectionHeader}>Address</Text>
       {userData.address && renderAddress()}
       <TouchableOpacity
         style={styles.updateButton}
+        activeOpacity={0.9} 
         onPress={() => setModalVisible(true)}
       >
         <Text style={styles.buttonText}>Edit Profile</Text>
@@ -130,9 +104,9 @@ const ProfileUpdate = () => {
               <Text style={styles.email}>Name</Text>
               <TextInput
                 style={styles.enteremail}
-                
+                onChangeText={name}
                 placeholder="Enter name"
-                autoCapitalize="none"
+
               />
             </View>
             <View style={styles.emailview}>
@@ -141,25 +115,48 @@ const ProfileUpdate = () => {
                 style={styles.enteremail}
                 
                 placeholder="Enter phone number"
-                autoCapitalize="none"
+
               />
             </View>
             <View style={styles.emailview}>
-              <Text style={styles.email}>Gender</Text>
-              <TextInput
-                style={styles.enteremail}
-                
-                placeholder="Enter gender"
-                autoCapitalize="none"
-              />
-            </View>
+        <Text style={styles.email}>Gender</Text>
+        <View style={styles.radioContainer}>
+          <View style={styles.radioButton}>
+            <RadioButton
+              value="male"
+              status={gender === 'male' ? 'checked' : 'unchecked'}
+              onPress={() => setGender('male')}
+              color="#4F718A"
+            />
+            <Text style={styles.radioText}>Male</Text>
+          </View>
+          <View style={styles.radioButton}>
+            <RadioButton
+              value="female"
+              status={gender === 'female' ? 'checked' : 'unchecked'}
+              onPress={() => setGender('female')}
+              color="#4F718A"
+            />
+            <Text style={styles.radioText}>Female</Text>
+          </View>
+          <View style={styles.radioButton}>
+            <RadioButton
+              value="others"
+              status={gender === 'others' ? 'checked' : 'unchecked'}
+              onPress={() => setGender('others')}
+              color="#4F718A"
+            />
+            <Text style={styles.radioText}>Others</Text>
+          </View>
+        </View>
+      </View>
             <View style={styles.emailview}>
               <Text style={styles.email}>Date of Birth</Text>
               <TextInput
                 style={styles.enteremail}
                 
                 placeholder="Enter date of birth"
-                autoCapitalize="none"
+
               />
             </View>
             <View style={styles.emailview}>
@@ -168,7 +165,7 @@ const ProfileUpdate = () => {
                 style={styles.enteremail}
                 
                 placeholder="Enter nationality"
-                autoCapitalize="none"
+
               />
             </View>
             <View style={styles.emailview}>
@@ -177,7 +174,7 @@ const ProfileUpdate = () => {
                 style={styles.enteremail}
                 
                 placeholder="Enter street"
-                autoCapitalize="none"
+
               />
             </View>
             <View style={styles.emailview}>
@@ -186,7 +183,7 @@ const ProfileUpdate = () => {
                 style={styles.enteremail}
                 
                 placeholder="Enter city"
-                autoCapitalize="none"
+
               />
             </View>
             <View style={styles.emailview}>
@@ -195,7 +192,7 @@ const ProfileUpdate = () => {
                 style={styles.enteremail}
                 
                 placeholder="Enter province"
-                autoCapitalize="none"
+ 
               />
             </View>
             <View style={styles.emailview}>
@@ -204,7 +201,7 @@ const ProfileUpdate = () => {
                 style={styles.enteremail}
                 
                 placeholder="Enter postal code"
-                autoCapitalize="none"
+    
               />
             </View>
             <View style={styles.emailview}>
@@ -213,12 +210,19 @@ const ProfileUpdate = () => {
                 style={styles.enteremail}
                 
                 placeholder="Enter country"
-                autoCapitalize="none"
+      
               />
             </View>
     
-            <Button title="Update" onPress={handleUpdateProfile} />
-            <Button title="Cancel" onPress={() => setModalVisible(false)} />
+            <View style={styles.modeleditbtn}> 
+              <TouchableOpacity activeOpacity={0.9} style={styles.cancelBtn} onPress={() => setModalVisible(false)} >
+                 <Text style={styles.cancelText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.9}  style={styles.updateBtn} >
+                <Text style={styles.updateText}>Update</Text>
+              </TouchableOpacity>
+            </View>
+            
           </View>
         </View>
         </ScrollView>
@@ -318,6 +322,53 @@ const styles = StyleSheet.create({
     height: 55,
     paddingHorizontal: 16,
     fontSize: 16,
+  },
+  modeleditbtn:{
+    width:'100%',
+    flexDirection:'row',
+    justifyContent:'space-evenly',
+    alignItems:'center',
+    paddingVertical:25,
+  },
+  cancelBtn:{
+    backgroundColor: "#92A7BA40",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent:'center',
+    height: 50,
+    width:'45%',
+  },
+  cancelText:{
+    fontSize:16,
+  },
+  updateText:{
+    fontSize:16,
+    color:'#fff',
+    fontWeight:'600'
+  },
+  updateBtn:{
+    backgroundColor: "#4F718A",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent:'center',
+    height: 50,
+    width:'45%',
+  },
+  radioContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 8,
+  },
+  radioButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioText: {
+    marginLeft: 8,
   },
 });
 

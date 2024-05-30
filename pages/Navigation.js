@@ -22,6 +22,7 @@ import RegisterwithEmail from "./CredentailsAllPages/RegisterwithEmail";
 import PaymentMethods from "./HelpandInfoApp/PaymentMethod";
 import AboutUs from "./HelpandInfoApp/AboutUs";
 import ContactUs from "./HelpandInfoApp/ContactUs";
+import FlightSearchResult from "./FlightAllPages/FlightSearchResult";
 
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +53,21 @@ function Navigation() {
           component={ForgetPassword}
           options={{
             headerTitle: "Forget Password",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="FlightResult"
+          component={FlightSearchResult}
+          options={{
+            headerTitle: "Flight Results",
             headerTitleStyle: {
               fontWeight: "bold",
               textAlign: "center",
