@@ -10,7 +10,6 @@ import {
   Image,
   Dimensions,
   Modal,
-  Alert,
   TextInput,
   FlatList,
 } from "react-native";
@@ -18,6 +17,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/person.png";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { FontAwesome5 } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 const Flight = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -60,7 +60,11 @@ const Flight = ({ navigation }) => {
       setSelectedDepartureDate(day.dateString);
       setDepartureDateModalVisible(false);
     } else {
-      Alert.alert("Error: Departure date cannot be after return date.");
+      Toast.show ({
+        type:'error',
+        text1:'Error',
+        text2:'Departure date cannot be after return date.',
+      });
     }
   };
 
@@ -69,7 +73,11 @@ const Flight = ({ navigation }) => {
       setSelectedReturnDate(day.dateString);
       setReturnDateModalVisible(false);
     } else {
-      Alert.alert("Error: Return date cannot be before departure date.");
+      Toast.show ({
+        type:'error',
+        text1:'Error',
+        text2:'Return date cannot be before departure date.',
+      });
     }
   };
 
@@ -133,7 +141,11 @@ const Flight = ({ navigation }) => {
 
   const handleSerach = () => {
     if (!fromValue || !toValue || !selectedDepartureDate || !selectedReturnDate || (adults + childs + infants) === 0 || !seatType) {
-      Alert.alert("Error", "Please fill in all the fields.");
+      Toast.show ({
+        type:'error',
+        text1:'Empty fields',
+        text2:'Please fill in all the fields.',
+      });
       return;
     }
 
@@ -155,7 +167,11 @@ const Flight = ({ navigation }) => {
       Seat Type: ${searchFlight.seatType}
     `;
 
-    Alert.alert("Flight Search Details", searchMessage);
+    Toast.show ({
+      type:'success',
+      text1:'Flight Search Details',
+      text2:searchMessage,
+    });
   };
 
 
@@ -203,7 +219,9 @@ const Flight = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
+      
         <View style={styles.profiledata}>
+        <Toast/>
           <View style={styles.headerContainer}>
             <View style={styles.headerData}>
               <TouchableOpacity
@@ -692,6 +710,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: Platform.OS === "ios" ? 20 : 30,
     marginHorizontal: 20,
+    zIndex:-100,
   },
   headerData: {
     flexDirection: "row",

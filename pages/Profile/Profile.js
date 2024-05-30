@@ -16,6 +16,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 import axios from "axios";
+import Toast from "react-native-toast-message";
 
 const Profile = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -94,6 +95,11 @@ const Profile = ({ navigation }) => {
   }
 
   const deleteAccount = async() =>{
+    try{
+
+    } catch{
+
+    }
       await axios.delete('http://192.168.50.220:3699/api/users/deleteAccount/abubakarnangri@gmail.com');
   }
 
@@ -375,7 +381,7 @@ const Profile = ({ navigation }) => {
           style={styles.footerBtn}
           onPress={handleTicket}
         >
-          <MaterialCommunityIcons name={"ticket"} size={26} color="gray" />
+          <MaterialCommunityIcons name={"airplane"} size={26} color="gray" />
           <Text style={styles.otherIconText}>Ticket</Text>
         </TouchableOpacity>
         <TouchableOpacity

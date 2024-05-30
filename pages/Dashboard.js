@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/person.png";
+import Toast from "react-native-toast-message";
 
 const Dashboard = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,6 +25,7 @@ const Dashboard = ({ navigation }) => {
       setIsLoading(false);
     }, 2000);
     return () => clearTimeout(timer);
+
   }, []);
 
   const handleTicket = () => {
@@ -63,6 +65,7 @@ const Dashboard = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
+      <Toast ref={(ref)=>Toast.setRef(ref)} />
         <View style={styles.profiledata}>
           <View style={styles.headerContainer}>
             <View style={styles.headerData}>
@@ -240,7 +243,7 @@ const Dashboard = ({ navigation }) => {
           style={styles.footerBtn}
           onPress={handleTicket}
         >
-          <MaterialCommunityIcons name={"ticket"} size={26} color="gray" />
+          <MaterialCommunityIcons name={"airplane"} size={26} color="gray" />
           <Text style={styles.otherIconText}>Ticket</Text>
         </TouchableOpacity>
         <TouchableOpacity

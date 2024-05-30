@@ -150,7 +150,7 @@ const History = ({ navigation }) => {
           style={styles.footerBtn}
           onPress={handleTicket}
         >
-          <MaterialCommunityIcons name={"ticket"} size={26} color="gray" />
+          <MaterialCommunityIcons name={"airplane"} size={26} color="gray" />
           <Text style={styles.otherIconText}>Ticket</Text>
         </TouchableOpacity>
         <TouchableOpacity

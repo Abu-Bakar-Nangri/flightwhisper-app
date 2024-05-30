@@ -1,46 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  Alert,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
+import Toast from "react-native-toast-message";
 
 const ForgetPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
 
+  const handleForgetPassword = async () => {
+    try {
+      if (!email) {
+        Toast.show({
+          type: 'error',
+          text1: 'Empty field',
+          text2: 'Please enter the email to search',
+          topOffset: 20,
+        });
+        return;
+      }
 
+      const response = await axios.post(`http://192.168.50.220:3699/api/users/resetPassword/:${email}`);
 
-const handleForgetPassword = async (email) => {
-  try {
-    if (!email) {
-      Alert.alert("Please enter the email to search");
-      return;
+      if (response.status === 200) {
+        Toast.show({
+          type: 'success',
+          text1: 'Success',
+          text2: 'Verification code sent to your email.',
+          topOffset: 20,
+        });
+        // navigation.navigate("VerifyOTP", { code: response.data.code, email });
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response ? error.response.data.message : error.message,
+        topOffset: 20,
+      });
     }
-
-    const response = await axios.post(`http://192.168.50.220:3699/api/users/resetPassword/:${email}`);
-
-    if (response.status === 200) {
-      Alert.alert(localIp);
-      //navigation.navigate("VerifyOTP", { code: response.data.code, email });
-    }
-  } catch (error) {
-    Alert.alert("Error", error.response ? error.response.data.message : error.message);
-  }
-};
-
+  };
 
   const handleLogin = () => {
     navigation.reset({ index: 0, routes: [{ name: "Login" }] });
   };
+
   return (
     <SafeAreaView style={styles.container}>
+      <Toast />
       <Text style={styles.forgetTitle}>Forgot password?</Text>
       <Text style={styles.forgetSubTitle}>
         Don't worry! it happens. Please enter the email
@@ -75,20 +87,9 @@ const handleForgetPassword = async (email) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "top",
-    alignItems: "left",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     backgroundColor: "#f5f5f5",
-  },
-  iconContainer: {
-    width: 32,
-    height: 32,
-    borderWidth: 1,
-    borderRadius: 8,
-    marginHorizontal: 20,
-    marginVertical: 40,
-  },
-  backIcon: {
-    padding: 2,
   },
   forgetTitle: {
     fontSize: 32,
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     paddingBottom: 6,
     paddingHorizontal: 20,
+    zIndex:-100,
   },
   forgetSubTitle: {
     fontSize: 16,
@@ -115,10 +117,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingVertical: 6,
     color: "#000000",
-  },
-  icon: {
-    marginHorizontal: 170,
-    marginTop: -40,
   },
   enteremail: {
     borderColor: "#D8DADC",

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import Toast from "react-native-toast-message";
 
 import {
   StyleSheet,
@@ -10,7 +10,6 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
-  Alert,
   Platform,
   ScrollView,
   KeyboardAvoidingView,
@@ -37,12 +36,22 @@ export default function RegisterwithEmail({ navigation }) {
   const handleRegister = async () => {
     try {
       if (!email || !password || !confirmpassword || !name || !phoneNo) {
-        Alert.alert("Please enter all fields");
+        Toast.show ({
+          type:'error',
+          text1:'Empty fields',
+          text2:'Please enter all fields',
+          topOffset: 20,
+        });
         return;
       }
 
       if (password !== confirmpassword) {
-        Alert.alert("Passwords do not match");
+        Toast.show ({
+          type:'error',
+          text1:'Password Error',
+          text2:'Passwords do not match',
+          topOffset: 20,
+        });
         return;
       }
       const registrationData = {
@@ -60,16 +69,20 @@ export default function RegisterwithEmail({ navigation }) {
       if (response.status === 201) {
         navigation.navigate("Login");
       } else {
-        Alert.alert(
-          "Registration failed",
-          response.data.message || "Unknown error"
-        );
+          Toast.show ({
+            type:'error',
+            text1:"Registration failed",
+            text2: response.data.message || "Unknown error",
+            topOffset: 20,
+          });
       }
     } catch (error) {
-      Alert.alert(
-        "Error occurred while registering",
-        error.response?.data?.message || error.message
-      );
+      Toast.show ({
+        type:'error',
+        text1:"Error occurred while registering",
+        text2: error.response?.data?.message || error.message,
+        topOffset: 20,
+      });
     }
   };
 
@@ -82,7 +95,9 @@ export default function RegisterwithEmail({ navigation }) {
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
     >
+   
       <SafeAreaView style={styles.container}>
+      <Toast  />
         <Text style={styles.login}>Register with Email</Text>
         <View style={styles.emailview}>
           <Text style={styles.email}>Name</Text>
@@ -187,6 +202,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     paddingHorizontal: 20,
     color: "#000000",
+    zIndex:-100,
   },
   emailview: {
     paddingHorizontal: 20,

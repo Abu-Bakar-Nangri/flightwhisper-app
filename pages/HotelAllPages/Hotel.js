@@ -19,6 +19,7 @@ import img from "../../assets/person.png";
 import { Calendar} from "react-native-calendars";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesome5 } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 const Hotel = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -48,7 +49,11 @@ const Hotel = ({ navigation }) => {
       setSelectedCheckInDate(day.dateString);
       setCheckInDateModalVisible(false);
     } else {
-      Alert.alert("Error: Check-in date cannot be after check-out date.");
+      Toast.show({
+        type:'error',
+        text1:'Error',
+        text2:'Check-in date cannot be after check-out date.',
+      });
     }
   };
 
@@ -57,7 +62,11 @@ const Hotel = ({ navigation }) => {
       setselectedCheckOutDate(day.dateString);
       setCheckOutDateModalVisible(false);
     } else {
-      Alert.alert("Error: Check-out cannot be before check-in date.");
+      Toast.show({
+        type:'error',
+        text1:'Error',
+        text2:'Check-out cannot be before check-in date.',
+      });
     }
   };
 
@@ -114,7 +123,11 @@ const Hotel = ({ navigation }) => {
 
   const handleSerach = () => {
     if (!destinationValue || !selectedCheckInDate || !selectedCheckOutDate || (adults + childs ) === 0 || rooms === 0) {
-      Alert.alert("Error", "Please fill in all the fields.");
+      Toast.show({
+        type:'error',
+        text1:'Empty fields',
+        text2:'Please fill in all the fields.',
+      });
       return;
     }
 
@@ -134,7 +147,11 @@ const Hotel = ({ navigation }) => {
       Rooms: ${searchFlight.rooms}
     `;
 
-    Alert.alert("Flight Search Details", searchMessage);
+    Toast.show({
+      type:'success',
+      text1:'Hotel Search Details',
+      text2:searchMessage,
+    })
   };
 
 
@@ -165,6 +182,7 @@ const Hotel = ({ navigation }) => {
         showsHorizontalScrollIndicator={false}
       >
         <View style={styles.profiledata}>
+        <Toast/>
           <View style={styles.headerContainer}>
             <View style={styles.headerData}>
               <TouchableOpacity
@@ -526,6 +544,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: Platform.OS === "ios" ? 20 : 30,
     marginHorizontal: 20,
+    zIndex:-100,
   },
   headerData: {
     flexDirection: "row",
