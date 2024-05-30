@@ -1,5 +1,5 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView, Alert } from 'react-native';
 
 const data = [
@@ -21,41 +21,86 @@ const data = [
     { id: '16', airline: 'Southwest Airlines', price: '$180', depCity: 'Atlanta', depCityShort: 'ATL', depDate: '20 June 2024', depTime: '08:00 AM', arrCity: 'Washington', arrCityShort: 'DCA', arrDate: '20 June 2024', arrTime: '10:20 AM', time: '2hrs 20mins' },
 ]
 const FlightSearchResult = () => {
+    const [activeButton, setActiveButton] = useState(null);
 
-    const handleItem =(item)=>{
+    // Function to handle button press
+    const handlePress = (buttonName) => {
+        setActiveButton(buttonName);
+    };
+    const handleItem = (item) => {
         Alert.alert(item.airline);
     }
     return (
         <SafeAreaView style={styles.container}>
+            <ScrollView horizontal>
+                <View style={styles.Filters}>
+                    <TouchableOpacity activeOpacity={0.9} style={[
+                        styles.filerFlight,
+                        activeButton === 'Best' && styles.activeButton
+                    ]}
+                        onPress={() => handlePress('Best')}>
+                        <Text style={styles.filterText}>Best</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.9} style={[
+                        styles.filerFlight,
+                        activeButton === 'Cheapest' && styles.activeButton
+                    ]}
+                        onPress={() => handlePress('Cheapest')}>
+                        <Text style={styles.filterText}>Cheapest</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.9} style={[
+                        styles.filerFlight,
+                        activeButton === 'Fastest' && styles.activeButton
+                    ]}
+                        onPress={() => handlePress('Fastest')}>
+                        <Text style={styles.filterText}>Fastest</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.9} style={[
+                        styles.filerFlight,
+                        activeButton === 'Direct' && styles.activeButton
+                    ]}
+                        onPress={() => handlePress('Direct')}>
+                        <Text style={styles.filterText}>Direct</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity activeOpacity={0.9} style={[
+                        styles.filerFlight,
+                        activeButton === 'Shortest' && styles.activeButton
+                    ]}
+                        onPress={() => handlePress('Shortest')}>
+                        <Text style={styles.filterText}>Shortest</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
             <ScrollView showsVerticalScrollIndicator={false}>
                 {data.map((item) => {
-                    return(
-                    <TouchableOpacity onPress={()=>handleItem(item)} activeOpacity={0.8} key={item.id} style={styles.FlightContainer}>
-                        <View style={styles.airlineContainer}>
-                            <Text style={styles.airlineName}>{item.airline}</Text>
-                            <Text style={styles.airlinePrice}>{item.price}</Text>
-                        </View>
-                        <View style={styles.dashedLine} />
-                        <View style={styles.flightinfo}>
-                            <View style={styles.depArivInfo}>
-                                <Text style={styles.depCity}>{item.depCity}</Text>
-                                <Text style={styles.depCityShort}>{item.depCityShort}</Text>
-                                <Text style={styles.depDate}>{item.depTime}</Text>
-                                <Text style={styles.depDate}>{item.depDate}</Text>
+                    return (
+                        <TouchableOpacity onPress={() => handleItem(item)} activeOpacity={0.8} key={item.id} style={styles.FlightContainer}>
+                            <View style={styles.airlineContainer}>
+                                <Text style={styles.airlineName}>{item.airline}</Text>
+                                <Text style={styles.airlinePrice}>{item.price}</Text>
                             </View>
-                            <View style={styles.depArivInfo} >
-                                <MaterialCommunityIcons name='airplane-takeoff' size={24} color={'rgba(0,0,0,0.8)'} />
-                                <Text style={styles.flightTime}>{item.time}</Text>
+                            <View style={styles.dashedLine} />
+                            <View style={styles.flightinfo}>
+                                <View style={styles.depArivInfo}>
+                                    <Text style={styles.depCity}>{item.depCity}</Text>
+                                    <Text style={styles.depCityShort}>{item.depCityShort}</Text>
+                                    <Text style={styles.depDate}>{item.depTime}</Text>
+                                    <Text style={styles.depDate}>{item.depDate}</Text>
+                                </View>
+                                <View style={styles.depArivInfo} >
+                                    <MaterialCommunityIcons name='airplane-takeoff' size={24} color={'rgba(0,0,0,0.8)'} />
+                                    <Text style={styles.flightTime}>{item.time}</Text>
+                                </View>
+                                <View style={styles.depArivInfo}>
+                                    <Text style={styles.depCity}>{item.arrCity}</Text>
+                                    <Text style={styles.depCityShort}>{item.arrCityShort}</Text>
+                                    <Text style={styles.depDate}>{item.arrTime}</Text>
+                                    <Text style={styles.depDate}>{item.arrDate}</Text>
+                                </View>
                             </View>
-                            <View style={styles.depArivInfo}>
-                                <Text style={styles.depCity}>{item.arrCity}</Text>
-                                <Text style={styles.depCityShort}>{item.arrCityShort}</Text>
-                                <Text style={styles.depDate}>{item.arrTime}</Text>
-                                <Text style={styles.depDate}>{item.arrDate}</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                )})}
+                        </TouchableOpacity>
+                    )
+                })}
             </ScrollView>
         </SafeAreaView>
     );
@@ -67,12 +112,39 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         width: "100%",
     },
+    Filters: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        marginVertical: 5,
+        height: 45,
+        backgroundColor: '#fff',
+        borderRadius: 6,
+        alignItems: 'center'
+    },
+    filerFlight: {
+        height: 35,
+        marginHorizontal: 8,
+        backgroundColor: '#EEF1F4',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 15,
+        borderRadius: 6,
+    },
+    activeButton: {
+        backgroundColor: '#4F718A',
+    },
+    filterText: {
+        fontSize: 16,
+        color: '#000',
+        fontWeight: '500',
+    },
     FlightContainer: {
         marginHorizontal: 10,
         marginVertical: 5,
         backgroundColor: '#EEF1F4',
         borderRadius: 6,
     },
+
     airlineContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
