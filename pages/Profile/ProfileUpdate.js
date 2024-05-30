@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+  Button,
+} from "react-native";
 
 const ProfileUpdate = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -9,14 +18,14 @@ const ProfileUpdate = () => {
     phoneNo: "",
     gender: "",
     dob: "",
-    nationality: ""
+    nationality: "",
   });
   const [updatedAddress, setUpdatedAddress] = useState({
     street: "",
     city: "",
     province: "",
     postalCode: "",
-    country: ""
+    country: "",
   });
 
   const userData = {
@@ -32,22 +41,21 @@ const ProfileUpdate = () => {
       city: "Lahore",
       province: "Punjab",
       postalCode: "54000",
-      country: "Pakistan"
-    }
+      country: "Pakistan",
+    },
   };
 
   const handleUpdateProfile = () => {
-
     const updatedProfileData = { ...userData };
-  
 
     updatedProfileData.name = updatedUserData.name || userData.name;
     updatedProfileData.email = updatedUserData.email || userData.email;
     updatedProfileData.phoneNo = updatedUserData.phoneNo || userData.phoneNo;
     updatedProfileData.gender = updatedUserData.gender || userData.gender;
     updatedProfileData.dob = updatedUserData.dob || userData.dob;
-    updatedProfileData.nationality = updatedUserData.nationality || userData.nationality;
-  
+    updatedProfileData.nationality =
+      updatedUserData.nationality || userData.nationality;
+
     updatedProfileData.address = {
       ...userData.address,
       street: updatedAddress.street || userData.address.street,
@@ -56,20 +64,19 @@ const ProfileUpdate = () => {
       postalCode: updatedAddress.postalCode || userData.address.postalCode,
       country: updatedAddress.country || userData.address.country,
     };
-  
 
     console.log("Updated Profile Data:", updatedProfileData);
-  
 
     setModalVisible(false);
   };
-  
 
   const renderAddress = () => {
     const { street, city, province, postalCode, country } = userData.address;
     return (
       <View style={styles.section}>
-        <Text style={styles.sectionText}>{street}, {city}, {province} {postalCode}, {country}</Text>
+        <Text style={styles.sectionText}>
+          {street}, {city}, {province} {postalCode}, {country}
+        </Text>
       </View>
     );
   };
@@ -103,7 +110,10 @@ const ProfileUpdate = () => {
       </View>
       <Text style={styles.sectionHeader}>Address</Text>
       {userData.address && renderAddress()}
-      <TouchableOpacity style={styles.updateButton} onPress={() => setModalVisible(true)}>
+      <TouchableOpacity
+        style={styles.updateButton}
+        onPress={() => setModalVisible(true)}
+      >
         <Text style={styles.buttonText}>Edit Profile</Text>
       </TouchableOpacity>
       <Modal
@@ -112,79 +122,106 @@ const ProfileUpdate = () => {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
+      <ScrollView>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalHeader}>Edit Profile</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Name"
-              value={updatedUserData.name}
-              onChangeText={(text) => setUpdatedUserData({...updatedUserData, name: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Email"
-              value={updatedUserData.email}
-              onChangeText={(text) => setUpdatedUserData({...updatedUserData, email: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Phone Number"
-              value={updatedUserData.phoneNo}
-              onChangeText={(text) => setUpdatedUserData({...updatedUserData, phoneNo: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Gender"
-              value={updatedUserData.gender}
-              onChangeText={(text) => setUpdatedUserData({...updatedUserData, gender: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Date of Birth"
-              value={updatedUserData.dob}
-              onChangeText={(text) => setUpdatedUserData({...updatedUserData, dob: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Nationality"
-              value={updatedUserData.nationality}
-              onChangeText={(text) => setUpdatedUserData({...updatedUserData, nationality: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Street"
-              value={updatedAddress.street}
-              onChangeText={(text) => setUpdatedAddress({...updatedAddress, street: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="City"
-              value={updatedAddress.city}
-              onChangeText={(text) => setUpdatedAddress({...updatedAddress, city: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Province"
-              value={updatedAddress.province}
-              onChangeText={(text) => setUpdatedAddress({...updatedAddress, province: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Postal Code"
-              value={updatedAddress.postalCode}
-              onChangeText={(text) => setUpdatedAddress({...updatedAddress, postalCode: text})}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Country"
-              value={updatedAddress.country}
-              onChangeText={(text) => setUpdatedAddress({...updatedAddress, country: text})}
-            />
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Name</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter name"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Phone Number</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter phone number"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Gender</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter gender"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Date of Birth</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter date of birth"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Nationality</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter nationality"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Street</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter street"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>City</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter city"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Province</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter province"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Postal Code</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter postal code"
+                autoCapitalize="none"
+              />
+            </View>
+            <View style={styles.emailview}>
+              <Text style={styles.email}>Country</Text>
+              <TextInput
+                style={styles.enteremail}
+                
+                placeholder="Enter country"
+                autoCapitalize="none"
+              />
+            </View>
+    
             <Button title="Update" onPress={handleUpdateProfile} />
             <Button title="Cancel" onPress={() => setModalVisible(false)} />
           </View>
         </View>
+        </ScrollView>
       </Modal>
     </ScrollView>
   );
@@ -201,11 +238,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
-    color: "#000000", 
+    color: "#000000",
   },
   section: {
     marginBottom: 15,
-    backgroundColor: "#92A7BA40", 
+    backgroundColor: "#92A7BA40",
     padding: 10,
     borderRadius: 8,
   },
@@ -213,35 +250,35 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "500",
     marginBottom: 5,
-    color: "#000000", 
+    color: "#000000",
   },
   sectionText: {
-    color: "#000000", 
+    color: "#000000",
   },
   ffooter: {
     paddingBottom: 20,
   },
   updateButton: {
-    backgroundColor: '#4F718A', 
+    backgroundColor: "#4F718A",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
-    alignItems: 'center', 
-    marginTop: 20, 
+    alignItems: "center",
+    marginTop: 20,
     marginBottom: 50,
-    height:50, 
+    height: 50,
   },
   buttonText: {
-    color: '#FFFFFF', 
+    color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    width:'100%',
+    width: "100%",
   },
   modalContent: {
     backgroundColor: "#FFFFFF",
@@ -263,6 +300,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 20,
     paddingHorizontal: 10,
+  },
+  emailview: {
+    paddingVertical: 3,
+    width: "100%",
+  },
+  email: {
+    fontSize: 14,
+    paddingVertical: 6,
+    color: "#000000",
+  },
+  enteremail: {
+    borderColor: "#D8DADC",
+    borderWidth: 1,
+    borderRadius: 6,
+    backgroundColor: "#ffffff",
+    height: 55,
+    paddingHorizontal: 16,
+    fontSize: 16,
   },
 });
 
