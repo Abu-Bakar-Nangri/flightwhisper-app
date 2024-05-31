@@ -23,6 +23,7 @@ import PaymentMethods from "./HelpandInfoApp/PaymentMethod";
 import AboutUs from "./HelpandInfoApp/AboutUs";
 import ContactUs from "./HelpandInfoApp/ContactUs";
 import FlightSearchResult from "./FlightAllPages/FlightSearchResult";
+import HotelSearchResults from "./HotelAllPages/HotelSearchResults";
 
 
 const Stack = createNativeStackNavigator();
@@ -68,6 +69,20 @@ function Navigation() {
           component={FlightSearchResult}
           options={{
             headerTitle: "Flight Results",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              textAlign: "center",
+              color: "white",
+            },
+            headerStyle: {
+              backgroundColor: "#4F718A",
+            },
+          }}/>
+          <Stack.Screen
+          name="HotelResults"
+          component={HotelSearchResults}
+          options={{
+            headerTitle: "Hotel Results",
             headerTitleStyle: {
               fontWeight: "bold",
               textAlign: "center",

@@ -34,7 +34,8 @@ const FlightSearchResult = () => {
         <SafeAreaView style={styles.container}>
             <ScrollView horizontal>
                 <View style={styles.Filters}>
-                    <TouchableOpacity activeOpacity={0.9} style={[
+                   
+                <TouchableOpacity activeOpacity={0.9} style={[
                         styles.filerFlight,
                         activeButton === 'Best' && styles.activeButton
                     ]}
