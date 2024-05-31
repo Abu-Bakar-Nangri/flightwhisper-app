@@ -30,12 +30,10 @@ const Hotel = ({ navigation }) => {
   const [travelerModalVisible, setTravelerModalVisible] = useState(false);
   const [selectedCheckInDate, setSelectedCheckInDate] = useState(null);
   const [selectedCheckOutDate, setselectedCheckOutDate] = useState(null);
-  const [seatType, setSeatType] = useState("Economy");
   const [adults, setAdults] = useState(1);
   const [childs, setChilds] = useState(0);
   const [infants, setInfants] = useState(0);
   const [destinationValue, setDestinationValue] = useState(null);
-  const [toValue, setToValue] = useState(null);
   const [rooms ,setRooms] = useState(1);
 
   const getTotalPassengers = () => adults + childs + infants;
@@ -121,7 +119,7 @@ const Hotel = ({ navigation }) => {
   };
 
 
-  const handleSerach = () => {
+  const handleSerach = () => {``
     if (!destinationValue || !selectedCheckInDate || !selectedCheckOutDate || (adults + childs ) === 0 || rooms === 0) {
       Toast.show({
         type:'error',
@@ -130,28 +128,29 @@ const Hotel = ({ navigation }) => {
       });
       return;
     }
+    navigation.navigate('HotelResults');
 
-    const searchFlight = {
-      destination: destinationValue,
-      depDate: selectedCheckInDate,
-      retDate: selectedCheckOutDate,
-      guest: adults + childs,
-      rooms: rooms,
-    };
+    // const searchFlight = {
+    //   destination: destinationValue,
+    //   depDate: selectedCheckInDate,
+    //   retDate: selectedCheckOutDate,
+    //   guest: adults + childs,
+    //   rooms: rooms,
+    // };
 
-    const searchMessage = `
-      Destination: ${searchFlight.destination}
-      Check-in Date: ${searchFlight.depDate}
-      Check-out Date: ${searchFlight.retDate}
-      Quest: ${searchFlight.guest}
-      Rooms: ${searchFlight.rooms}
-    `;
+    // const searchMessage = `
+    //   Destination: ${searchFlight.destination}
+    //   Check-in Date: ${searchFlight.depDate}
+    //   Check-out Date: ${searchFlight.retDate}
+    //   Quest: ${searchFlight.guest}
+    //   Rooms: ${searchFlight.rooms}
+    // `;
 
-    Toast.show({
-      type:'success',
-      text1:'Hotel Search Details',
-      text2:searchMessage,
-    })
+    // Toast.show({
+    //   type:'success',
+    //   text1:'Hotel Search Details',
+    //   text2:searchMessage,
+    // })
   };
 
 
