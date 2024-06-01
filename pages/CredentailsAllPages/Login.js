@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import axios from 'axios';
 
 import {
   StyleSheet,
@@ -15,11 +15,14 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/airplane.png";
-
+import Toast from "react-native-toast-message";
+import { UserContext } from "../Context/UserContext";
 export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const {setUser} = useContext(UserContext); 
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -28,12 +31,49 @@ export default function Login({ navigation }) {
   const handleLogin = async () => {
     try {
       if (!email || !password) {
-        Alert.alert("Please enter both email and password");
+        Alert.alert(
+          'Empty fields',
+          'Please enter both email and password',
+
+        );
         return;
       }
-      navigation.navigate("Dashboard");
+  
+      const response = await axios.post("http://192.168.50.171:3699/api/users/login", {
+        email,
+        password,
+      });
+  
+      if (response.status === 201) { // Update response status check
+        setUser(response.data);
+        navigation.navigate("Dashboard");
+      } else {
+        Alert.alert(
+          'Login failed',
+          response.data?.message || "Unknown error",
+   
+        );
+      }
     } catch (error) {
-      Alert.alert("Error occurred while logging in");
+      if (error.response) {
+        Alert.alert(
+          'Error',
+          error.response.data?.message || "Unknown server error",
+       
+        );
+      } else if (error.request) {
+        Alert.alert(
+          'Network error',
+          'No response from server. Please try again later.',
+
+        );
+      } else {
+        Alert.alert(
+          'Error',
+          'An error occurred while logging in',
+         
+        );
+      }
     }
   };
 
@@ -49,14 +89,17 @@ export default function Login({ navigation }) {
       <View style={styles.imageContainer}>
         <Image source={img} style={styles.image} />
       </View>
+      <Toast ref={(ref)=> useRef(ref)}/>
       <Text style={styles.login}>Log In</Text>
       <View style={styles.emailview}>
+      
         <Text style={styles.email}>Email address or number</Text>
         <TextInput
           style={styles.enteremail}
           value={email}
           onChangeText={setEmail}
           placeholder="Enter email or number"
+          autoCapitalize="none"
         />
       </View>
       <View style={styles.passwordview}>
