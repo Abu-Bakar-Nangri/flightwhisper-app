@@ -18,6 +18,7 @@ import img from "../../assets/person.png";
 import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import { Checkbox, RadioButton } from "react-native-paper";
 
 const Flight = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -34,8 +35,9 @@ const Flight = ({ navigation }) => {
   const [adults, setAdults] = useState(1);
   const [childs, setChilds] = useState(0);
   const [infants, setInfants] = useState(0);
-  const [fromValue, setFromValue] = useState(null)
-  const [toValue, setToValue] = useState(null)
+  const [fromValue, setFromValue] = useState(null);
+  const [toValue, setToValue] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('oneWay');
 
   const getTotalPassengers = () => adults + childs + infants;
 
@@ -60,10 +62,10 @@ const Flight = ({ navigation }) => {
       setSelectedDepartureDate(day.dateString);
       setDepartureDateModalVisible(false);
     } else {
-      Toast.show ({
-        type:'error',
-        text1:'Error',
-        text2:'Departure date cannot be after return date.',
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Departure date cannot be after return date.',
       });
     }
   };
@@ -73,10 +75,10 @@ const Flight = ({ navigation }) => {
       setSelectedReturnDate(day.dateString);
       setReturnDateModalVisible(false);
     } else {
-      Toast.show ({
-        type:'error',
-        text1:'Error',
-        text2:'Return date cannot be before departure date.',
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Return date cannot be before departure date.',
       });
     }
   };
@@ -140,14 +142,27 @@ const Flight = ({ navigation }) => {
   };
 
   const handleSerach = () => {
-    if (!fromValue || !toValue || !selectedDepartureDate || !selectedReturnDate || (adults + childs + infants) === 0 || !seatType) {
-      Toast.show ({
-        type:'error',
-        text1:'Empty fields',
-        text2:'Please fill in all the fields.',
-      });
-      return;
+    if(selectedOption==='oneWay'){
+      if (!fromValue || !toValue || !selectedDepartureDate || (adults + childs + infants) === 0 || !seatType) {
+        Toast.show({
+          type: 'error',
+          text1: 'Empty fields',
+          text2: 'Please fill in all the fields.',
+        });
+        return;
+      }
     }
+    else {
+      if (!fromValue || !toValue || !selectedDepartureDate || !selectedReturnDate || (adults + childs + infants) === 0 || !seatType) {
+        Toast.show({
+          type: 'error',
+          text1: 'Empty fields',
+          text2: 'Please fill in all the fields.',
+        });
+        return;
+      }
+    }
+    
 
     // const searchFlight = {
     //   from: fromValue,
@@ -206,13 +221,19 @@ const Flight = ({ navigation }) => {
     </TouchableOpacity>
   );
 
+  const RadioButton = ({ selected, onPress, children }) => (
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress} style={styles.radioButtonContainer}>
+      <View style={styles.radioButton}>
+        {selected ? <View style={styles.radioButtonSelected} /> : null}
+      </View>
+      <Text style={styles.radioButtonText}>{children}</Text>
+    </TouchableOpacity>
+  );
 
-  const countStyle = {
-    borderWidth: 2,
-    borderRadius: 20,
-    color: getTotalPassengers() < 10 ? 'red' : 'gray',
-    backgroundColor:'#4F718A',
+  const dynamicWidth = {
+    width: selectedOption === 'oneWay' ? '95%' : '46%',
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -220,9 +241,9 @@ const Flight = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-      
+
         <View style={styles.profiledata}>
-        <Toast/>
+          <Toast />
           <View style={styles.headerContainer}>
             <View style={styles.headerData}>
               <TouchableOpacity
@@ -279,6 +300,20 @@ const Flight = ({ navigation }) => {
           <Text style={styles.DashboardTitle}>Book Your Flight Ticket</Text>
         </View>
         <View style={styles.flightSearch}>
+          <View style={styles.radioButtonGroup}>
+            <RadioButton
+              selected={selectedOption === 'oneWay'}
+              onPress={() => setSelectedOption('oneWay')}
+            >
+              One way
+            </RadioButton>
+            <RadioButton
+              selected={selectedOption === 'roundTrip'}
+              onPress={() => setSelectedOption('roundTrip')}
+            >
+              Round trip
+            </RadioButton>
+          </View>
           <TouchableOpacity
             style={styles.departurebtn}
             activeOpacity={0.8}
@@ -310,7 +345,7 @@ const Flight = ({ navigation }) => {
           <View style={styles.dateContainer}>
             <TouchableOpacity
               activeOpacity={0.8}
-              style={styles.departuredate}
+              style={[styles.departuredate, dynamicWidth]}
               onPress={() => setDepartureDateModalVisible(true)}
             >
               <MaterialCommunityIcons name="calendar-month-outline" size={28} />
@@ -320,18 +355,21 @@ const Flight = ({ navigation }) => {
                   : selectedDepartureDate}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.arivaldate}
-              onPress={() => setReturnDateModalVisible(true)}
-            >
-              <MaterialCommunityIcons name="calendar-month-outline" size={28} />
-              <Text style={styles.deteTitle}>
-                {selectedReturnDate === null
-                  ? "Retrun date"
-                  : selectedReturnDate}
-              </Text>
-            </TouchableOpacity>
+            {selectedOption === 'roundTrip' ? (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.arivaldate}
+                onPress={() => setReturnDateModalVisible(true)}
+              >
+                <MaterialCommunityIcons name="calendar-month-outline" size={28} />
+                <Text style={styles.deteTitle}>
+                  {selectedReturnDate === null
+                    ? "Retrun date"
+                    : selectedReturnDate}
+                </Text>
+              </TouchableOpacity>
+            ) : ''}
+
           </View>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -709,9 +747,9 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: Platform.OS === "ios" ? 20 : 30,
+    marginTop: Platform.OS === "ios" ? 25 : 40,
     marginHorizontal: 20,
-    zIndex:-100,
+    zIndex: -100,
   },
   headerData: {
     flexDirection: "row",
@@ -778,7 +816,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "400",
     color: "#fff",
-    paddingVertical: 12,
+    paddingVertical: 10,
   },
   flightSearch: {
     marginHorizontal: 20,
@@ -836,7 +874,6 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   departuredate: {
-    width: "46%",
     height: 60,
     backgroundColor: "#B5C5D2",
     borderRadius: 6,
@@ -953,7 +990,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: 'rgba(255,255,255,1)',
-    height: Platform.OS==='ios'?'93%':'100%',
+    height: Platform.OS === 'ios' ? '93%' : '100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingTop: 10,
@@ -1022,7 +1059,7 @@ const styles = StyleSheet.create({
   modalDepartureDateContainer: {
     flex: 1,
     backgroundColor: "white",
-    paddingTop: Platform.OS==='ios'? 80:50,
+    paddingTop: Platform.OS === 'ios' ? 80 : 50,
     paddingHorizontal: 20,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -1130,14 +1167,44 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingHorizontal: 25,
   },
-  line:{
-    width:"100%",
-    borderBottomWidth:2,
-    borderColor:'red',
+  line: {
+    width: "100%",
+    borderBottomWidth: 2,
+    borderColor: 'red',
+  },
+  radioButtonGroup: {
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
+  radioButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  radioButton: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#4F718A',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+  },
+  radioButtonSelected: {
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    backgroundColor: '#4F718A',
+  },
+  radioButtonText: {
+    fontSize: 16,
+    paddingRight: 25,
   },
 });
 
 export default Flight;
+
 
 
 const popularCities = [

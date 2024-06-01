@@ -112,7 +112,7 @@ const Profile = ({ navigation }) => {
       >
         <View style={styles.profiledata}>
           <View style={styles.headerContainer}>
-            <TouchableOpacity activeOpacity={1} style={styles.BackBtnContainer}>
+            <TouchableOpacity onPress={()=>{navigation.navigate('Dashboard')}} activeOpacity={1} style={styles.BackBtnContainer}>
               <MaterialCommunityIcons
                 name="chevron-left"
                 size={28}
