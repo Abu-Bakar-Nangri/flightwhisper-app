@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -19,8 +19,10 @@ import { Calendar, CalendarList, Agenda } from "react-native-calendars";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import { Checkbox, RadioButton } from "react-native-paper";
+import { UserContext } from "../Context/UserContext";
 
 const Flight = ({ navigation }) => {
+  const {user} = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [fromModalVisible, setFromModalVisible] = useState(false);
   const [toModalVisible, setToModalVisible] = useState(false);
@@ -280,8 +282,8 @@ const Flight = ({ navigation }) => {
                 </View>
               </Modal>
               <View>
-                <Text style={styles.userName}>Abu Bakar Siddique</Text>
-                <Text style={styles.userEmail}>abububakarnangri@gmail.com</Text>
+                <Text style={styles.userName}>{user.name}</Text>
+                <Text style={styles.userEmail}>{user.email}</Text>
               </View>
             </View>
             <TouchableOpacity
