@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import {
   StyleSheet,
@@ -10,7 +9,9 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  Alert,
   Platform,
+  ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/airplane.png";
@@ -19,7 +20,6 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -28,48 +28,12 @@ export default function Login({ navigation }) {
   const handleLogin = async () => {
     try {
       if (!email || !password) {
-        Toast.show({
-          type: 'error',
-          text1: 'Empty fields',
-          text2: 'Please enter both email and password',
-        });
+        Alert.alert("Please enter both email and password");
         return;
       }
-  
-      const response = await axios.post("http://192.168.50.171:3699/api/users/login", {
-        email,
-        password,
-      });
-  
-      if (response.status === 201) {
-        navigation.navigate("Dashboard");
-      } else {
-        Toast.show({
-          type: 'error',
-          text1: 'Login failed',
-          text2: response.data?.message || "Unknown error",
-        });
-      }
+      navigation.navigate("Dashboard");
     } catch (error) {
-      if (error.response) {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: error.response.data?.message || "Unknown server error",
-        });
-      } else if (error.request) {
-        Toast.show({
-          type: 'error',
-          text1: "Network error",
-          text2: "No response from server. Please try again later.",
-        });
-      } else {
-        Toast.show({
-          type: 'error',
-          text1: "Error",
-          text2: "An error occurred while logging in",
-        });
-      }
+      Alert.alert("Error occurred while logging in");
     }
   };
 
@@ -85,16 +49,14 @@ export default function Login({ navigation }) {
       <View style={styles.imageContainer}>
         <Image source={img} style={styles.image} />
       </View>
-      <Toast />
       <Text style={styles.login}>Log In</Text>
       <View style={styles.emailview}>
         <Text style={styles.email}>Email address or number</Text>
         <TextInput
           style={styles.enteremail}
-          value={email}s
-          onChangeText={(text) => setEmail(text.trim().toLowerCase())}
+          value={email}
+          onChangeText={setEmail}
           placeholder="Enter email or number"
-          autoCapitalize="none"
         />
       </View>
       <View style={styles.passwordview}>

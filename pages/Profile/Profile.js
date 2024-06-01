@@ -86,7 +86,7 @@ const Profile = ({ navigation }) => {
         },
         {
           text: "Delete Account",
-          onPress: () => navigation.navigate("Login"),
+          onPress: () => deleteAccount(),
           style: "destructive",
         },
       ],
@@ -94,14 +94,43 @@ const Profile = ({ navigation }) => {
     );
   }
 
-  const deleteAccount = async() =>{
-    try{
-
-    } catch{
-
+  const deleteAccount = async () => {
+    try {
+      Toast.show({
+        type: 'info',
+        text1: 'Deleting Account',
+        text2: 'Your account deletion request is being processed',
+        position: 'bottom',
+      });
+  
+      const response = await axios.delete(`http://192.168.50.171:3699/api/users/deleteAccount/a`);
+  
+      if (response.status === 200) {
+        navigation.navigate('Login');
+        Toast.show({
+          type: 'success',
+          text1: 'Account Deleted',
+          text2: 'Your account has been deleted successfully',
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Failed to delete the account',
+          position: 'bottom',
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'An error occurred while deleting the account',
+        position: 'bottom',
+      });
+      console.error('Error deleting account:', error);
     }
-      await axios.delete('http://192.168.50.220:3699/api/users/deleteAccount/abubakarnangri@gmail.com');
-  }
+  };
+  
 
   return (
     <SafeAreaView style={styles.container}>
