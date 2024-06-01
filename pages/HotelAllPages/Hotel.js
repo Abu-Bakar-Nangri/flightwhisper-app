@@ -541,7 +541,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: Platform.OS === "ios" ? 20 : 30,
+    marginTop: Platform.OS === "ios" ? 25 : 40,
     marginHorizontal: 20,
     zIndex:-100,
   },
@@ -610,7 +610,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: "400",
     color: "#fff",
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
   flightSearch: {
     marginHorizontal: 20,

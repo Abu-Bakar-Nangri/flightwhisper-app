@@ -36,7 +36,7 @@ export default function Login({ navigation }) {
         return;
       }
   
-      const response = await axios.post("http://192.168.50.220:3699/api/users/login", {
+      const response = await axios.post("http://192.168.50.171:3699/api/users/login", {
         email,
         password,
       });

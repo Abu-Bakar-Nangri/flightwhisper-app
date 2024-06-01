@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import {
   View,
@@ -11,9 +12,10 @@ import {
   Alert,
 } from "react-native";
 import { RadioButton } from 'react-native-paper';
+import Toast from "react-native-toast-message";
 
 const userData = {
-  _id: "66562162cbd69eeac59ac811",
+  _id: "66572185599cc73cb1285fcb",
   name: "Abu Bakar Siddique",
   email: "abubakarnangri@gmail.com",
   phoneNo: "03245521001",
@@ -31,23 +33,69 @@ const userData = {
 
 const ProfileUpdate = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [name, setName] = useState(userData.name)
-  const [phoneNo, setPhoneNo] = useState(userData.phoneNo)
-  const [gender, setGender] = useState(userData.gender)
-  const [dob, setDOB] = useState(userData.dob)
-  const [nationality, setNationality] = useState(userData.nationality)
-  const [street, setStreet] = useState(userData.address.street)
-  const [city, setCity] = useState(userData.address.city)
-  const [province, setProvince] = useState(userData.address.province)
-  const [postalCode, setPostalCode] = useState(userData.address.postalCode)
-  const [country, setCountry] = useState(userData.address.country)
+  const [name, setName] = useState(userData.name);
+  const [phoneNo, setPhoneNo] = useState(userData.phoneNo);
+  const [gender, setGender] = useState(userData.gender);
+  const [dob, setDOB] = useState(userData.dob);
+  const [nationality, setNationality] = useState(userData.nationality);
+  const [street, setStreet] = useState(userData.address.street);
+  const [city, setCity] = useState(userData.address.city);
+  const [province, setProvince] = useState(userData.address.province);
+  const [postalCode, setPostalCode] = useState(userData.address.postalCode);  const [country, setCountry] = useState(userData.address.country);
+  const [updatedData,setUpdatedData]= useState(userData);
 
-  const handleUpdate = () => {
-    Alert.alert(gender);
+  const handleUpdate = async () => {
+    try {
 
-    // Close the modal after updating
-    setModalVisible(false);
-  }
+      Toast.show({
+        type: 'success',
+        text1: 'Updating Request',
+        text2: 'Data is sending for update',
+        position: "bottom",
+      });
+
+      const response = await axios.post(`http://192.168.50.171:3699/api/users/updateProfile/${userData._id}`, {
+        name,
+        phoneNo,
+        gender,
+        dob,
+        nationality,
+        address: {
+          street,
+          city,
+          province,
+          postalCode,
+          country,
+        },
+      });
+
+      if (response.status === 200) {
+        Toast.show({
+          type: 'success',
+          text1: 'Success',
+          text2: 'Update was successful',
+          position: "bottom",
+        });
+        setUpdatedData(response.data)
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Update failed',
+          position: "bottom",
+        });
+      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'An error occurred during the update',
+        position: "bottom",
+      });
+    } finally {
+      setModalVisible(false);
+    }
+  };
 
   const renderAddress = () => {
     const { street, city, province, postalCode, country } = userData.address;
@@ -64,6 +112,7 @@ const ProfileUpdate = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Profile Edit</Text>
       <Text style={styles.sectionHeader}>Name</Text>
+      <Toast />
       <View style={styles.section}>
         <Text style={styles.sectionText}>{name}</Text>
       </View>
@@ -246,6 +295,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "#f5f5f5",
+    zIndex: -100,
   },
   header: {
     fontSize: 24,
@@ -281,6 +331,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 50,
     height: 50,
+    zIndex: -100,
   },
   buttonText: {
     color: "#FFFFFF",
