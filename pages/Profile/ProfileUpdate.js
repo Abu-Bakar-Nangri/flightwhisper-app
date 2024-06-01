@@ -97,17 +97,6 @@ const ProfileUpdate = () => {
     }
   };
 
-  const renderAddress = () => {
-    const { street, city, province, postalCode, country } = userData.address;
-    return (
-      <View style={styles.section}>
-        <Text style={styles.sectionText}>
-          {street}, {city}, {province} {postalCode}, {country}
-        </Text>
-      </View>
-    );
-  };
-
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Profile Edit</Text>
@@ -137,7 +126,11 @@ const ProfileUpdate = () => {
         <Text style={styles.sectionText}>{nationality}</Text>
       </View>
       <Text style={styles.sectionHeader}>Address</Text>
-      {userData.address && renderAddress()}
+      <View style={styles.section}>
+        <Text style={styles.sectionText}>
+          {street}, {city}, {province} {postalCode}, {country}
+        </Text>
+      </View>
       <TouchableOpacity
         style={styles.updateButton}
         activeOpacity={0.9}

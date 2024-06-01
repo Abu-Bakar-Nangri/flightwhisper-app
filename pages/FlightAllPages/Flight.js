@@ -1243,4 +1243,3 @@ const morePopularCities = [
   { city: "Helsinki", country: "Finland", shortName: "HEL", icon: "map-marker-outline" },
   { city: "Stockholm", country: "Sweden", shortName: "STO", icon: "map-marker-outline" },
 ];
-
