@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -20,8 +20,10 @@ import { Calendar} from "react-native-calendars";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesome5 } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import { UserContext } from "../Context/UserContext";
 
 const Hotel = ({ navigation }) => {
+  const {user} = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [destinationModalVisible, setDestinationModalVisible] = useState(false);
   const [checkInDateModalVisible, setCheckInDateModalVisible] =
@@ -218,8 +220,8 @@ const Hotel = ({ navigation }) => {
                 </View>
               </Modal>
               <View>
-                <Text style={styles.userName}>Abu Bakar Siddique</Text>
-                <Text style={styles.userEmail}>abububakarnangri@gmail.com</Text>
+                <Text style={styles.userName}>{user.name}</Text>
+                <Text style={styles.userEmail}>{user.email}</Text>
               </View>
             </View>
             <TouchableOpacity

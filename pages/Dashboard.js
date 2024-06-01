@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,8 +15,10 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../assets/person.png";
 import Toast from "react-native-toast-message";
+import { UserContext } from "./Context/UserContext";
 
 const Dashboard = ({ navigation }) => {
+  const {user} = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -103,8 +105,8 @@ const Dashboard = ({ navigation }) => {
                 </View>
               </Modal>
               <View>
-                <Text style={styles.userName}>Abu Bakar Siddique</Text>
-                <Text style={styles.userEmail}>abububakarnangri@gmail.com</Text>
+                <Text style={styles.userName}>{user.name}</Text>
+                <Text style={styles.userEmail}>{user.email}</Text>
               </View>
             </View>
             <TouchableOpacity

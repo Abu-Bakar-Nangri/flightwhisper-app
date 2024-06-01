@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -17,8 +17,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { UserContext } from "../Context/UserContext";
 
 const Profile = ({ navigation }) => {
+  const {user} = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
   const handleTicket = () => {
     navigation.navigate("Flight");
@@ -192,8 +194,8 @@ const Profile = ({ navigation }) => {
                 </Pressable>
               </View>
             </Modal>
-            <Text style={styles.ProfileTitle}>Abu Bakar Siddique</Text>
-            <Text style={styles.ProfileEmail}>abubakarnangri@gmail.com</Text>
+            <Text style={styles.ProfileTitle}>{user.name}</Text>
+            <Text style={styles.ProfileEmail}>{user.email}</Text>
           </View>
           <View style={styles.SettingContainer}>
             <Text style={styles.SettingTitle}>Profile</Text>
