@@ -31,11 +31,11 @@ export default function Login({ navigation }) {
   const handleLogin = async () => {
     try {
       if (!email || !password) {
-        Alert.alert(
-          'Empty fields',
-          'Please enter both email and password',
-
-        );
+        Toast.show({
+          type: 'error',
+          text1: 'Empty fields',
+          text2: 'Please enter both email and password',
+        });
         return;
       }
   
@@ -46,33 +46,40 @@ export default function Login({ navigation }) {
   
       if (response.status === 201) { // Update response status check
         setUser(response.data);
+        Toast.show({
+          type: 'success',
+          text1: 'Login Successful',
+          text2: 'Welcome to your dashboard',
+        });
         navigation.navigate("Dashboard");
+        setEmail('');
+        setPassword('');
       } else {
-        Alert.alert(
-          'Login failed',
-          response.data?.message || "Unknown error",
-   
-        );
+        Toast.show({
+          type: 'error',
+          text1: 'Login failed',
+          text2: response.data?.message || "Unknown error",
+        });
       }
     } catch (error) {
       if (error.response) {
-        Alert.alert(
-          'Error',
-          error.response.data?.message || "Unknown server error",
-       
-        );
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: error.response.data?.message || "Unknown server error",
+        });
       } else if (error.request) {
-        Alert.alert(
-          'Network error',
-          'No response from server. Please try again later.',
-
-        );
+        Toast.show({
+          type: 'error',
+          text1: 'Network error',
+          text2: 'No response from server. Please try again later.',
+        });
       } else {
-        Alert.alert(
-          'Error',
-          'An error occurred while logging in',
-         
-        );
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'An error occurred while logging in',
+        });
       }
     }
   };

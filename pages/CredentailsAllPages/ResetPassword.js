@@ -12,69 +12,91 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
 import { useRoute } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 
 const ResetPassword = ({ navigation }) => {
   const route = useRoute();
-  const {email} = route.params;
-  const [showNewPassword, setNewShowPassword] = useState(false);
-  const [showConfirmPassword, setConfirmShowPassword] = useState(false);
+  const { email } = route.params;
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState(''); // Corrected the typo
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const toggleShowNewPassword = () => {
-    setNewShowPassword(!showNewPassword);
+    setShowNewPassword(!showNewPassword);
   };
   const toggleShowConfirmPassword = () => {
-    setConfirmShowPassword(!showConfirmPassword);
+    setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleResetPassword = async() => {
-      try {
-  
+  const handleResetPassword = async () => {
+    try {
+      if (!password || !confirmPassword) {
+        Toast.show({
+          type: 'error',
+          text1: 'Empty fields',
+          text2: 'Please fill out all fields',
+          topOffset:20,
+        });
+        return; 
+      }
+
+      if (password !== confirmPassword) {
+        Toast.show({
+          type: 'error',
+          text1: 'Password not match',
+          text2: 'Please check the password',
+          topOffset:20,
+        });
+        return;
+      }
+
+      if (password.length < 8) {
+        Toast.show({
+          type: 'error',
+          text1: 'Password too short',
+          text2: 'Password must be at least 8 characters',
+        });
+        return; 
+      }
+
+      const response = await axios.post(`http://192.168.50.171:3699/api/users/updateUserPassword/${email}`, {
+        password
+      });
+
+      if (response.status === 200) {
         Toast.show({
           type: 'success',
-          text1: 'Updating Request',
-          text2: 'Data is sending for update',
+          text1: 'Success',
+          text2: 'Update was successful',
           position: "bottom",
         });
-  
-        const response = await axios.post(`http://192.168.50.171:3699/api/users/updateUserPassword/${email}`, {
-          password
-        });
-  
-        if (response.status === 200) {
-          Toast.show({
-            type: 'success',
-            text1: 'Success',
-            text2: 'Update was successful',
-            position: "bottom",
-          });
-          setUpdatedData(response.data)
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Error',
-            text2: 'Update failed',
-            position: "bottom",
-          });
-        }
-      } catch (error) {
+        navigation.navigate("PasswordChanged");
+      } else {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2: 'An error occurred during the update',
+          text2: 'Update failed',
           position: "bottom",
         });
-      } finally {
-        setModalVisible(false);
       }
-
-    navigation.navigate("PasswordChanged");
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'An error occurred during the update',
+        position: "bottom",
+      });
+    }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.resetTitle}>Reset password</Text>
       <Text style={styles.resetSubTitle}>
         Please type something you'll remember
       </Text>
+      <Toast />
       <View style={styles.passwordview}>
         <Text style={styles.password}>New password</Text>
         <View style={styles.passwordInputview}>
@@ -82,6 +104,8 @@ const ResetPassword = ({ navigation }) => {
             secureTextEntry={!showNewPassword}
             style={styles.enterpassword}
             placeholder="must be 8 characters"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
           <MaterialCommunityIcons
             name={showNewPassword ? "eye-off" : "eye"}
@@ -99,6 +123,8 @@ const ResetPassword = ({ navigation }) => {
             secureTextEntry={!showConfirmPassword}
             style={styles.enterpassword}
             placeholder="repeat password"
+            value={confirmPassword} // Corrected the typo
+            onChangeText={(text) => setConfirmPassword(text)} // Corrected the typo
           />
           <MaterialCommunityIcons
             name={showConfirmPassword ? "eye-off" : "eye"}
@@ -123,8 +149,8 @@ const ResetPassword = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "top",
-    alignItems: "left",
+    justifyContent: "flex-start", 
+    alignItems: "flex-start", 
     backgroundColor: "#f5f5f5",
   },
   iconContainer: {
@@ -171,11 +197,11 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    marginRight: 20, // Adjust margin to create space between text and icon
+    marginRight: 20, 
     marginLeft: -40,
   },
   enterpassword: {
-    flex: 1, // Allow the TextInput to grow to take available space
+    flex: 1,
     borderColor: "#D8DADC",
     borderWidth: 1,
     borderRadius: 6,
