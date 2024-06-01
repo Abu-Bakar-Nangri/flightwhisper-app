@@ -1,3 +1,4 @@
+import { useRoute } from "@react-navigation/native";
 import React, { useState, useRef, useEffect } from "react";
 import {
   View,
@@ -7,8 +8,11 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
+import Toast from "react-native-toast-message";
 
 const VerifyOTP = ({ navigation }) => {
+  const route = useRoute();
+  const { code, email } = route.params;
   const [seconds, setSeconds] = useState(30);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputs = useRef([]);
@@ -28,7 +32,18 @@ const VerifyOTP = ({ navigation }) => {
   };
 
   const handleVerifyOTP = () => {
-    navigation.navigate("ResetPassword");
+    const otpString = otp.join("");
+    const otpIntegers = parseInt(otpString, 10);
+    if(otpIntegers==code){
+      navigation.navigate("ResetPassword",{email});
+    } else{
+      Toast.show({
+        type:'error',
+        text1:'Error',
+        text2:'OTP is incorrect',
+        topOffset:10,
+      })
+    }
   };
 
   useEffect(() => {
@@ -47,9 +62,10 @@ const VerifyOTP = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.verifyOTPTitle}>Please check your email</Text>
       <Text style={styles.verifyOTPSubTitle}>
-        We've sent a code to{" "}
-        <Text style={styles.verifyOTPEmail}>{"abubakar@gmail.com"}</Text>
+        We've sent a code to {code} {" "}
+        <Text style={styles.verifyOTPEmail}>{email}</Text>
       </Text>
+      <Toast/>
       <View style={styles.inputContainer}>
         {otp.map((value, index) => (
           <TextInput

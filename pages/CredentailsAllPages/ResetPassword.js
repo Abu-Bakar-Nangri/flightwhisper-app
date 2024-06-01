@@ -10,9 +10,12 @@ import {
   Platform,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import axios from "axios";
+import { useRoute } from "@react-navigation/native";
 
 const ResetPassword = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+  const route = useRoute();
+  const {email} = route.params;
   const [showNewPassword, setNewShowPassword] = useState(false);
   const [showConfirmPassword, setConfirmShowPassword] = useState(false);
 
@@ -23,7 +26,47 @@ const ResetPassword = ({ navigation }) => {
     setConfirmShowPassword(!showConfirmPassword);
   };
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async() => {
+      try {
+  
+        Toast.show({
+          type: 'success',
+          text1: 'Updating Request',
+          text2: 'Data is sending for update',
+          position: "bottom",
+        });
+  
+        const response = await axios.post(`http://192.168.50.171:3699/api/users/updateUserPassword/${email}`, {
+          password
+        });
+  
+        if (response.status === 200) {
+          Toast.show({
+            type: 'success',
+            text1: 'Success',
+            text2: 'Update was successful',
+            position: "bottom",
+          });
+          setUpdatedData(response.data)
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Error',
+            text2: 'Update failed',
+            position: "bottom",
+          });
+        }
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'An error occurred during the update',
+          position: "bottom",
+        });
+      } finally {
+        setModalVisible(false);
+      }
+
     navigation.navigate("PasswordChanged");
   };
   return (

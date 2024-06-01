@@ -11,7 +11,7 @@ import axios from "axios";
 import Toast from "react-native-toast-message";
 
 const ForgetPassword = ({ navigation }) => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
 
   const handleForgetPassword = async () => {
     try {
@@ -24,17 +24,10 @@ const ForgetPassword = ({ navigation }) => {
         });
         return;
       }
-
-      const response = await axios.post(`http://192.168.50.220:3699/api/users/resetPassword/:${email}`);
+      const response = await axios.post(`http://192.168.50.171:3699/api/users/resetPassword/${email}`);
 
       if (response.status === 200) {
-        Toast.show({
-          type: 'success',
-          text1: 'Success',
-          text2: 'Verification code sent to your email.',
-          topOffset: 20,
-        });
-        // navigation.navigate("VerifyOTP", { code: response.data.code, email });
+         navigation.navigate("VerifyOTP", { code: response.data.code, email, });
       }
     } catch (error) {
       Toast.show({
@@ -65,6 +58,7 @@ const ForgetPassword = ({ navigation }) => {
           value={email}
           onChangeText={setEmail}
           placeholder="Email your email address"
+          autoCapitalize='none'
         />
       </View>
       <TouchableOpacity

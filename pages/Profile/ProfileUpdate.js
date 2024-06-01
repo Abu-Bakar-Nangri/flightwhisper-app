@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -13,40 +13,27 @@ import {
 } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import Toast from "react-native-toast-message";
+import { UserContext } from "../Context/UserContext";
 
-const userData = {
-  _id: "66572185599cc73cb1285fcb",
-  name: "Abu Bakar Siddique",
-  email: "abubakarnangri@gmail.com",
-  phoneNo: "03245521001",
-  gender: "Male",
-  dob: "2003-05-15",
-  nationality: "Pakistan",
-  address: {
-    street: "Rose place street",
-    city: "Lahore",
-    province: "Punjab",
-    postalCode: "54000",
-    country: "Pakistan",
-  },
-};
 
 const ProfileUpdate = () => {
+  const {user,setUser} = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
-  const [name, setName] = useState(userData.name);
-  const [phoneNo, setPhoneNo] = useState(userData.phoneNo);
-  const [gender, setGender] = useState(userData.gender);
-  const [dob, setDOB] = useState(userData.dob);
-  const [nationality, setNationality] = useState(userData.nationality);
-  const [street, setStreet] = useState(userData.address.street);
-  const [city, setCity] = useState(userData.address.city);
-  const [province, setProvince] = useState(userData.address.province);
-  const [postalCode, setPostalCode] = useState(userData.address.postalCode);  const [country, setCountry] = useState(userData.address.country);
-  const [updatedData,setUpdatedData]= useState(userData);
+  const [name, setName] = useState(user.name);
+  const [phoneNo, setPhoneNo] = useState(user.phoneNo);
+  const [gender, setGender] = useState(user.gender);
+  const [dob, setDOB] = useState(user.dob);
+  const [nationality, setNationality] = useState(user.nationality);
+  const [street, setStreet] = useState(user.address.street);
+  const [city, setCity] = useState(user.address.city);
+  const [province, setProvince] = useState(user.address.province);
+  const [postalCode, setPostalCode] = useState(user.address.postalCode);  
+  const [country, setCountry] = useState(user.address.country);
+  const [updatedData,setUpdatedData]= useState();
+
 
   const handleUpdate = async () => {
     try {
-
       Toast.show({
         type: 'success',
         text1: 'Updating Request',
@@ -54,7 +41,7 @@ const ProfileUpdate = () => {
         position: "bottom",
       });
 
-      const response = await axios.post(`http://192.168.50.171:3699/api/users/updateProfile/${userData._id}`, {
+      const response = await axios.post(`http://192.168.50.171:3699/api/users/updateProfile/${user._id}`, {
         name,
         phoneNo,
         gender,
@@ -70,6 +57,7 @@ const ProfileUpdate = () => {
       });
 
       if (response.status === 200) {
+        setUser(response.data)
         Toast.show({
           type: 'success',
           text1: 'Success',
@@ -107,7 +95,7 @@ const ProfileUpdate = () => {
       </View>
       <Text style={styles.sectionHeader}>Email</Text>
       <View style={styles.section}>
-        <Text style={styles.sectionText}>{userData.email}</Text>
+        <Text style={styles.sectionText}>{user.email}</Text>
       </View>
       <Text style={styles.sectionHeader}>Phone Number</Text>
       <View style={styles.section}>
