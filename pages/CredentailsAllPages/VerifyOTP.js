@@ -7,8 +7,10 @@ import {
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import Toast from "react-native-toast-message";
+import axios from "axios";
 
 const VerifyOTP = ({ navigation }) => {
   const route = useRoute();
@@ -16,6 +18,7 @@ const VerifyOTP = ({ navigation }) => {
   const [seconds, setSeconds] = useState(30);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputs = useRef([]);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (index, value) => {
     const newOtp = [...otp];
@@ -31,20 +34,39 @@ const VerifyOTP = ({ navigation }) => {
     }
   };
 
-  const handleVerifyOTP = () => {
-    const otpString = otp.join("");
-    const otpIntegers = parseInt(otpString, 10);
-    if(otpIntegers==code){
-      navigation.navigate("ResetPassword",{email});
-    } else{
+
+  const handleVerifyOTP = async () => {
+    try {
+      setLoading(true);
+      const otpString = otp.join("");
+      const otpIntegers = parseInt(otpString, 10);
+  
+      const response = await axios.post('http://192.168.50.171:3699/api/users/verifyOTP', { otp: otpIntegers });
+  
+      if (response.status === 200) { 
+        navigation.navigate("ResetPassword", { email });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2:'OTP is incorrect',
+          topOffset: 10,
+        });
+      }
+    } catch (error) {
       Toast.show({
-        type:'error',
-        text1:'Error',
-        text2:'OTP is incorrect',
-        topOffset:10,
-      })
+        type: 'error',
+        text1: 'Error',
+        text2: 'An error occurred during OTP verification',
+        topOffset: 10,
+      });
+    } finally {
+      setLoading(false);
     }
   };
+  
+  
+  
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -60,6 +82,7 @@ const VerifyOTP = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+    {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <Text style={styles.verifyOTPTitle}>Please check your email</Text>
       <Text style={styles.verifyOTPSubTitle}>
         We've sent a code to {code} {" "}
@@ -107,6 +130,14 @@ const styles = StyleSheet.create({
     justifyContent: "top",
     alignItems: "left",
     backgroundColor: "#f5f5f5",
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1, width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.6)'
   },
   verifyOTPTitle: {
     fontSize: 32,

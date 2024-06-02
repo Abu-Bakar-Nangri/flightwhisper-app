@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  ActivityIndicator
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import axios from "axios";
@@ -21,6 +22,7 @@ const ResetPassword = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState(''); // Corrected the typo
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const toggleShowNewPassword = () => {
     setShowNewPassword(!showNewPassword);
@@ -30,35 +32,36 @@ const ResetPassword = ({ navigation }) => {
   };
 
   const handleResetPassword = async () => {
+    if (!password || !confirmPassword) {
+      Toast.show({
+        type: 'error',
+        text1: 'Empty fields',
+        text2: 'Please fill out all fields',
+        topOffset:20,
+      });
+      return; 
+    }
+
+    if (password !== confirmPassword) {
+      Toast.show({
+        type: 'error',
+        text1: 'Password not match',
+        text2: 'Please check the password',
+        topOffset:20,
+      });
+      return;
+    }
+
+    if (password.length < 8) {
+      Toast.show({
+        type: 'error',
+        text1: 'Password too short',
+        text2: 'Password must be at least 8 characters',
+      });
+      return; 
+    }
     try {
-      if (!password || !confirmPassword) {
-        Toast.show({
-          type: 'error',
-          text1: 'Empty fields',
-          text2: 'Please fill out all fields',
-          topOffset:20,
-        });
-        return; 
-      }
-
-      if (password !== confirmPassword) {
-        Toast.show({
-          type: 'error',
-          text1: 'Password not match',
-          text2: 'Please check the password',
-          topOffset:20,
-        });
-        return;
-      }
-
-      if (password.length < 8) {
-        Toast.show({
-          type: 'error',
-          text1: 'Password too short',
-          text2: 'Password must be at least 8 characters',
-        });
-        return; 
-      }
+      setLoading(true);
 
       const response = await axios.post(`http://192.168.50.171:3699/api/users/updateUserPassword/${email}`, {
         password
@@ -88,10 +91,14 @@ const ResetPassword = ({ navigation }) => {
         position: "bottom",
       });
     }
+    finally{
+      setLoading(false);
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
+     {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <Text style={styles.resetTitle}>Reset password</Text>
       <Text style={styles.resetSubTitle}>
         Please type something you'll remember
@@ -152,6 +159,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start", 
     alignItems: "flex-start", 
     backgroundColor: "#f5f5f5",
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1, width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.6)'
   },
   iconContainer: {
     width: 32,

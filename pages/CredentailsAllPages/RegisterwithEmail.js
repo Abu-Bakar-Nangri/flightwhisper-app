@@ -13,6 +13,7 @@ import {
   Platform,
   ScrollView,
   KeyboardAvoidingView,
+  ActivityIndicator
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -24,6 +25,7 @@ export default function RegisterwithEmail({ navigation }) {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [phoneNo, setPhoneNo] = useState("");
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -34,26 +36,27 @@ export default function RegisterwithEmail({ navigation }) {
   };
 
   const handleRegister = async () => {
-    try {
-      if (!email || !password || !confirmpassword || !name || !phoneNo) {
-        Toast.show ({
-          type:'error',
-          text1:'Empty fields',
-          text2:'Please enter all fields',
-          topOffset: 20,
-        });
-        return;
-      }
+    if (!email || !password || !confirmpassword || !name || !phoneNo) {
+      Toast.show ({
+        type:'error',
+        text1:'Empty fields',
+        text2:'Please enter all fields',
+        topOffset: 20,
+      });
+      return;
+    }
 
-      if (password !== confirmpassword) {
-        Toast.show ({
-          type:'error',
-          text1:'Password Error',
-          text2:'Passwords do not match',
-          topOffset: 20,
-        });
-        return;
-      }
+    if (password !== confirmpassword) {
+      Toast.show ({
+        type:'error',
+        text1:'Password Error',
+        text2:'Passwords do not match',
+        topOffset: 20,
+      });
+      return;
+    }
+    try {
+      setLoading(true);
       const registrationData = {
         name,
         email,
@@ -83,6 +86,8 @@ export default function RegisterwithEmail({ navigation }) {
         text2: error.response?.data?.message || error.message,
         topOffset: 20,
       });
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -97,6 +102,7 @@ export default function RegisterwithEmail({ navigation }) {
     >
    
       <SafeAreaView style={styles.container}>
+      {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <Toast  />
         <Text style={styles.login}>Register with Email</Text>
         <View style={styles.emailview}>
@@ -191,6 +197,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     backgroundColor: "#f5f5f5",
     width: "100%",
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1, width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.6)'
   },
   imageContainer: {
     marginVertical: 50,

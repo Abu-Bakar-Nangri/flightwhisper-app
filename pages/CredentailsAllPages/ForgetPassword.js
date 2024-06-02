@@ -6,24 +6,28 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator
 } from "react-native";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 
 const ForgetPassword = ({ navigation }) => {
   const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleForgetPassword = async () => {
+    if (!email) {
+      Toast.show({
+        type: 'error',
+        text1: 'Empty field',
+        text2: 'Please enter the email to search',
+        topOffset: 20,
+      });
+      return;
+    }
     try {
-      if (!email) {
-        Toast.show({
-          type: 'error',
-          text1: 'Empty field',
-          text2: 'Please enter the email to search',
-          topOffset: 20,
-        });
-        return;
-      }
+      setLoading(true);
+
       const response = await axios.post(`http://192.168.50.171:3699/api/users/resetPassword/${email}`);
 
       if (response.status === 200) {
@@ -36,6 +40,8 @@ const ForgetPassword = ({ navigation }) => {
         text2: error.response ? error.response.data.message : error.message,
         topOffset: 20,
       });
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -45,6 +51,7 @@ const ForgetPassword = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+    {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <Toast />
       <Text style={styles.forgetTitle}>Forgot password?</Text>
       <Text style={styles.forgetSubTitle}>
@@ -84,6 +91,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     backgroundColor: "#f5f5f5",
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1, width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.6)'
   },
   forgetTitle: {
     fontSize: 32,
