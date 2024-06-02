@@ -57,11 +57,8 @@ const Dashboard = ({ navigation }) => {
     (a, b) => b.rating - a.rating
   ).slice(0, 6);
 
-  return isLoading ? (
-    <View style={styles.loadingIndicator}>
-      <ActivityIndicator size={70} color="#4F718A" />
-    </View>
-  ) : (
+  return (
+
     <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}

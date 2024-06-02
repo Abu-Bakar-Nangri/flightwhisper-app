@@ -12,6 +12,7 @@ import {
   Pressable,
   Platform,
   Alert,
+  ActivityIndicator
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/jatniel-tunon-D4f5wkW9H9U-unsplash.jpg";
@@ -22,6 +23,9 @@ import { UserContext } from "../Context/UserContext";
 const Profile = ({ navigation }) => {
   const {user} = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+
   const handleTicket = () => {
     navigation.navigate("Flight");
   };
@@ -97,15 +101,15 @@ const Profile = ({ navigation }) => {
   }
 
   const deleteAccount = async () => {
+    Toast.show({
+      type: 'info',
+      text1: 'Deleting Account',
+      text2: 'Your account deletion request is being processed',
+      position: 'bottom',
+    });
     try {
-      Toast.show({
-        type: 'info',
-        text1: 'Deleting Account',
-        text2: 'Your account deletion request is being processed',
-        position: 'bottom',
-      });
-  
-      const response = await axios.delete(`http://192.168.50.171:3699/api/users/deleteAccount/a`);
+      setLoading(true);
+      const response = await axios.delete(`http://192.168.50.171:3699/api/users/deleteAccount/${user.email}`);
   
       if (response.status === 200) {
         navigation.navigate('Login');
@@ -130,12 +134,15 @@ const Profile = ({ navigation }) => {
         position: 'bottom',
       });
       console.error('Error deleting account:', error);
+    } finally{
+      setLoading(false);
     }
   };
   
 
   return (
     <SafeAreaView style={styles.container}>
+     {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <ScrollView
         bounces={false}
         showsVerticalScrollIndicator={false}
@@ -445,6 +452,14 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: "#f5f5f5",
     width: "100%",
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1, width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.6)'
   },
   profiledata: {
     backgroundColor: "#4F718A",

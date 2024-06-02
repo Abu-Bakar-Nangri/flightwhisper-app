@@ -12,15 +12,18 @@ import {
   Alert,
   Platform,
   ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import img from "../../assets/airplane.png";
 import Toast from "react-native-toast-message";
 import { UserContext } from "../Context/UserContext";
+
 export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const {setUser} = useContext(UserContext); 
 
@@ -29,15 +32,16 @@ export default function Login({ navigation }) {
   };
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      Toast.show({
+        type: 'error',
+        text1: 'Empty fields',
+        text2: 'Please enter both email and password',
+      });
+      return;
+    }
     try {
-      if (!email || !password) {
-        Toast.show({
-          type: 'error',
-          text1: 'Empty fields',
-          text2: 'Please enter both email and password',
-        });
-        return;
-      }
+      setLoading(true);
   
       const response = await axios.post("http://192.168.50.171:3699/api/users/login", {
         email,
@@ -81,6 +85,8 @@ export default function Login({ navigation }) {
           text2: 'An error occurred while logging in',
         });
       }
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -93,6 +99,7 @@ export default function Login({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
+    {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <View style={styles.imageContainer}>
         <Image source={img} style={styles.image} />
       </View>
@@ -160,6 +167,14 @@ const styles = StyleSheet.create({
     justifyContent: "left",
     backgroundColor: "#f5f5f5",
     width: "100%",
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1, width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.6)'
   },
   imageContainer: {
     flex: 1,

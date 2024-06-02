@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,37 +10,54 @@ import {
   TextInput,
   Button,
   Alert,
+  ActivityIndicator
 } from "react-native";
 import { RadioButton } from 'react-native-paper';
 import Toast from "react-native-toast-message";
 import { UserContext } from "../Context/UserContext";
 
+const defaultAddress = {
+  street: '',
+  city: '',
+  province: '',
+  postalCode: '',
+  country: ''
+};
 
 const ProfileUpdate = () => {
-  const {user,setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [modalVisible, setModalVisible] = useState(false);
-  const [name, setName] = useState(user.name);
-  const [phoneNo, setPhoneNo] = useState(user.phoneNo);
-  const [gender, setGender] = useState(user.gender);
-  const [dob, setDOB] = useState(user.dob);
-  const [nationality, setNationality] = useState(user.nationality);
-  const [street, setStreet] = useState(user.address.street);
-  const [city, setCity] = useState(user.address.city);
-  const [province, setProvince] = useState(user.address.province);
-  const [postalCode, setPostalCode] = useState(user.address.postalCode);  
-  const [country, setCountry] = useState(user.address.country);
-  const [updatedData,setUpdatedData]= useState();
+  const [name, setName] = useState('');
+  const [phoneNo, setPhoneNo] = useState('');
+  const [gender, setGender] = useState('');
+  const [dob, setDOB] = useState('');
+  const [nationality, setNationality] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [province, setProvince] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [country, setCountry] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setName(user.name || '');
+      setPhoneNo(user.phoneNo || '');
+      setGender(user.gender || '');
+      setDOB(user.dob || '');
+      setNationality(user.nationality || '');
+      setStreet(user.address ? user.address.street || '' : '');
+      setCity(user.address ? user.address.city || '' : '');
+      setProvince(user.address ? user.address.province || '' : '');
+      setPostalCode(user.address ? user.address.postalCode || '' : '');
+      setCountry(user.address ? user.address.country || '' : '');
+    }
+  }, [user]);
 
 
   const handleUpdate = async () => {
     try {
-      Toast.show({
-        type: 'success',
-        text1: 'Updating Request',
-        text2: 'Data is sending for update',
-        position: "bottom",
-      });
-
+      setLoading(true);
       const response = await axios.post(`http://192.168.50.171:3699/api/users/updateProfile/${user._id}`, {
         name,
         phoneNo,
@@ -55,16 +72,15 @@ const ProfileUpdate = () => {
           country,
         },
       });
-
+  
       if (response.status === 200) {
-        setUser(response.data)
+  
         Toast.show({
           type: 'success',
           text1: 'Success',
           text2: 'Update was successful',
           position: "bottom",
         });
-        setUpdatedData(response.data)
       } else {
         Toast.show({
           type: 'error',
@@ -82,11 +98,30 @@ const ProfileUpdate = () => {
       });
     } finally {
       setModalVisible(false);
+      setLoading(false);
     }
   };
 
+  const handleCancel = () => {
+    if (user) {
+      setName(user.name || '');
+      setPhoneNo(user.phoneNo || '');
+      setGender(user.gender || '');
+      setDOB(user.dob || '');
+      setNationality(user.nationality || '');
+      setStreet(user.address ? user.address.street || '' : '');
+      setCity(user.address ? user.address.city || '' : '');
+      setProvince(user.address ? user.address.province || '' : '');
+      setPostalCode(user.address ? user.address.postalCode || '' : '');
+      setCountry(user.address ? user.address.country || '' : '');
+    }
+     setModalVisible(false)
+  }
+  
+
   return (
     <ScrollView style={styles.container}>
+    
       <Text style={styles.header}>Profile Edit</Text>
       <Text style={styles.sectionHeader}>Name</Text>
       <Toast />
@@ -133,6 +168,7 @@ const ProfileUpdate = () => {
         onRequestClose={() => setModalVisible(false)}
       >
         <ScrollView>
+        {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
               <Text style={styles.modalHeader}>Edit Profile</Text>
@@ -255,7 +291,7 @@ const ProfileUpdate = () => {
                 />
               </View>
               <View style={styles.modeleditbtn}>
-                <TouchableOpacity activeOpacity={0.9} style={styles.cancelBtn} onPress={() => setModalVisible(false)} >
+                <TouchableOpacity activeOpacity={0.9} style={styles.cancelBtn} onPress={handleCancel} >
                   <Text style={styles.cancelText}>Cancel</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.9} style={styles.updateBtn} onPress={handleUpdate} >
@@ -277,6 +313,15 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: "#f5f5f5",
     zIndex: -100,
+  },
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: 1, width:'100%',
+    height:'100%',
+    backgroundColor:'rgba(0,0,0,0.6)',
+    zIndex:1000,
   },
   header: {
     fontSize: 24,
