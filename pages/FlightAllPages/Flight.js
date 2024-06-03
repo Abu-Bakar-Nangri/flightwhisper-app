@@ -41,6 +41,9 @@ const Flight = ({ navigation }) => {
   const [toValue, setToValue] = useState(null);
   const [selectedOption, setSelectedOption] = useState('oneWay');
 
+  const minDate = new Date();
+  const minDateString = minDate.toISOString();
+
   const getTotalPassengers = () => adults + childs + infants;
 
   const handleTicket = () => {
@@ -524,7 +527,7 @@ const Flight = ({ navigation }) => {
           <Text style={styles.DateModalTitle}>Departure Date</Text>
           <Calendar
             current={new Date()}
-            minDate={new Date()}
+            minDate={minDateString}
             onDayPress={handleDepartureDateSelect}
             markedDates={{ [selectedDepartureDate]: { selected: true } }}
             theme={{
@@ -567,7 +570,7 @@ const Flight = ({ navigation }) => {
           <Text style={styles.DateModalTitle}>Return Date</Text>
           <Calendar
             current={new Date()}
-            minDate={new Date()}
+            minDate={minDateString}
             onDayPress={handleReturnDateSelect}
             markedDates={{ [selectedReturnDate]: { selected: true } }}
             theme={{

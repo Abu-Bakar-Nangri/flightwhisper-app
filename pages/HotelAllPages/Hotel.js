@@ -38,6 +38,9 @@ const Hotel = ({ navigation }) => {
   const [destinationValue, setDestinationValue] = useState(null);
   const [rooms ,setRooms] = useState(1);
 
+  const minDate = new Date();
+  const minDateString = minDate.toISOString();
+
   const getTotalPassengers = () => adults + childs + infants;
 
   const handleHistory = () => {
@@ -356,7 +359,7 @@ const Hotel = ({ navigation }) => {
           <Text style={styles.DateModalTitle}>Check-in Date</Text>
           <Calendar
             current={new Date()}
-            minDate={new Date()}
+            minDate={minDateString}
             onDayPress={handleDepartureDateSelect}
             markedDates={{ [selectedCheckInDate]: { selected: true } }}
             theme={{
@@ -399,7 +402,7 @@ const Hotel = ({ navigation }) => {
           <Text style={styles.DateModalTitle}>Check-out Date</Text>
           <Calendar
             current={new Date()}
-            minDate={new Date()}
+            minDate={minDateString}
             onDayPress={handleCheckOutDateSelect}
             markedDates={{ [selectedCheckOutDate]: { selected: true } }}
             theme={{

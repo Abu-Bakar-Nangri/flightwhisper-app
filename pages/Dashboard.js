@@ -64,7 +64,7 @@ const Dashboard = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-      <Toast ref={(ref)=>Toast.setRef(ref)} />
+      <Toast />
         <View style={styles.profiledata}>
           <View style={styles.headerContainer}>
             <View style={styles.headerData}>
