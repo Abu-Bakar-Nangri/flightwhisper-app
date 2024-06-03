@@ -103,7 +103,7 @@ export default function Login({ navigation }) {
       <View style={styles.imageContainer}>
         <Image source={img} style={styles.image} />
       </View>
-      <Toast ref={(ref)=> useRef(ref)}/>
+      <Toast />
       <Text style={styles.login}>Log In</Text>
       <View style={styles.emailview}>
       
