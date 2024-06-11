@@ -58,7 +58,7 @@ const ProfileUpdate = () => {
   const handleUpdate = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(`http://192.168.50.171:3699/api/users/updateProfile/${user._id}`, {
+      const response = await axios.post(`http://192.168.170.171:3699/api/users/updateProfile/${user._id}`, {
         name,
         phoneNo,
         gender,
