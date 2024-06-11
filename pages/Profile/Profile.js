@@ -109,7 +109,7 @@ const Profile = ({ navigation }) => {
     });
     try {
       setLoading(true);
-      const response = await axios.delete(`http://192.168.50.171:3699/api/users/deleteAccount/${user.email}`);
+      const response = await axios.delete(`http://192.168.170.171:3699/api/users/deleteAccount/${user.email}`);
   
       if (response.status === 200) {
         navigation.navigate('Login');
