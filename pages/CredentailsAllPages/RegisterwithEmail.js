@@ -65,7 +65,7 @@ export default function RegisterwithEmail({ navigation }) {
       };
 
       const response = await axios.post(
-        "http://192.168.170.171:3699/api/users/register",
+        "http://192.168.1.66:3699/api/users/register",
         registrationData
       );
 
@@ -110,7 +110,7 @@ export default function RegisterwithEmail({ navigation }) {
           <TextInput
             style={styles.enteremail}
             value={name}
-            onChangeText={(text) => setName(text.trim())}
+            onChangeText={(text) => setName(text)}
             placeholder="Enter name"
           />
         </View>

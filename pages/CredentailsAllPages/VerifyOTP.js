@@ -41,7 +41,7 @@ const VerifyOTP = ({ navigation }) => {
       const otpString = otp.join("");
       const otpIntegers = parseInt(otpString, 10);
   
-      const response = await axios.post('http://192.168.170.171:3699/api/users/verifyOTP', { otp: otpIntegers });
+      const response = await axios.post('http://192.168.1.66:3699/api/users/verifyOTP', { otp: otpIntegers });
   
       if (response.status === 200) { 
         navigation.navigate("ResetPassword", { email });
@@ -85,7 +85,7 @@ const VerifyOTP = ({ navigation }) => {
     {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <Text style={styles.verifyOTPTitle}>Please check your email</Text>
       <Text style={styles.verifyOTPSubTitle}>
-        We've sent a code to {code} {" "}
+        We've sent a code to {" "}
         <Text style={styles.verifyOTPEmail}>{email}</Text>
       </Text>
       <Toast/>
