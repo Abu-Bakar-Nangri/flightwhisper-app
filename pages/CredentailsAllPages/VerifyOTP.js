@@ -1,5 +1,5 @@
 import { useRoute } from "@react-navigation/native";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -14,8 +14,7 @@ import axios from "axios";
 
 const VerifyOTP = ({ navigation }) => {
   const route = useRoute();
-  const { code, email } = route.params;
-  const [seconds, setSeconds] = useState(30);
+  const { email } = route.params;
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputs = useRef([]);
   const [loading, setLoading] = useState(false);
@@ -34,14 +33,13 @@ const VerifyOTP = ({ navigation }) => {
     }
   };
 
-
   const handleVerifyOTP = async () => {
     try {
       setLoading(true);
       const otpString = otp.join("");
       const otpIntegers = parseInt(otpString, 10);
   
-      const response = await axios.post('http://192.168.170.171:3699/api/users/verifyOTP', { otp: otpIntegers });
+      const response = await axios.post('http://192.168.1.72:3699/api/users/verifyOTP', { otp: otpIntegers });
   
       if (response.status === 200) { 
         navigation.navigate("ResetPassword", { email });
@@ -64,31 +62,49 @@ const VerifyOTP = ({ navigation }) => {
       setLoading(false);
     }
   };
-  
-  
-  
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds((prevSeconds) => prevSeconds - 1);
+  const handleResendCode = async () => {
+    try {
+      setLoading(true);
+      // Call your API to resend the OTP
+      const response = await axios.post(`http://192.168.1.72:3699/api/users/resetPassword/${email}`);
+      
+      if (response.status === 200) {
+        Toast.show({
+          type: 'success',
+          text1: 'Success',
+          text2: 'OTP has been resent successfully',
+          topOffset: 10,
+        });
       } else {
-        clearInterval(timer);
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: 'Failed to resend OTP. Please try again.',
+          topOffset: 10,
+        });
       }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'An error occurred while resending OTP. Please try again.',
+        topOffset: 10,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-    {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
+      {loading && <ActivityIndicator style={styles.loader} size={70} color={"#4F718A"} />}
       <Text style={styles.verifyOTPTitle}>Please check your email</Text>
       <Text style={styles.verifyOTPSubTitle}>
-        We've sent a code to {code} {" "}
+        We've sent a code to {" "}
         <Text style={styles.verifyOTPEmail}>{email}</Text>
       </Text>
-      <Toast/>
+      <Toast />
       <View style={styles.inputContainer}>
         {otp.map((value, index) => (
           <TextInput
@@ -112,17 +128,16 @@ const VerifyOTP = ({ navigation }) => {
       <View style={styles.sendCodeContainer}>
         <TouchableOpacity
           style={styles.sendCodeButton}
-          onPress={() => setSeconds(30)}
+          onPress={handleResendCode}
         >
           <Text style={styles.sendCodeButtonText}>Send code again</Text>
         </TouchableOpacity>
-        <Text style={styles.timerText}>{`00:${
-          seconds < 10 ? `0${seconds}` : seconds
-        }`}</Text>
       </View>
     </SafeAreaView>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
