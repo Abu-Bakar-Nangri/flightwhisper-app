@@ -32,6 +32,7 @@ export default function Login({ navigation }) {
   };
 
   const handleLogin = async () => {
+    // Validate email and password
     if (!email || !password) {
       Toast.show({
         type: 'error',
@@ -40,15 +41,27 @@ export default function Login({ navigation }) {
       });
       return;
     }
+  
+    // Regular expression for email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid email',
+        text2: 'Please enter a valid email address',
+      });
+      return;
+    }
+  
     try {
       setLoading(true);
   
-      const response = await axios.post("http://192.168.1.66:3699/api/users/login", {
+      const response = await axios.post("http://192.168.1.72:3699/api/users/login", {
         email,
         password,
       });
   
-      if (response.status === 201) { // Update response status check
+      if (response.status === 200) { // Check for status code 200 for successful login
         setUser(response.data);
         Toast.show({
           type: 'success',
@@ -85,10 +98,11 @@ export default function Login({ navigation }) {
           text2: 'An error occurred while logging in',
         });
       }
-    } finally{
+    } finally {
       setLoading(false);
     }
   };
+  
 
   const handleForgetPassword = () => {
     navigation.navigate("ForgetPassword");
@@ -111,7 +125,8 @@ export default function Login({ navigation }) {
         <TextInput
           style={styles.enteremail}
           value={email}
-          onChangeText={setEmail}
+          keyboardType="email-address"
+          onChangeText={text => setEmail(text)}
           placeholder="Enter email or number"
           autoCapitalize="none"
         />

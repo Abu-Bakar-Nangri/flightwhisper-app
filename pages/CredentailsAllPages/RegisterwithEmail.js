@@ -36,25 +36,62 @@ export default function RegisterwithEmail({ navigation }) {
   };
 
   const handleRegister = async () => {
-    if (!email || !password || !confirmpassword || !name || !phoneNo) {
-      Toast.show ({
-        type:'error',
-        text1:'Empty fields',
-        text2:'Please enter all fields',
+    // Basic form validation
+    if (!name || !email || !phoneNo || !password || !confirmpassword) {
+      Toast.show({
+        type: 'error',
+        text1: 'Empty fields',
+        text2: 'Please enter all fields',
+        topOffset: 20,
+      });
+      return;
+    }
+
+    // Validate email format using a regular expression
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid email',
+        text2: 'Please enter a valid email address',
+        topOffset: 20,
+      });
+      return;
+    }
+
+    // Validate phone number format (you can customize this based on your requirements)
+    const phoneRegex = /^03\d{9}$/;
+    if (!phoneRegex.test(phoneNo)) {
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid phone number',
+        text2: 'Phone number should start with 03 and have 11 digits',
+        topOffset: 20,
+      });
+      return;
+    }
+
+    // Validate password length and match rwith confirm password
+    if (password.length < 8) {
+      Toast.show({
+        type: 'error',
+        text1: 'Weak password',
+        text2: 'Password should be at least 8 characters long',
         topOffset: 20,
       });
       return;
     }
 
     if (password !== confirmpassword) {
-      Toast.show ({
-        type:'error',
-        text1:'Password Error',
-        text2:'Passwords do not match',
+      Toast.show({
+        type: 'error',
+        text1: 'Password Error',
+        text2: 'Passwords do not match',
         topOffset: 20,
       });
       return;
     }
+
     try {
       setLoading(true);
       const registrationData = {
@@ -65,28 +102,34 @@ export default function RegisterwithEmail({ navigation }) {
       };
 
       const response = await axios.post(
-        "http://192.168.1.66:3699/api/users/register",
+        'http://192.168.1.72:3699/api/users/register',
         registrationData
       );
 
       if (response.status === 201) {
-        navigation.navigate("Login");
+        Toast.show({
+          type: 'success',
+          text1: 'Registration successful',
+          text2: 'You can now login with your credentials',
+          topOffset: 20,
+        });
+        navigation.navigate('Login');
       } else {
-          Toast.show ({
-            type:'error',
-            text1:"Registration failed",
-            text2: response.data.message || "Unknown error",
-            topOffset: 20,
-          });
+        Toast.show({
+          type: 'error',
+          text1: 'Registration failed',
+          text2: response.data.message || 'Unknown error',
+          topOffset: 20,
+        });
       }
     } catch (error) {
-      Toast.show ({
-        type:'error',
-        text1:"Error occurred while registering",
+      Toast.show({
+        type: 'error',
+        text1: 'Error occurred while registering',
         text2: error.response?.data?.message || error.message,
         topOffset: 20,
       });
-    } finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -120,6 +163,7 @@ export default function RegisterwithEmail({ navigation }) {
           <TextInput
             style={styles.enteremail}
             value={email}
+            keyboardType="email-address"
             onChangeText={(text) => setEmail(text.trim().toLowerCase())}
             placeholder="Enter email"
             autoCapitalize="none"
@@ -130,6 +174,7 @@ export default function RegisterwithEmail({ navigation }) {
           <TextInput
             style={styles.enteremail}
             value={phoneNo}
+             keyboardType="phone-pad"
             onChangeText={(text) => setPhoneNo(text.trim())}
             placeholder="Enter phone number"
           />

@@ -28,7 +28,7 @@ const ForgetPassword = ({ navigation }) => {
     try {
       setLoading(true);
 
-      const response = await axios.post(`http://192.168.1.66:3699/api/users/resetPassword/${email}`);
+      const response = await axios.post(`http://192.168.1.72:3699/api/users/resetPassword/${email}`);
 
       if (response.status === 200) {
          navigation.navigate("VerifyOTP", { code: response.data.code, email, });
@@ -63,7 +63,7 @@ const ForgetPassword = ({ navigation }) => {
         <TextInput
           style={styles.enteremail}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={text => setEmail(text.trim())}
           placeholder="Email your email address"
           autoCapitalize='none'
         />
