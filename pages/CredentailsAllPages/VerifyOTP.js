@@ -39,7 +39,7 @@ const VerifyOTP = ({ navigation }) => {
       const otpString = otp.join("");
       const otpIntegers = parseInt(otpString, 10);
   
-      const response = await axios.post('http://192.168.1.72:3699/api/users/verifyOTP', { otp: otpIntegers });
+      const response = await axios.post(`http://192.168.1.72:3699/api/users/verifyOTP`, { email:email,otp: otpIntegers });
   
       if (response.status === 200) { 
         navigation.navigate("ResetPassword", { email });
@@ -47,7 +47,7 @@ const VerifyOTP = ({ navigation }) => {
         Toast.show({
           type: 'error',
           text1: 'Error',
-          text2:'OTP is incorrect',
+          text2: error.response.data.message,
           topOffset: 10,
         });
       }
@@ -55,7 +55,7 @@ const VerifyOTP = ({ navigation }) => {
       Toast.show({
         type: 'error',
         text1: 'Error',
-        text2: 'An error occurred during OTP verification',
+        text2: error.response.data.message,
         topOffset: 10,
       });
     } finally {
