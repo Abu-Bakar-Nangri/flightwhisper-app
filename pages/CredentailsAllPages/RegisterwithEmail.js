@@ -102,7 +102,7 @@ export default function RegisterwithEmail({ navigation }) {
       };
 
       const response = await axios.post(
-        'http://192.168.1.72:3699/api/users/register',
+        'http://192.168.1.83:3699/api/users/register',
         registrationData
       );
 
