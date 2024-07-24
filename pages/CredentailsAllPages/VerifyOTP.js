@@ -39,7 +39,7 @@ const VerifyOTP = ({ navigation }) => {
       const otpString = otp.join("");
       const otpIntegers = parseInt(otpString, 10);
   
-      const response = await axios.post(`http://192.168.1.72:3699/api/users/verifyOTP`, { email:email,otp: otpIntegers });
+      const response = await axios.post(`http://192.168.1.83:3699/api/users/verifyOTP`, { email:email,otp: otpIntegers });
   
       if (response.status === 200) { 
         navigation.navigate("ResetPassword", { email });
@@ -67,7 +67,7 @@ const VerifyOTP = ({ navigation }) => {
     try {
       setLoading(true);
       // Call your API to resend the OTP
-      const response = await axios.post(`http://192.168.1.72:3699/api/users/resetPassword/${email}`);
+      const response = await axios.post(`http://192.168.1.83:3699/api/users/resetPassword/${email}`);
       
       if (response.status === 200) {
         Toast.show({

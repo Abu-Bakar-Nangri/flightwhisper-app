@@ -28,7 +28,7 @@ const ForgetPassword = ({ navigation }) => {
     try {
       setLoading(true);
 
-      const response = await axios.post(`http://192.168.1.72:3699/api/users/resetPassword/${email}`);
+      const response = await axios.post(`http://192.168.1.83:3699/api/users/resetPassword/${email}`);
 
       if (response.status === 200) {
          navigation.navigate("VerifyOTP", { code: response.data.code, email, });
